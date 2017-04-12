@@ -1,18 +1,11 @@
 <template>
-    <div class="home">
-        <v-banner></v-banner>
-        home
+    <div class="header">
+        header
     </div>
 </template>
 
 <script>
-
-    import banner from '@/components/banner'
-
     export default {
-        components: {
-            'v-banner': banner
-        },
         data () {
             return {
                 
@@ -22,7 +15,5 @@
 </script>
 
 <style lang="scss" scoped>
-    .home {
-
-    }
+    
 </style>
