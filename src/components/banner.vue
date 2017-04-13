@@ -53,7 +53,6 @@ export default {
 
         for (let i = 3; i < this.image.length; i++) {
             this.move[i] = 'wait'
-            console.log(this.move)
         }
         if (this.autoRoll) {
             if (this.direction === 'left') {

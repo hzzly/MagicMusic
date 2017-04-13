@@ -146,7 +146,7 @@ export default {
         .info {
             flex: 1;
             .music-name {
-                font-size: px2rem(30px);
+                font-size: px2rem(32px);
                 font-weight: bold;
                 vertical-align: middle;
                 .tag {
@@ -161,7 +161,7 @@ export default {
                 }
             }
             .music-s {
-                font-size: px2rem(22px);
+                font-size: px2rem(24px);
                 color: #777686;
                 line-height: px2rem(40px);
             }
