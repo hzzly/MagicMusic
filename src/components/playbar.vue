@@ -7,7 +7,9 @@
             <div class="music-next"></div>
             <div class="music-list"></div>
         </div>
-        <div class="progress-bar"></div>
+        <div class="progress-bar">
+            <div class="play"></div>
+        </div>
     </div>
 </template>
 
@@ -25,18 +27,20 @@
     @import '../assets/css/function';
 
     .playbar {
-        height: px2rem(120px);
-        background: red;
+        background: #ea2448;
         .play-box {
             display: flex;
-            // box-shadow: 0 -2px 0 #000;
             height: px2rem(120px);
         }
         .progress-bar {
             height: px2rem(4px);
             background: linear-gradient(#902541, #902444);
+            .play {
+                height: 100%;
+                width: 60%;
+                background: #fe7498;
+            }
         }
         
-        // border-bottom: 1px solid rgba(144, 36, 68, .8);
     }
 </style>

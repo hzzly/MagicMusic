@@ -16,17 +16,6 @@
                          @click="target(index)">
                 </template>
             </v-touch>
-    
-            <!--<template v-if="typeof item === 'object'">
-                            <img :src="item.src"
-                                 @click="target(index)">
-                            <span :class="{tag:item.tagName}"
-                                  :style="item.tagStyle">{{item.tagName}}</span>
-                        </template>
-                        <template v-if="typeof item === 'string'">
-                            <img :src="item"
-                                 @click="target(index)">
-                        </template>-->
         </li>
         <li class="button">
             <em v-for="(item,index) in image"
@@ -108,8 +97,9 @@ export default {
     perspective: 1000px;
     position: relative;
     width: 100%;
-    height: px2rem(345px);
-    margin-top: px2rem(10px); // padding-top: px2rem(10px);
+    height: px2rem(350px);
+    // padding-top: px2rem(10px);
+    background: rgba(8, 5, 58, .9);
 }
 
 .control {

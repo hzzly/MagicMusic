@@ -34,6 +34,23 @@ export default {
 
 <style lang="scss">
 @import './assets/css/function';
+
+@font-face {
+  font-family: 'icon';  /* project id 277165 */
+  src: url('//at.alicdn.com/t/font_bz6db9vxzw6lmcxr.eot');
+  src: url('//at.alicdn.com/t/font_bz6db9vxzw6lmcxr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_bz6db9vxzw6lmcxr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_bz6db9vxzw6lmcxr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_bz6db9vxzw6lmcxr.svg#iconfont') format('svg');
+}
+
+.icon {
+    font-family: "icon" !important;
+    font-size: 18px;
+    font-style: normal;
+    color: #ffffff;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

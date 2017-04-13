@@ -1,17 +1,22 @@
 <template>
     <div class="home">
         <v-banner :image="image"></v-banner>
-        
+        <v-nav></v-nav>
+        <v-music-list></v-music-list>
     </div>
 </template>
 
 <script>
 
     import banner from '@/components/banner'
+    import nav from '@/components/nav'
+    import musicList from '@/components/musicList'
 
     export default {
         components: {
-            'v-banner': banner
+            'v-banner': banner,
+            'v-nav': nav,
+            'v-music-list': musicList
         },
         data () {
             return {
