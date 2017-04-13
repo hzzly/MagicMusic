@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-header></v-header>
-    <div class="container" :class="{marginBottom:playBar}">
+    <div class="container">
       <router-view></router-view>
     </div>
     <!--<router-view></router-view>-->
@@ -38,11 +38,12 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   .container {
-    padding-top: px2rem(100px);
-    &.marginBottom {
-      margin-bottom: px2rem(120px);
-    }
+    flex: 1;
+    overflow: auto;
   }
 }
 </style>

@@ -1,66 +1,7 @@
 <template>
     <div class="home">
         <v-banner :image="image"></v-banner>
-        <p>home</p>
-        <p>home</p>
-        <p>home</p>
-        <p>home</p>
-        <p>home</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>ddddd</p>
-      <p>ddddd</p>
-      <p>ddddd</p>
-      <p>ddddd</p>
-      <p>ddddd</p>
-      <p>ddddd</p>
-      <p>ddddd</p>
-      <p>ddddd</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
-      <p>a</p>
+        
     </div>
 </template>
 
@@ -88,6 +29,6 @@
 
 <style lang="scss" scoped>
     .home {
-        
+
     }
 </style>
