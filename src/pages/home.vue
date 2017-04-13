@@ -1,7 +1,66 @@
 <template>
     <div class="home">
-        <v-banner></v-banner>
-        home
+        <v-banner :image="image"></v-banner>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>ddddd</p>
+      <p>ddddd</p>
+      <p>ddddd</p>
+      <p>ddddd</p>
+      <p>ddddd</p>
+      <p>ddddd</p>
+      <p>ddddd</p>
+      <p>ddddd</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
     </div>
 </template>
 
@@ -15,7 +74,13 @@
         },
         data () {
             return {
-                
+                image: [
+                    'static/img/1-1.jpg',
+                    'static/img/1-2.jpg', 
+                    'static/img/1-3.jpg', 
+                    'static/img/1-4.jpg', 
+                    'static/img/1-5.jpg'
+                ],
             }
         }
     }
@@ -23,6 +88,6 @@
 
 <style lang="scss" scoped>
     .home {
-
+        
     }
 </style>
