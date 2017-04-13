@@ -30,7 +30,7 @@
         background: #ea2448;
         .play-box {
             display: flex;
-            height: px2rem(120px);
+            height: px2rem(110px);
         }
         .progress-bar {
             height: px2rem(4px);

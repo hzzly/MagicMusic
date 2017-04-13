@@ -1,6 +1,6 @@
 <template>
     <div class="nav">
-        <div class="nav-item">
+        <div class="nav-item active">
             <div class="icon"><i class="icon">&#xe62f;</i></div>
             <span>流行</span>
         </div>
@@ -41,6 +41,7 @@
         .nav-item {
             flex: 1;
             font-size: px2rem(24px);
+            cursor: pointer;
             .icon {
                 font-size: px2rem(46px);
                 color: #eb234a;
@@ -48,6 +49,9 @@
             span {
                 display: block;
                 margin-top: px2rem(8px);
+            }
+            &.active {
+                color: #fff;
             }
         }
     }
