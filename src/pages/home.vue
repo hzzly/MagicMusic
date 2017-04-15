@@ -3,6 +3,7 @@
         <v-banner :image="image"></v-banner>
         <v-nav></v-nav>
         <v-music-list></v-music-list>
+        <v-play></v-play>
     </div>
 </template>
 
@@ -11,12 +12,14 @@
     import banner from '@/components/banner'
     import nav from '@/components/nav'
     import musicList from '@/components/musicList'
+    import play from '@/components/play'
 
     export default {
         components: {
             'v-banner': banner,
             'v-nav': nav,
-            'v-music-list': musicList
+            'v-music-list': musicList,
+            'v-play': play,
         },
         data () {
             return {

@@ -28,7 +28,7 @@
         </div>
         <audio preload
                ref="myAudio"
-               src="http://m10.music.126.net/20170413174301/bb78a4e4daf144294bacebc756ce0879/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3"></audio>
+               src="http://m10.music.126.net/20170414094626/0434c157f09b89b9f4aa54a60119593a/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3"></audio>
         <v-listen-list v-show="showLists"></v-listen-list>
     </div>
 </template>
