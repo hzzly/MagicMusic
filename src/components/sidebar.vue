@@ -11,37 +11,37 @@
 				<ul>
 					<li>
 						<router-link to="">
-							<i class="icon">&#xe615;</i>
+							<i class="icon">&#xe63c;</i>
 							<span>个人中心</span>
 						</router-link>
 					</li>
 					<li>
 						<router-link to="">
-							<i class="icon">&#xe615;</i>
+							<i class="icon">&#xe631;</i>
 							<span>音效调整</span>
 						</router-link>
 					</li>
 					<li>
 						<router-link to="">
-							<i class="icon">&#xe615;</i>
+							<i class="icon">&#xe65b;</i>
 							<span>定时关闭</span>
 						</router-link>
 					</li>
 					<li>
 						<router-link to="">
-							<i class="icon">&#xe615;</i>
+							<i class="icon">&#xe601;</i>
 							<span>听歌识曲</span>
 						</router-link>
 					</li>
 					<li>
 						<router-link to="">
-							<i class="icon">&#xe615;</i>
+							<i class="icon">&#xe600;</i>
 							<span>帮助</span>
 						</router-link>
 					</li>
 					<li>
 						<router-link to="">
-							<i class="icon">&#xe615;</i>
+							<i class="icon">&#xe61f;</i>
 							<span>设置</span>
 						</router-link>
 					</li>
@@ -74,7 +74,7 @@
         },
         computed: {
             showbar() {
-                return true
+                return false
             }
         }
     }
@@ -176,7 +176,7 @@
 						span {
 							vertical-align: middle;
 							font-size: px2rem(24px);
-							padding-left: px2rem(10px);
+							padding-left: px2rem(20px);
 							color: #fff;
 						}
 					}
