@@ -12,26 +12,30 @@
         </div>
         <div class="content">
             <div class="lyrics"></div>
+            <div class="time">
+                <div class="n-time">3:25</div>
+                <div class="t-time">4:15</div>
+            </div>
             <div class="control">
                 <div>
-                    <div class="loop"><i class="icon">&#xe6ae;</i></div>
-                    <div class="pre"><i class="icon">&#xe6ae;</i></div>
-                    <div class="pause"><i class="icon">&#xe6ae;</i></div>
-                    <div class="next"><i class="icon">&#xe6ae;</i></div>
-                    <div class="list"><i class="icon">&#xe6ae;</i></div>
+                    <div class="loop"><i class="icon">&#xe819;</i></div>
+                    <div class="pre"><i class="icon">&#xe61e;</i></div>
+                    <div class="pause"><i class="icon">&#xe644;</i></div>
+                    <div class="next"><i class="icon">&#xe604;</i></div>
+                    <div class="list"><i class="icon">&#xe60f;</i></div>
                 </div>
             </div>
             <div class="process">
-                <div class="line"></div>
-                <div class="pro">
-                    <div class="pro-line"></div>
-                </div>
-                <!--<div class="control-box">
-                    <div class="absolutely-x-center">
-                        <div class="control-circle control-process"></div>
-                        <div class="control-circle control-pannel"></div>
+                    <div class="line"></div>
+                    <div class="pro">
+                        <!--<div class="pro-line"></div>-->
                     </div>
-                </div>-->
+                    <!--<div class="control-box">
+                        <div class="absolutely-x-center">
+                            <div class="control-circle control-process"></div>
+                            <div class="control-circle control-pannel"></div>
+                        </div>
+                    </div>-->
             </div>
         </div>
     </div>
@@ -43,6 +47,9 @@ export default {
         return {
 
         }
+    },
+    mounted() {
+
     }
 }
 </script>
@@ -125,6 +132,21 @@ export default {
                 border-right: px2rem(750px) solid transparent;
             }
         }
+        .time {
+            width: 100%;
+            height: px2rem(50px);
+            line-height: px2rem(50px);
+            text-align: center;
+            position: absolute;
+            bottom: px2rem(320px);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            font-size: px2rem(28px);
+            > div {
+                width: px2rem(100px);
+            }
+        }
         .control {
             position: absolute;
             bottom: px2rem(-850px); // width: px2rem(900px);
@@ -138,20 +160,41 @@ export default {
             >div {
                 width: px2rem(650px);
                 display: flex;
-                transform: translate(px2rem(270px), px2rem(140px));
+                height: px2rem(120px);
+                line-height: px2rem(120px);
+                transform: translate(px2rem(280px), px2rem(80px));
                 >div {
                     flex: 1;
                     z-index: 35;
                     text-align: center;
+                    cursor: pointer;
+                    .icon {
+                        font-size: px2rem(54px);
+                    }
+                    &:first-child,
+                    &:last-child {
+                        padding-top: px2rem(8px);
+                        .icon {
+                            font-size: px2rem(40px);
+                        }
+                    }
+                }
+                .pause {
+                    background: #fff;
+                    border-radius: 50%;
+                    margin: 0 px2rem(6px) 0 px2rem(10px);
+                    .icon {
+                        color: #4436b1;
+                    }
                 }
             }
         }
         .process {
             position: absolute;
             bottom: px2rem(280px);
-            width: 100%;
+            width: 100%; 
             height: px2rem(100px);
-            background: #fff;
+            // background: #fff;
             overflow: hidden;
             z-index: 40;
             .line {
@@ -159,20 +202,21 @@ export default {
                 height: px2rem(1200px);
                 border-radius: 50%;
                 position: absolute;
-                transform: translateX(-115px);
+                // transform: translateX(px2rem(-224px)) rotate(-528deg);
+                transform: translateX(px2rem(-224px)) rotate(100deg);
+                border: 1px solid rgba(255, 255, 255, .6);
+                // border: 2px solid #fff;
                 border-bottom-color: transparent;
-                // background: #000;
-                border: 1px solid red;
             }
             .pro {
                 width: px2rem(1200px);
                 height: px2rem(1200px);
                 border-radius: 50%;
-                transform: translateX(-115px);
-                border-bottom-color: transparent;
-                // background: #000;
-                border: 1px solid #000;
-                transform-origin: 115px center;
+                position: absolute;
+                transform: translateX(px2rem(-224px)) rotate(-528deg); //-462
+                // border: 1px solid rgba(255, 255, 255, .6);
+                border: 2px solid #fff;
+                border-bottom-color: transparent; 
             }
         }
     }
