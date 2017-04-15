@@ -6,12 +6,28 @@
         </div>
         <div class="name">刚好遇见你</div>
         <div class="operation">
-            <div class="love"></div>
-            <div class="msg"></div>
-            <div class="share"></div>
+            <div class="love"><i class="icon">&#xe615;</i></div>
+            <div class="msg"><i class="icon">&#xe603;</i></div>
+            <div class="share"><i class="icon">&#xe64c;</i></div>
         </div>
         <div class="content">
-            <div class="lyrics"></div>
+            <div class="lyrics">
+                <div class="m-name">刚好遇见你</div>
+                <div class="s-name">李玉刚</div>
+                <div class="lyric">
+                    <p>因为我刚好遇见你</p>
+                    <p>因为我刚好遇见你</p>
+                    <p>刚好遇见你</p>
+                    <p>因为我刚好遇见你</p>
+                    <p>因为我刚好遇见你</p>
+                    <p>因为我刚好遇见你</p>
+                    <p>遇见你</p>
+                    <p>因为我刚好遇见你</p>
+                    <p>因为我刚好遇见你</p>
+                    <p>因为我刚好遇见你</p>
+                    <p>因为</p>
+                </div>
+            </div>
             <div class="time">
                 <div class="n-time">3:25</div>
                 <div class="t-time">4:15</div>
@@ -26,16 +42,8 @@
                 </div>
             </div>
             <div class="process">
-                    <div class="line"></div>
-                    <div class="pro">
-                        <!--<div class="pro-line"></div>-->
-                    </div>
-                    <!--<div class="control-box">
-                        <div class="absolutely-x-center">
-                            <div class="control-circle control-process"></div>
-                            <div class="control-circle control-pannel"></div>
-                        </div>
-                    </div>-->
+                <div class="line"></div>
+                <div class="pro"></div>
             </div>
         </div>
     </div>
@@ -94,14 +102,20 @@ export default {
         >div {
             width: px2rem(80px);
             height: px2rem(80px);
+            line-height: px2rem(80px);
+            text-align: center;
             border-radius: 50%;
             background: #f12c61;
             position: relative;
             cursor: pointer;
+            .icon {
+                font-size: px2rem(46px);
+            }
         }
         .love {
             right: px2rem(150px);
             top: px2rem(60px);
+            line-height: px2rem(90px);
         }
         .msg {
             right: px2rem(50px);
@@ -114,7 +128,8 @@ export default {
         }
     }
     .content {
-        height: 100%; // overflow: hidden;
+        height: 100%;
+        overflow: hidden;
         position: relative;
         .lyrics {
             position: absolute;
@@ -122,6 +137,7 @@ export default {
             width: 100%;
             height: px2rem(850px);
             background: rgba(40, 34, 78, .9);
+
             &::after {
                 content: '';
                 position: absolute;
@@ -130,6 +146,31 @@ export default {
                 height: 0; // border-left: px2rem(750px) solid rgba(40, 34, 78, .9);
                 border-bottom: px2rem(150px) solid rgba(40, 34, 78, .9);
                 border-right: px2rem(750px) solid transparent;
+            }
+            .m-name {
+                font-size: px2rem(38px);
+                text-align: center;
+                color: #fff;
+                margin: px2rem(20px);
+            }
+            .s-name {
+                color: rgba(255, 255, 255, .8);
+                font-size: px2rem(32px);
+                text-align: center;
+            }
+            .lyric {
+                width: px2rem(500px);
+                height: px2rem(250px);
+                margin: px2rem(40px) auto;
+                color: rgba(255, 255, 255, .8);
+                text-align: center;
+                font-size: px2rem(30px);
+                overflow: auto;
+                // transform: translateY(20px);
+                p {
+                    margin: px2rem(20px) 0;
+                    transform: translateY(-20px);
+                }
             }
         }
         .time {
@@ -143,7 +184,7 @@ export default {
             display: flex;
             justify-content: space-between;
             font-size: px2rem(28px);
-            > div {
+            >div {
                 width: px2rem(100px);
             }
         }
@@ -192,9 +233,8 @@ export default {
         .process {
             position: absolute;
             bottom: px2rem(280px);
-            width: 100%; 
+            width: 100%;
             height: px2rem(100px);
-            // background: #fff;
             overflow: hidden;
             z-index: 40;
             .line {
@@ -202,10 +242,8 @@ export default {
                 height: px2rem(1200px);
                 border-radius: 50%;
                 position: absolute;
-                // transform: translateX(px2rem(-224px)) rotate(-528deg);
                 transform: translateX(px2rem(-224px)) rotate(100deg);
                 border: 1px solid rgba(255, 255, 255, .6);
-                // border: 2px solid #fff;
                 border-bottom-color: transparent;
             }
             .pro {
@@ -214,9 +252,8 @@ export default {
                 border-radius: 50%;
                 position: absolute;
                 transform: translateX(px2rem(-224px)) rotate(-528deg); //-462
-                // border: 1px solid rgba(255, 255, 255, .6);
                 border: 2px solid #fff;
-                border-bottom-color: transparent; 
+                border-bottom-color: transparent;
             }
         }
     }
@@ -232,34 +269,66 @@ export default {
             top: px2rem(350px);
         }
         .content {
-            width: 460px; // overflow: hidden;
+            width: 460px; 
+            overflow: hidden;
             .lyrics {
                 height: 500px;
+                .lyric {
+                    height: px2rem(200px);
+                    font-size: px2rem(25px);
+                }
+            }
+            .time {
+                bottom: px2rem(250px);
             }
             .control {
-                position: absolute;
-                bottom: px2rem(-520px); // width: px2rem(900px);
-                width: px2rem(850px);
-                left: px2rem(-105px);
-                height: px2rem(800px);
-                background: #ea2448;
-                border-radius: 50% 50% 0 0;
+                bottom: px2rem(-925px);
+                left: px2rem(-280px);
+                >div {
+                    width: px2rem(550px);
+                    height: px2rem(100px);
+                    line-height: px2rem(100px);
+                    transform: translate(px2rem(325px), px2rem(60px));
+                    >div {
+                        .icon {
+                            font-size: px2rem(44px);
+                        }
+                        &:first-child,
+                        &:last-child {
+                            padding-top: px2rem(8px);
+                            .icon {
+                                font-size: px2rem(30px);
+                            }
+                        }
+                    }
+                    .pause {
+                        margin: 0 px2rem(6px) 0 px2rem(10px);
+                    }
+                }
             }
             .process {
-                position: absolute;
-                bottom: px2rem(-140px);
-                left: px2rem(265px);
-                z-index: 30;
-                width: px2rem(106px);
+                bottom: px2rem(220px);
                 overflow: hidden;
-                transform: rotate(90deg);
+                height: px2rem(75px);
                 .line {
-                    width: px2rem(700px);
-                    height: px2rem(800px);
-                    border: 1px solid #fff;
+                    width: px2rem(1200px);
+                    height: px2rem(1200px);
                     border-radius: 50%;
+                    position: absolute;
+                    transform: translateX(px2rem(-280px)) rotate(100deg);
+                    border: 1px solid rgba(255, 255, 255, .6);
                     border-bottom-color: transparent;
                 }
+                .pro {
+                    width: px2rem(1200px);
+                    height: px2rem(1200px);
+                    border-radius: 50%;
+                    position: absolute;
+                    transform: translateX(px2rem(-280px)) rotate(-523deg); //-462
+                    border: 2px solid #fff;
+                    border-bottom-color: transparent;
+                }
+            
             }
         }
     }
