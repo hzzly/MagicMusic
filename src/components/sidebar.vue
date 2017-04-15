@@ -1,67 +1,52 @@
 <template>
 	<div class="sidebar">
 		<div class="sidebar-con" :class="{showbar: showbar}">
-	      	<div class="sidebar_head" v-if="loginStatus">
-	        	<div class="user">
-	          		<img :src="userInfo.avatar" alt="">
-	          		<span>{{userInfo.username}}</span>
-	        	</div>
-	        	<div class="function">
-	          		<div class="function_sub">
-	          			<router-link to="">
-	          				<i class="icon">&#xe626;</i>
-	              			<span>我的参加</span>
-	          			</router-link>	
-	          		</div>
-	          		<div class="function_sub">
-	          			<a href="javascript:;" @click="logout">
-	          				<i class="icon">&#xe674;</i>
-	                		<span>退出登录</span>
-	          			</a>	
-	          		</div>
-	        	</div>
-	      	</div>
-			<div class="sidebar_head" v-else>
-	        	<div class="user">
-	          		<span>请登录</span>
-	        	</div>
-	        	<div class="function">
-	          		<div class="function_sub">
-	          			<router-link to="">
-	          				<i class="icon">&#xe626;</i>
-	              			<span>我的参加</span>
-	          			</router-link>	
-	          		</div>
-	          		<div class="function_sub">
-	          			<router-link to="user/login" @click="hidebar">
-	          				<i class="icon">&#xe601;</i>
-	                		<span>去登录</span>
-	          			</router-link>	
-	          		</div>
-	        	</div>
-	      	</div>
-	      	<div class="sidebar_list">
-	        	<div class="sidebar_list_first">
-	        		<router-link to="/home" @click="hidebar">
-	          			<i class="icon" style="color: #76D49B; font-size: 20px;">&#xe60a;</i>
-	          			<span>首页</span>
-	          		</router-link>	          		
-	        	</div>
-	        	<ul class="sidebar_list_ul">
-	          		<li>
-	          			<router-link to="">
-		          			我的约行
-	              			<span>+</span>
-		          		</router-link>
-	          		</li>
-	          		<li>
-	          			<router-link to="">
-		          			我的约跑
-	              			<span>+</span>
-		          		</router-link>
-	          		</li>
-	        	</ul>
-	      	</div>
+			<div class="head">
+				<div class="avatar">
+					<img src="https://dn-mhke0kuv.qbox.me/51ec2dae1418f9c88443.png?imageView2/1/w/100/h/100/q/85/interlace/1" alt="">
+				</div>
+				<div class="name">hzzly</div>
+			</div>
+			<div class="menu">
+				<ul>
+					<li>
+						<router-link to="">
+							<i class="icon">&#xe615;</i>
+							<span>个人中心</span>
+						</router-link>
+					</li>
+					<li>
+						<router-link to="">
+							<i class="icon">&#xe615;</i>
+							<span>音效调整</span>
+						</router-link>
+					</li>
+					<li>
+						<router-link to="">
+							<i class="icon">&#xe615;</i>
+							<span>定时关闭</span>
+						</router-link>
+					</li>
+					<li>
+						<router-link to="">
+							<i class="icon">&#xe615;</i>
+							<span>听歌识曲</span>
+						</router-link>
+					</li>
+					<li>
+						<router-link to="">
+							<i class="icon">&#xe615;</i>
+							<span>帮助</span>
+						</router-link>
+					</li>
+					<li>
+						<router-link to="">
+							<i class="icon">&#xe615;</i>
+							<span>设置</span>
+						</router-link>
+					</li>
+				</ul>
+			</div>
 	    </div>
 	    <div v-show="showbar" class="sidebar_mask" @click="hidebar"></div>
 	</div>
@@ -71,7 +56,7 @@
     export default {
         data () {
             return {
-                showbar: false,
+                // showbar: false,
                 userInfo: {
                     avatar: '',
                     username: 'hzzly'
@@ -89,7 +74,7 @@
         },
         computed: {
             showbar() {
-                return false
+                return true
             }
         }
     }
@@ -137,83 +122,66 @@
 <style scoped lang="scss">
 @import '../assets/css/function';
 .sidebar {
-    background: #030207;
-    color: #fff;
+    color: #e8e8e8;
 	.sidebar-con {
-	    position: fixed;
+		background: #040308;
+		position: absolute;
 	    top: 0;
-	    left: px2rem(-600px);
+	    left: px2rem(-400px);
 	    transform: translateZ(0);
-	    width: px2rem(600px);
+		opacity: 0;
+	    width: px2rem(350px);
 	    z-index: 1002;
-	    background: #fff;
 	    height: 100%;
 	    overflow: auto;
 	    transition: all .3s ease;
+		
 	    &.showbar {
-	    	transform: translateX(px2rem(600px));
+	    	transform: translateX(px2rem(400px));
+			opacity: 1;
 	    }
-	    .sidebar_head{
-		    padding: px2rem(35px) px2rem(35px) 0;
-		    color: #fff;
-		    background: #76D49B;
-		    .user {
+		.head {
+			text-align: center;
+			.avatar {
+				width: px2rem(90px);
+				height: px2rem(90px);
+				background: #f1f1f1;
+				border-radius: 50%;
+				margin: px2rem(60px) auto px2rem(15px);
 				img {
-				    width: px2rem(100px);
-				    height: px2rem(100px);
-				    border-radius: 50%;
-				    vertical-align: middle;
-				}
-				span{
-				    padding-left: px2rem(15px);
-				    font-size: 22px;
+					width: 100%;
 				}
 			}
-			.function{
-			    display: flex;
-			    margin-top: px2rem(20px);
-			    .function_sub{
-				    flex: 1;
-				    padding-left: px2rem(30px);
-				    height: px2rem(100px);
-				    line-height: px2rem(100px);
-				    a {
-				    	display: block;
-					    color: #fff;
-					}
-				}
+			.name {
+				font-size: px2rem(32px);
 			}
 		}
-		.sidebar_list {
-			.sidebar_list_first{
-			    height: px2rem(100px);
-			    line-height: px2rem(100px);
-			    font-size: 19px;
-			    padding-left: px2rem(35px);
-			    a {
-			    	display: block;
-					color: #76D49B;
-			    }
-			}
-			.sidebar_list_ul{
-			    line-height: px2rem(100px);
-			    li{
-				    height: px2rem(100px);
-				    padding-left: px2rem(40px);
-				    a{
-					    display: block;
-					}
-					span{
-					    float: right;
-					    margin-right: px2rem(50px);
-					    font-size: 16px;
-					    opacity: 0.7; 
+		.menu {
+			margin-top: px2rem(30px);
+			ul {
+				li {
+					height: px2rem(90px);
+					line-height: px2rem(90px);
+					a {
+						display: block;
+						padding-left: px2rem(60px);
+						&:hover {
+							// background: rgba(0, 0, 0, .8);
+							// border-bottom: 1px solid #fff;
+						}
+						.icon {
+							font-size: px2rem(36px);
+							vertical-align: middle;
+						}
+						span {
+							vertical-align: middle;
+							font-size: px2rem(24px);
+							padding-left: px2rem(10px);
+							color: #fff;
+						}
 					}
 				}
 			}
-		}
-		.icon {
-			vertical-align: middle;
 		}
 	}
 	.sidebar_mask{
@@ -225,7 +193,19 @@
 	    bottom: 0;
 	    right: 0;
 	    z-index: 1001;
-	    background: rgba(0,0,0,.6);
+	    background: rgba(0,0,0,.4);
 	}
+}
+
+@media screen and(min-width: 769px) {
+    .sidebar {
+        width: 460px;
+        margin: 0 auto;
+		    position: absolute;
+    height: 100%;
+		.sidebar_mask {
+			width: 460px;
+		}
+    }
 }
 </style>
