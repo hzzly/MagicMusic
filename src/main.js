@@ -11,10 +11,12 @@ import '../static/css/reset.scss'
 var VueTouch = require('vue-touch')
 Vue.use(VueTouch, {name: 'v-touch'})
 
+import store from './vuex/store'
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  template: '<App/>',
-  components: { App }
+  store,
+  ...App
 })

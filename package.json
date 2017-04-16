@@ -10,11 +10,14 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.16.1",
     "node-sass": "^4.5.2",
+    "qs": "^6.4.0",
     "sass-loader": "^6.0.3",
     "vue": "^2.2.2",
     "vue-router": "^2.3.0",
-    "vue-touch": "git://github.com/vuejs/vue-touch.git#next"
+    "vue-touch": "git://github.com/vuejs/vue-touch.git#next",
+    "vuex": "^2.3.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

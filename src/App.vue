@@ -26,10 +26,10 @@ export default {
   },
   computed: {
     playBar() {
-      return false
+      return true
     },
     header() {
-      return false
+      return true
     }
   }
 }
@@ -40,11 +40,11 @@ export default {
 
 @font-face {
   font-family: 'icon';  /* project id 277165 */
-  src: url('//at.alicdn.com/t/font_qwbcrow2heqoxbt9.eot');
-  src: url('//at.alicdn.com/t/font_qwbcrow2heqoxbt9.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_qwbcrow2heqoxbt9.woff') format('woff'),
-  url('//at.alicdn.com/t/font_qwbcrow2heqoxbt9.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_qwbcrow2heqoxbt9.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_vazj4h1dw7bymn29.eot');
+  src: url('//at.alicdn.com/t/font_vazj4h1dw7bymn29.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_vazj4h1dw7bymn29.woff') format('woff'),
+  url('//at.alicdn.com/t/font_vazj4h1dw7bymn29.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_vazj4h1dw7bymn29.svg#iconfont') format('svg');
 }
 
 .icon {

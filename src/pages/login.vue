@@ -7,8 +7,8 @@
         </div>
         <div class="form-g">
             <div class="input-group">
-                <input type="text" placeholder="手机号" v-model="phone">
-                <i class="icon">&#xe637;</i>
+                <input type="text" placeholder="邮箱" v-model="email">
+                <i class="icon">&#xe6fd;</i>
             </div>
             <div class="input-group">
                 <input type="password" placeholder="密码" v-model="password">
@@ -17,7 +17,7 @@
             <div class="forget-pwd">
                 忘记密码?
             </div>
-            <div class="form-btn">登录</div>
+            <div class="form-btn" @click="_login">登录</div>
         </div>
         <div class="other-login">
             <p>Or 使用以下账号登录</p>
@@ -31,11 +31,41 @@
 </template>
 
 <script>
+import api from '../api/index'
 export default {
     data() {
         return {
-            phone: '',
+            email: '',
             password: ''
+        }
+    },
+    methods: {
+        _login() {
+            //id=468310461  122595746
+            if (!this.email || !this.password) {
+                // _.alert('请填写完整')
+                return
+            }
+            let data = {
+                email: this.email,
+                password: this.password
+            }
+            // this.$store.dispatch('setLoadingState', true)
+            api.Login(data)
+                .then(res => {
+                    // console.log(res)
+                    console.log(res.data)
+                    console.log(res)
+                    if(res.data.code == 200) {
+                        // let userInfo = Object.assign()
+                        // this.$store.dispatch('setLoadingState', false)
+                        // this.setUserInfo(res.data)
+                        this.$router.replace('/home')
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         }
     }
 }

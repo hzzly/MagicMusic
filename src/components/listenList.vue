@@ -1,51 +1,41 @@
 <template>
     <div class="listen-list">
         <div class="num">
-            <i class="icon">&#xe6ae;</i> 循环播放(7首)
+            <i class="icon">&#xe6ae;</i> 循环播放({{musicLists.length}}首)
         </div>
         <div class="list">
-            <div class="item">
-                <p>Faded</p>
-            </div>
-            <div class="item">
-                <p>刚好遇见你</p>
-            </div>
-            <div class="item">
-                <p>Faded</p>
-            </div>
-            <div class="item">
-                <p>刚好遇见你</p>
-            </div>
-            <div class="item">
-                <p>Faded</p>
-            </div>
-            <div class="item">
-                <p>刚好遇见你</p>
-            </div>
-            <div class="item">
-                <p>Faded</p>
-            </div>
-            <div class="item">
-                <p>刚好遇见你</p>
-            </div>
-            <div class="item">
-                <p>Faded</p>
-            </div>
-            <div class="item">
-                <p>刚好遇见你</p>
+            <div class="item" v-for="(item, index) in musicLists" @click="_play(item)">
+                <p>{{item.name}}</p>
             </div>
         </div>
     
-        <div class="close">关闭</div>
+        <div class="close" @click="_close">关闭</div>
     </div>
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex'
+
 export default {
     data() {
         return {
 
         }
+    },
+    methods: {
+        _close() {
+            this.$store.dispatch('setShowListenList', false)
+        },
+        _play(music) {
+            this.$store.dispatch('setAudio', music)
+            this.$store.dispatch('setShowListenList', false)
+        }
+    },
+    computed: {
+        ...mapGetters([
+			'musicLists'
+		])
     }
 }
 </script>
@@ -66,23 +56,25 @@ export default {
     height: 100%;
 
     .num {
-        height: px2rem(80px);
-        line-height: px2rem(80px);
-        font-size: px2rem(23px);
+        height: px2rem(90px);
+        line-height: px2rem(90px);
+        font-size: px2rem(28px);
         margin: 0 px2rem(15px);
         .icon {
-            font-size: px2rem(26px);
+            font-size: px2rem(34px);
         }
     }
     .list {
         flex: 1;
         overflow: auto;
         .item {
-            height: px2rem(70px);
-            line-height: px2rem(70px);
-            margin: 0 px2rem(15px);
+            height: px2rem(80px);
+            line-height: px2rem(80px);
+            margin: 0 px2rem(20px);
+            padding-left: px2rem(15px);
             border-top: 1px solid rgba(255, 255, 255, .3);
-            font-size: px2rem(24px);
+            font-size: px2rem(26px);
+            color: #fff;
         }
     }
     
@@ -90,7 +82,7 @@ export default {
         height: px2rem(90px);
         line-height: px2rem(90px);
         text-align: center;
-        font-size: px2rem(22px);
+        font-size: px2rem(24px);
         border-top: 1px solid rgba(255, 255, 255, .7);
         cursor: pointer;
     }

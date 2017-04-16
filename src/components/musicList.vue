@@ -1,13 +1,18 @@
 <template>
     <div class="music-list">
-        <div class="list-item" v-for="(item, index) in musicData">
+        <div class="list-item"
+             v-for="(item, index) in musicLists"
+             @click="_play(item)">
             <div class="avatar">
-                <img :src="item.musicPic" alt="">
+                <img :src="item.imgUrl"
+                     alt="">
             </div>
             <div class="info">
-                <div class="music-name">{{item.musicName}}<i class="tag" v-show="item.sq">SQ</i></div>
-                <div class="music-s">{{item.musicS}}</div>
-                <div class="music-hot"><i class="icon">&#xe650;</i>{{item.hot}}</div>
+                <div class="music-name">{{item.name}}<i class="tag"
+                       v-show="item.sq">SQ</i></div>
+                <div class="music-s">{{item.sname}}</div>
+                <div class="music-hot"
+                     v-show="item.hot"><i class="icon">&#xe650;</i>{{item.hot}}</div>
             </div>
             <div class="operation"><i class="icon">&#xe605;</i></div>
         </div>
@@ -16,104 +21,113 @@
 
 <script>
 export default {
+    props: {
+        musicLists: Array
+    },
     data() {
         return {
-            "musicData": [
-                {
-                    "musicName": "暧昧",
-                    "musicS": "薛之谦",
-                    "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
-                    "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
-                    "hot": 144037
-                },
-                {
-                    "musicName": "成都",
-                    "musicS": "赵雷",
-                    "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
-                    "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
-                    "hot": 144037,
-                    "sq": true
-                },
-                {
-                    "musicName": "刚好遇见你",
-                    "musicS": "李玉刚",
-                    "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
-                    "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
-                    "hot": 144037
-                },
-                {
-                    "musicName": "童话镇",
-                    "musicS": "陈一发儿",
-                    "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
-                    "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
-                    "hot": 144037
-                },
-                {
-                    "musicName": "Shape of You",
-                    "musicS": "Ed Sheeran",
-                    "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
-                    "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
-                    "hot": 144037
-                },
-                {
-                    "musicName": "Faded",
-                    "musicS": "Alan Walker",
-                    "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
-                    "musicPic": "http://p4.music.126.net/8dzD62VK8jLDbhEqkmpIAg==/18277181788626198.jpg?param=130y130",
-                    "hot": 144037
-                },
-                {
-                    "musicName": "暧昧",
-                    "musicS": "薛之谦",
-                    "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
-                    "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
-                    "hot": 144037
-                },
-                {
-                    "musicName": "暧昧",
-                    "musicS": "薛之谦",
-                    "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
-                    "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
-                    "hot": 144037
-                },
-                {
-                    "musicName": "暧昧",
-                    "musicS": "薛之谦",
-                    "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
-                    "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
-                    "hot": 144037
-                },
-                {
-                    "musicName": "暧昧",
-                    "musicS": "薛之谦",
-                    "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
-                    "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
-                    "hot": 144037
-                },
-                {
-                    "musicName": "暧昧",
-                    "musicS": "薛之谦",
-                    "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
-                    "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
-                    "hot": 144037,
-                    "sq": true
-                },
-                {
-                    "musicName": "暧昧",
-                    "musicS": "薛之谦",
-                    "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
-                    "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
-                    "hot": 144037,
-                    "sq": true
-                },
-                {
-                    "musicName": "暧昧",
-                    "musicS": "薛之谦",
-                    "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
-                    "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
-                    "hot": 144037
-                }
-            ]
+            // "musicData": [
+            //     {
+            //         "musicName": "暧昧",
+            //         "musicS": "薛之谦",
+            //         "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
+            //         "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
+            //         "hot": 144037
+            //     },
+            //     {
+            //         "musicName": "成都",
+            //         "musicS": "赵雷",
+            //         "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
+            //         "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
+            //         "hot": 144037,
+            //         "sq": true
+            //     },
+            //     {
+            //         "musicName": "刚好遇见你",
+            //         "musicS": "李玉刚",
+            //         "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
+            //         "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
+            //         "hot": 144037
+            //     },
+            //     {
+            //         "musicName": "童话镇",
+            //         "musicS": "陈一发儿",
+            //         "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
+            //         "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
+            //         "hot": 144037
+            //     },
+            //     {
+            //         "musicName": "Shape of You",
+            //         "musicS": "Ed Sheeran",
+            //         "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
+            //         "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
+            //         "hot": 144037
+            //     },
+            //     {
+            //         "musicName": "Faded",
+            //         "musicS": "Alan Walker",
+            //         "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
+            //         "musicPic": "http://p4.music.126.net/8dzD62VK8jLDbhEqkmpIAg==/18277181788626198.jpg?param=130y130",
+            //         "hot": 144037
+            //     },
+            //     {
+            //         "musicName": "暧昧",
+            //         "musicS": "薛之谦",
+            //         "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
+            //         "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
+            //         "hot": 144037
+            //     },
+            //     {
+            //         "musicName": "暧昧",
+            //         "musicS": "薛之谦",
+            //         "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
+            //         "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
+            //         "hot": 144037
+            //     },
+            //     {
+            //         "musicName": "暧昧",
+            //         "musicS": "薛之谦",
+            //         "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
+            //         "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
+            //         "hot": 144037
+            //     },
+            //     {
+            //         "musicName": "暧昧",
+            //         "musicS": "薛之谦",
+            //         "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
+            //         "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
+            //         "hot": 144037
+            //     },
+            //     {
+            //         "musicName": "暧昧",
+            //         "musicS": "薛之谦",
+            //         "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
+            //         "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
+            //         "hot": 144037,
+            //         "sq": true
+            //     },
+            //     {
+            //         "musicName": "暧昧",
+            //         "musicS": "薛之谦",
+            //         "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
+            //         "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
+            //         "hot": 144037,
+            //         "sq": true
+            //     },
+            //     {
+            //         "musicName": "暧昧",
+            //         "musicS": "薛之谦",
+            //         "src": "http://m10.music.126.net/20170413155603/1c2052140d3f05a882d5cf15a2555503/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3",
+            //         "musicPic": "http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130",
+            //         "hot": 144037
+            //     }
+            // ]
+        }
+
+    },
+    methods: {
+        _play(music) {
+            this.$store.dispatch('setAudio', music)
         }
     }
 }

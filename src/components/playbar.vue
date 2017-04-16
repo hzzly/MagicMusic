@@ -3,13 +3,13 @@
         <div class="play-box">
             <div class="music-avatar"
                  @click="showPlay()">
-                <img src="http://p3.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg?param=130y130"
+                <img :src="audio.imgUrl"
                      alt="">
             </div>
             <div class="music-info"
                  @click="showPlay()">
-                <div class="music-name">暧昧</div>
-                <div class="music-s">薛之谦</div>
+                <div class="music-name">{{audio.name}}</div>
+                <div class="music-s">{{audio.sname}}</div>
             </div>
             <div class="music-play"
                  @click="play()">
@@ -28,13 +28,15 @@
         </div>
         <audio preload
                ref="myAudio"
-               src="http://m10.music.126.net/20170414094626/0434c157f09b89b9f4aa54a60119593a/ymusic/57b7/3f5b/3c1d/9e8424b10ad130794e436bd47ad70c4b.mp3"></audio>
-        <v-listen-list v-show="showLists"></v-listen-list>
+               :src="audio.mp3Url"></audio>
+        <v-listen-list v-show="showListenList"></v-listen-list>
     </div>
 </template>
 
 <script>
 import listenList from '@/components/listenList'
+
+import { mapGetters } from 'vuex'
 
 export default {
     components: {
@@ -45,6 +47,12 @@ export default {
             playing: false,
             showLists: false
         }
+    },
+    computed: {
+        ...mapGetters([
+			'audio',
+            'showListenList'
+		])
     },
     mounted() {
         // let timer = setInterval(() => {
@@ -68,8 +76,7 @@ export default {
             console.log('next')
         },
         showList() {
-            console.log('showList')
-            this.showLists = true
+            this.$store.dispatch('setShowListenList', true)
         },
         showPlay() {
             console.log('showPlay')

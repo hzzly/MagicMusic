@@ -1,5 +1,5 @@
 <template>
-	<div class="sidebar">
+	<div class="sidebar" :class="{showSidebar: showbar}">
 		<div class="sidebar-con" :class="{showbar: showbar}">
 			<div class="head">
 				<div class="avatar">
@@ -198,11 +198,11 @@
 }
 
 @media screen and(min-width: 769px) {
-    .sidebar {
+    .showSidebar {
         width: 460px;
         margin: 0 auto;
-		    position: absolute;
-    height: 100%;
+		position: absolute;
+    	height: 100%;
 		.sidebar_mask {
 			width: 460px;
 		}
