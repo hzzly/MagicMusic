@@ -4,24 +4,31 @@ import * as types from '../types'
  * App通用配置
  */
 const state = {
-    showListenList: false
+    showListenList: false,
+    showSidebar: false
 }
 
 const actions = {
     setShowListenList({ commit }, status) {
         commit(types.COM_SHOW_LISTEN_LIST, status)
     },
-
+    setShowSidebar({ commit }, status) {
+        commit(types.COM_SHOW_SIDE_BAR, status)
+    },
 }
 
 const getters = {
     showListenList: state => state.showListenList,
+    showSidebar: state => state.showSidebar
 }
 
 
 const mutations = {
     [types.COM_SHOW_LISTEN_LIST](state, status) {
         state.showListenList = status
+    },
+    [types.COM_SHOW_SIDE_BAR](state, status) {
+        state.showSidebar = status
     },
     // [types.COM_LOADING_STATUS](state, status) {
     //     state.loading = status

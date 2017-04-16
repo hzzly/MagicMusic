@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="header-icon"><i class="icon">&#xe692;</i></div>
+        <div class="header-icon" @click="showSidebar"><i class="icon">&#xe692;</i></div>
         <div class="header-cont">
             <div class="nav-item active">推荐</div>
             <div class="nav-item">音乐集</div>
@@ -15,6 +15,11 @@ export default {
     data() {
         return {
 
+        }
+    },
+    methods: {
+        showSidebar() {
+            this.$store.dispatch('setShowSidebar', true)
         }
     }
 }
