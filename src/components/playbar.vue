@@ -29,7 +29,8 @@
         </div>
         <audio preload
                ref="myAudio"
-               :src="audio.mp3Url"></audio>
+               :src="audio.mp3Url"
+               @ended="_next()"></audio>
         <v-listen-list v-show="showListenList"></v-listen-list>
     </div>
 </template>
@@ -69,7 +70,7 @@ export default {
     },
     methods: {
         _play() {
-            console.log(this.$refs.myAudio.duration)
+            console.log(this.$refs.myAudio.src)
             // this.playing ? this.$refs.myAudio.pause() : this.$refs.myAudio.play()
             // this.playing = !this.playing
             this.$refs.myAudio.play()
@@ -79,7 +80,7 @@ export default {
             this.$refs.myAudio.pause()
             this.$store.dispatch('setPlaying', false)
         },
-        next() {
+        _next() {
             console.log('next')
         },
         showList() {
@@ -96,7 +97,15 @@ export default {
     watch: {
         deep: true,
         playing() {
-            this.playing ? this.$refs.myAudio.play() : this.$refs.myAudio.pause()
+            console.log(this.$refs.myAudio.src)
+            console.log(this.playing)
+            if(this.playing) {
+                console.log('play')
+                this.$refs.myAudio.play()
+            } else {
+                this.$refs.myAudio.pause()
+            }
+            // this.playing ? this.$refs.myAudio.play() : this.$refs.myAudio.pause()
         }
     }
 }
