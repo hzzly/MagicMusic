@@ -20,7 +20,7 @@
                    @click="_play()">&#xe606;</i>
             </div>
             <div class="music-next"
-                 @click="next()"><i class="icon">&#xe718;</i></div>
+                 @click="_next()"><i class="icon">&#xe718;</i></div>
             <div class="music-list"
                  @click="showList()"><i class="icon">&#xe927;</i></div>
         </div>
@@ -51,6 +51,7 @@ export default {
     },
     computed: {
         ...mapGetters([
+            'musicLists',
             'audio',
             'showListenList',
             'playing'
@@ -82,6 +83,14 @@ export default {
         },
         _next() {
             console.log('next')
+            for (let i = 0; i < this.musicLists.length; i++) {
+                if (this.musicLists[i].name === this.audio.name) {
+                    console.log(1)
+                    this.$store.dispatch('setNextAudio', i)
+                    return
+                }
+            }
+            
         },
         showList() {
             this.$store.dispatch('setShowListenList', true)

@@ -34,21 +34,12 @@ const actions = {
                 commit(types.GET_MUSIC_LISTS, res.musicData)
                 localStorage.musics = JSON.stringify(res.musicData)
             })
-        // if(state.scroll) {
-        //     commit(types.GET_TRAVELS_PAGE_NUM)
-        //     commit(types.COM_LOADING_STATUS, true),
-        //     commit(types.GET_TRAVELS_SCORLL_STATUS, false)
-        //     api.TravelsList()
-        //         .then(res => {
-        //             console.log(res)
-        //             commit(types.COM_LOADING_STATUS, false),
-        //             commit(types.GET_TRAVELS_SCORLL_STATUS, true)
-        //             commit(types.GET_TRAVELS_LIST, res)
-        //         })
-        // }
     },
     setAudio({ commit }, music) {
         commit(types.SET_AUDIO, music)
+    },
+    setNextAudio({ commit }, index) {
+        commit(types.SET_NEXT_AUDIO, index)
     },
     setPlaying({ commit }, status) {
         commit(types.SET_PLAYING, status)
@@ -70,6 +61,11 @@ const mutations = {
     },
     [types.SET_AUDIO](state, music) {
         state.audio = music
+    },
+    [types.SET_NEXT_AUDIO](state, index) {
+        let i = index === state.musicLists.length - 1 ? 0 : (++index)
+        state.audio = state.musicLists[i]
+        // state.audio = music
     },
     [types.SET_PLAYING](state, status) {
         state.playing = status
