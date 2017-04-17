@@ -8,6 +8,7 @@ const state = {
 		"id": 439915614,
 		"sname": "李玉刚",
 		"imgUrl": "http://p4.music.126.net/lDyytkTaPYVTb1Vpide6AA==/18591642115187138.jpg?param=130y130",
+        "mp3Url": "http://dl.stream.qqmusic.qq.com/C400003jX9iw0DCQY3.m4a?vkey=EFB2F75BD7284C40286FDD2112390E7CE0702E9AE5B205EA54D9ECFDD61B9BF1CB7FAB19DE4DA964999213DB5DFB2216DC4B5BADB2F10F14&guid=4798016024&uin=842250570&fromtag=66"
     },
     // lyric:
     currentIndex: 0, // 当前播放的歌曲位置
@@ -16,7 +17,7 @@ const state = {
 
 const actions = {
     /**
-     * 获取约跑步列表
+     * 获取音乐列表
      */
     getMusicLists({ commit }) {
         if (localStorage.musics !== '[]' && localStorage.musics) {

@@ -5,7 +5,7 @@
         </div>
         <div class="list">
             <div class="item" v-for="(item, index) in musicLists" @click="_play(item)">
-                <p>{{item.name}}</p>
+                <p>{{item.name}} <span>-- {{item.sname}}</span></p>
             </div>
         </div>
     
@@ -77,6 +77,10 @@ export default {
             font-size: px2rem(26px);
             color: #fff;
             cursor: pointer;
+            span {
+                color: rgba(255, 255, 255, .6);
+                font-size: px2rem(24px);
+            }
         }
     }
     
