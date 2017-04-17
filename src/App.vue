@@ -17,6 +17,8 @@ import header from '@/components/header'
 import playbar from '@/components/playbar'
 import sidebar from '@/components/sidebar'
 
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'app',
   components: {
@@ -25,12 +27,16 @@ export default {
     'v-sidebar': sidebar,
   },
   computed: {
+    
     playBar() {
       return true
     },
     header() {
       return true
-    }
+    },
+    ...mapGetters([
+			'showSidebar'
+		]),
   }
 }
 </script>

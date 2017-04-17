@@ -5,7 +5,8 @@ import * as types from '../types'
  */
 const state = {
     showListenList: false,
-    showSidebar: false
+    showSidebar: false,
+    showPlay: false
 }
 
 const actions = {
@@ -15,11 +16,15 @@ const actions = {
     setShowSidebar({ commit }, status) {
         commit(types.COM_SHOW_SIDE_BAR, status)
     },
+    setShowPlay({ commit }, status) {
+        commit(types.COM_SHOW_PLAY, status)
+    },
 }
 
 const getters = {
     showListenList: state => state.showListenList,
-    showSidebar: state => state.showSidebar
+    showSidebar: state => state.showSidebar,
+    showPlay: state => state.showPlay,
 }
 
 
@@ -29,6 +34,9 @@ const mutations = {
     },
     [types.COM_SHOW_SIDE_BAR](state, status) {
         state.showSidebar = status
+    },
+    [types.COM_SHOW_PLAY](state, status) {
+        state.showPlay = status
     },
     // [types.COM_LOADING_STATUS](state, status) {
     //     state.loading = status

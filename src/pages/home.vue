@@ -3,8 +3,7 @@
         <v-banner :image="image"></v-banner>
         <v-nav></v-nav>
         <v-music-list :music-lists="musicLists"></v-music-list>
-        <!--<v-play></v-play>-->
-        <v-sidebar></v-sidebar>
+        <v-play v-show="showPlay"></v-play>
     </div>
 </template>
 
@@ -14,7 +13,6 @@ import banner from '@/components/banner'
 import nav from '@/components/nav'
 import musicList from '@/components/musicList'
 import play from '@/components/play'
-import sidebar from '@/components/sidebar'
 
 import { mapGetters } from 'vuex'
 
@@ -24,7 +22,6 @@ export default {
         'v-nav': nav,
         'v-music-list': musicList,
         'v-play': play,
-        'v-sidebar': sidebar
     },
     data() {
         return {
@@ -44,7 +41,8 @@ export default {
     },
     computed: {
         ...mapGetters([
-			'musicLists'
+			'musicLists',
+            'showPlay'
 		])
     }
 

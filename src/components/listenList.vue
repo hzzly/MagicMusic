@@ -29,6 +29,7 @@ export default {
         },
         _play(music) {
             this.$store.dispatch('setAudio', music)
+            this.$store.dispatch('setPlaying', true)
             this.$store.dispatch('setShowListenList', false)
         }
     },
@@ -75,6 +76,7 @@ export default {
             border-top: 1px solid rgba(255, 255, 255, .3);
             font-size: px2rem(26px);
             color: #fff;
+            cursor: pointer;
         }
     }
     

@@ -48,7 +48,7 @@
 				</ul>
 			</div>
 	    </div>
-	    <div v-show="showSidebar" class="sidebar_mask" @click="hidebar"></div>
+	    <div v-show="showSidebar" class="sidebar_mask" @click="_hidebar"></div>
 	</div>
 </template>
 
@@ -67,12 +67,9 @@ import { mapGetters } from 'vuex'
             }
         },
         methods: {
-            hidebar() {
+            _hidebar() {
                 this.$store.dispatch('setShowSidebar', false)
             },
-            logout() {
-
-            }
         },
         computed: {
             ...mapGetters([

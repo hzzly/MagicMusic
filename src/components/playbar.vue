@@ -11,12 +11,13 @@
                 <div class="music-name">{{audio.name}}</div>
                 <div class="music-s">{{audio.sname}}</div>
             </div>
-            <div class="music-play"
-                 @click="play()">
+            <div class="music-play">
                 <i class="icon"
-                   v-if="playing">&#xe60a;</i>
+                   v-if="playing"
+                   @click="_pause()">&#xe60a;</i>
                 <i class="icon"
-                   v-else>&#xe606;</i>
+                   v-else
+                   @click="_play()">&#xe606;</i>
             </div>
             <div class="music-next"
                  @click="next()"><i class="icon">&#xe718;</i></div>
@@ -44,33 +45,39 @@ export default {
     },
     data() {
         return {
-            playing: false,
-            showLists: false
+
         }
     },
     computed: {
         ...mapGetters([
-			'audio',
-            'showListenList'
-		])
+            'audio',
+            'showListenList',
+            'playing'
+        ])
     },
     mounted() {
         // let timer = setInterval(() => {
         //     console.log(this.$refs.myAudio.currentTime)
         // }, 1000)
-        this.$refs.myAudio.addEventListener('play', () => {
-            console.log(this.$refs.myAudio.currentTime)
-            setInterval(() => {
-                console.log(this.$refs.myAudio.currentTime)
-            }, 1000)
-            // console.log(this.$refs.myAudio.currentTime)
-        })
+        // this.$refs.myAudio.addEventListener('play', () => {
+        //     console.log(this.$refs.myAudio.currentTime)
+        //     setInterval(() => {
+        //         console.log(this.$refs.myAudio.currentTime)
+        //     }, 1000)
+        //     // console.log(this.$refs.myAudio.currentTime)
+        // })
     },
     methods: {
-        play() {
+        _play() {
             console.log(this.$refs.myAudio.duration)
-            this.playing ? this.$refs.myAudio.pause() : this.$refs.myAudio.play()
-            this.playing = !this.playing
+            // this.playing ? this.$refs.myAudio.pause() : this.$refs.myAudio.play()
+            // this.playing = !this.playing
+            this.$refs.myAudio.play()
+            this.$store.dispatch('setPlaying', true)
+        },
+        _pause() {
+            this.$refs.myAudio.pause()
+            this.$store.dispatch('setPlaying', false)
         },
         next() {
             console.log('next')
@@ -80,9 +87,16 @@ export default {
         },
         showPlay() {
             console.log('showPlay')
+            this.$store.dispatch('setShowPlay', true)
         },
         changeProcess() {
 
+        }
+    },
+    watch: {
+        deep: true,
+        playing() {
+            this.playing ? this.$refs.myAudio.play() : this.$refs.myAudio.pause()
         }
     }
 }
@@ -130,6 +144,7 @@ export default {
             cursor: pointer;
             .icon {
                 font-size: px2rem(44px);
+                display: block;
             }
         }
     }

@@ -1,7 +1,7 @@
 <template>
     <div class="play">
         <div class="head">
-            <div class="h-icon"><i class="icon">&#xe8e2;</i></div>
+            <div class="h-icon" @click="hidePlay"><i class="icon">&#xe8e2;</i></div>
             <div class="h-icon"><i class="icon">&#xe93b;</i></div>
         </div>
         <div class="name">刚好遇见你</div>
@@ -58,6 +58,11 @@ export default {
     },
     mounted() {
 
+    },
+    methods: {
+        hidePlay() {
+            this.$store.dispatch('setShowPlay', false)
+        }
     }
 }
 </script>
