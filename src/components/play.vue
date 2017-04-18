@@ -41,7 +41,7 @@
                         <i class="icon"
                            v-if="playing"
                            @click="_pause()">&#xe644;</i>
-                        <i class="icon"
+                        <i class="icon pause-icon"
                            v-else
                            @click="_play()">&#xe630;</i>
                     </div>
@@ -140,6 +140,7 @@ export default {
     z-index: 20;
     width: 100%;
     background: rgba(0, 0, 0, .5);
+    overflow: hidden;
     .head {
         height: px2rem(100px);
         line-height: px2rem(100px);
@@ -257,7 +258,7 @@ export default {
         }
         .control {
             position: absolute;
-            bottom: px2rem(-850px); // width: px2rem(900px);
+            bottom: px2rem(-860px); // width: px2rem(900px);
             width: px2rem(1200px);
             left: px2rem(-225px);
             height: px2rem(1200px);
@@ -294,12 +295,16 @@ export default {
                     .icon {
                         color: #4436b1;
                     }
+                    .pause-icon {
+                        margin-top: px2rem(12px);
+                        margin-left: px2rem(6px);
+                    }
                 }
             }
         }
         .process {
             position: absolute;
-            bottom: px2rem(280px);
+            bottom: px2rem(270px);
             width: 100%;
             height: px2rem(100px);
             overflow: hidden;

@@ -24,6 +24,7 @@
     
         <div class="close"
              @click="_close">关闭</div>
+        <div v-show="showListenList" class="mask" @click="_close"></div>
     </div>
 </template>
 
@@ -59,7 +60,8 @@ export default {
     computed: {
         ...mapGetters([
             'musicLists',
-            'audio'
+            'audio',
+            'showListenList'
         ]),
         currentIndex() {
             for (let i = 0; i < this.musicLists.length; i++) {
@@ -152,11 +154,26 @@ export default {
         border-top: 1px solid rgba(255, 255, 255, .7);
         cursor: pointer;
     }
+    .mask{
+	    position: fixed;
+	    width: 100%;
+	    margin: 0 auto;
+	    top: 0;
+	    left: 0;
+	    bottom: 0;
+	    right: 0;
+	    z-index: -1;
+	    background: rgba(0,0,0,.5);
+	}
 }
 
 @media screen and(min-width: 769px) {
     .listen-list {
         width: 460px;
+        margin: 0 auto;
+        .mask {
+            width: 460px !important;
+        }
     }
 }
 </style>

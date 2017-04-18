@@ -31,7 +31,9 @@
                ref="myAudio"
                :src="audio.mp3Url"
                @ended="_next()"></audio>
-        <v-listen-list v-show="showListenList"></v-listen-list>
+        <transition name="fold">
+            <v-listen-list v-show="showListenList"></v-listen-list>
+        </transition>
     </div>
 </template>
 
@@ -117,6 +119,7 @@ export default {
 
 .playbar {
     background: #ea2448;
+    transition: all .7s ease-in;
     .play-box {
         display: flex;
         align-items: center;
@@ -166,6 +169,19 @@ export default {
             width: 60%;
             background: #fe7498;
         }
+    }
+    // &.fold-enter-active {
+    //     transform: translate3d(0, 0, 0);
+    // }
+    // &.fold-enter,
+    // &.fold-leave-active {
+    //     transform: translate3d(0, -100%, 0);
+    // }
+    .fold-enter-active, .fold-leave-active {
+        transition: transform .3s ease-in;
+    }
+    .fold-enter, .fold-leave-active {
+        transform: translate3d(0, 100%, 0);
     }
 }
 </style>
