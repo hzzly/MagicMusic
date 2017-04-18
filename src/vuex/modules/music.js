@@ -7,7 +7,7 @@ const state = {
 		"name": "刚好遇见你",
 		"id": 439915614,
 		"sname": "李玉刚",
-		"imgUrl": "http://p4.music.126.net/lDyytkTaPYVTb1Vpide6AA==/18591642115187138.jpg?param=130y130",
+		"imgUrl": "http://p4.music.126.net/lDyytkTaPYVTb1Vpide6AA==/18591642115187138.jpg",
         "mp3Url": "http://m2.music.126.net/qv3RI4K7ABKJ0TyAdb3taw==/3250156397064860.mp3"
     },
     // lyric:
@@ -41,6 +41,9 @@ const actions = {
     setNextAudio({ commit }, index) {
         commit(types.SET_NEXT_AUDIO, index)
     },
+    setPreAudio({ commit }, index) {
+        commit(types.SET_PRE_AUDIO, index)
+    },
     setPlaying({ commit }, status) {
         commit(types.SET_PLAYING, status)
     },
@@ -65,7 +68,10 @@ const mutations = {
     [types.SET_NEXT_AUDIO](state, index) {
         let i = index === state.musicLists.length - 1 ? 0 : (++index)
         state.audio = state.musicLists[i]
-        // state.audio = music
+    },
+    [types.SET_PRE_AUDIO](state, index) {
+        let i = index === 0 ? state.musicLists.length - 1 : (--index)
+        state.audio = state.musicLists[i]
     },
     [types.SET_PLAYING](state, status) {
         state.playing = status

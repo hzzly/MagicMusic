@@ -41,8 +41,11 @@ export default {
     },
     methods: {
         _play(music) {
+            this.$store.dispatch('setPlaying', false)
             this.$store.dispatch('setAudio', music)
-            this.$store.dispatch('setPlaying', true)
+            this.$nextTick(() => {
+                this.$store.dispatch('setPlaying', true)
+            })
         },
         _showOperation(index) {
             for(let i = 0; i<this.musicList.length; i++) {

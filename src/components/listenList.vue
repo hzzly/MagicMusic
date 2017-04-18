@@ -42,11 +42,17 @@ export default {
             this.$store.dispatch('setShowListenList', false)
         },
         _play(music) {
+            this.$store.dispatch('setPlaying', false)
             this.$store.dispatch('setAudio', music)
-            this.$store.dispatch('setPlaying', true)
+            this.$nextTick(() => {
+                this.$store.dispatch('setPlaying', true)
+            })
             this.$store.dispatch('setShowListenList', false)
         },
         _delete(index) {
+            if(this.currentIndex === index) {
+                return
+            }
             this.$store.dispatch('deleteMusic', index)
         }
     },

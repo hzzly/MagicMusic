@@ -1,10 +1,11 @@
 <template>
     <div class="play">
         <div class="head">
-            <div class="h-icon" @click="hidePlay"><i class="icon">&#xe8e2;</i></div>
+            <div class="h-icon"
+                 @click="hidePlay"><i class="icon">&#xe8e2;</i></div>
             <div class="h-icon"><i class="icon">&#xe93b;</i></div>
         </div>
-        <div class="name">刚好遇见你</div>
+        <div class="name">{{audio.name}}</div>
         <div class="operation">
             <div class="love"><i class="icon">&#xe615;</i></div>
             <div class="msg"><i class="icon">&#xe603;</i></div>
@@ -12,8 +13,8 @@
         </div>
         <div class="content">
             <div class="lyrics">
-                <div class="m-name">刚好遇见你</div>
-                <div class="s-name">李玉刚</div>
+                <div class="m-name">{{audio.name}}</div>
+                <div class="s-name">{{audio.sname}}</div>
                 <div class="lyric">
                     <p>因为我刚好遇见你</p>
                     <p>因为我刚好遇见你</p>
@@ -35,10 +36,19 @@
             <div class="control">
                 <div>
                     <div class="loop"><i class="icon">&#xe819;</i></div>
-                    <div class="pre"><i class="icon">&#xe61e;</i></div>
-                    <div class="pause"><i class="icon">&#xe644;</i></div>
-                    <div class="next"><i class="icon">&#xe604;</i></div>
-                    <div class="list"><i class="icon">&#xe60f;</i></div>
+                    <div class="pre" @click="_pre()"><i class="icon">&#xe61e;</i></div>
+                    <div class="pause">
+                        <i class="icon"
+                           v-if="playing"
+                           @click="_pause()">&#xe644;</i>
+                        <i class="icon"
+                           v-else
+                           @click="_play()">&#xe630;</i>
+                    </div>
+                    <div class="next"
+                         @click="_next()"><i class="icon">&#xe604;</i></div>
+                    <div class="list"
+                         @click="showList()"><i class="icon">&#xe60f;</i></div>
                 </div>
             </div>
             <div class="process">
@@ -46,20 +56,74 @@
                 <div class="pro"></div>
             </div>
         </div>
+        <div class="background">
+            <img :src="audio.imgUrl"
+                 width="100%"
+                 height="100%"
+                 alt="">
+        </div>
     </div>
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex'
+
 export default {
     data() {
         return {
 
         }
     },
+    computed: {
+        ...mapGetters([
+            'musicLists',
+            'audio',
+            'showListenList',
+            'playing'
+        ])
+    },
+    created() {
+
+    },
     mounted() {
 
     },
     methods: {
+        _play() {
+            this.$store.dispatch('setPlaying', true)
+        },
+        _pause() {
+            this.$store.dispatch('setPlaying', false)
+        },
+        _pre() {
+            this.$store.dispatch('setPlaying', false)
+            for (let i = 0; i < this.musicLists.length; i++) {
+                if (this.musicLists[i].name === this.audio.name) {
+                    this.$store.dispatch('setPreAudio', i)
+                    this.$nextTick(() => {
+                        this.$store.dispatch('setPlaying', true)
+                    })
+                    return
+                }
+            }
+        },
+        _next() {
+            this.$store.dispatch('setPlaying', false)
+            for (let i = 0; i < this.musicLists.length; i++) {
+                if (this.musicLists[i].name === this.audio.name) {
+                    this.$store.dispatch('setNextAudio', i)
+                    this.$nextTick(() => {
+                        this.$store.dispatch('setPlaying', true)
+                    })
+                    return
+                }
+            }
+            
+        },
+        showList() {
+            this.$store.dispatch('setShowListenList', true)
+        },
         hidePlay() {
             this.$store.dispatch('setShowPlay', false)
         }
@@ -74,9 +138,8 @@ export default {
     top: 0;
     bottom: 0;
     z-index: 20;
-    width: 100%; // background: rgba(0, 0, 0, .7);
-    background: url(https://y.gtimg.cn/music/photo_new/T002R300x300M000002qBBpu2q0vL3.jpg?max_age=2592000) no-repeat;
-    background-size: cover;
+    width: 100%;
+    background: rgba(0, 0, 0, .5);
     .head {
         height: px2rem(100px);
         line-height: px2rem(100px);
@@ -170,8 +233,7 @@ export default {
                 color: rgba(255, 255, 255, .8);
                 text-align: center;
                 font-size: px2rem(30px);
-                overflow: auto;
-                // transform: translateY(20px);
+                overflow: auto; // transform: translateY(20px);
                 p {
                     margin: px2rem(20px) 0;
                     transform: translateY(-20px);
@@ -262,6 +324,15 @@ export default {
             }
         }
     }
+    .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; 
+        filter: blur(5px);
+    }
 }
 
 @media screen and(min-width: 769px) {
@@ -274,7 +345,7 @@ export default {
             top: px2rem(350px);
         }
         .content {
-            width: 460px; 
+            width: 460px;
             overflow: hidden;
             .lyrics {
                 height: 500px;
@@ -333,7 +404,6 @@ export default {
                     border: 2px solid #fff;
                     border-bottom-color: transparent;
                 }
-            
             }
         }
     }

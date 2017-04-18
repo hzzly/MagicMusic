@@ -74,19 +74,19 @@ export default {
             console.log(this.$refs.myAudio.src)
             // this.playing ? this.$refs.myAudio.pause() : this.$refs.myAudio.play()
             // this.playing = !this.playing
-            this.$refs.myAudio.play()
             this.$store.dispatch('setPlaying', true)
         },
         _pause() {
-            this.$refs.myAudio.pause()
             this.$store.dispatch('setPlaying', false)
         },
         _next() {
-            console.log('next')
+            this.$store.dispatch('setPlaying', false)
             for (let i = 0; i < this.musicLists.length; i++) {
                 if (this.musicLists[i].name === this.audio.name) {
-                    console.log(1)
                     this.$store.dispatch('setNextAudio', i)
+                    this.$nextTick(() => {
+                        this.$store.dispatch('setPlaying', true)
+                    })
                     return
                 }
             }
@@ -106,15 +106,7 @@ export default {
     watch: {
         deep: true,
         playing() {
-            console.log(this.$refs.myAudio.src)
-            console.log(this.playing)
-            if(this.playing) {
-                console.log('play')
-                this.$refs.myAudio.play()
-            } else {
-                this.$refs.myAudio.pause()
-            }
-            // this.playing ? this.$refs.myAudio.play() : this.$refs.myAudio.pause()
+            this.playing ? this.$refs.myAudio.play() : this.$refs.myAudio.pause()
         }
     }
 }
