@@ -45,6 +45,7 @@ export default {
         _play(music) {
             this.$store.dispatch('setPlaying', false)
             this.$store.dispatch('setAudio', music)
+            this.$store.dispatch('getLyric', music.id)
             this.$nextTick(() => {
                 this.$store.dispatch('setPlaying', true)
             })

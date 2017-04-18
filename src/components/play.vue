@@ -16,17 +16,7 @@
                 <div class="m-name">{{audio.name}}</div>
                 <div class="s-name">{{audio.sname}}</div>
                 <div class="lyric">
-                    <p>因为我刚好遇见你</p>
-                    <p>因为我刚好遇见你</p>
-                    <p>刚好遇见你</p>
-                    <p>因为我刚好遇见你</p>
-                    <p>因为我刚好遇见你</p>
-                    <p>因为我刚好遇见你</p>
-                    <p>遇见你</p>
-                    <p>因为我刚好遇见你</p>
-                    <p>因为我刚好遇见你</p>
-                    <p>因为我刚好遇见你</p>
-                    <p>因为</p>
+                    <div class="roll-lyric" v-html="lyrics"></div>
                 </div>
             </div>
             <div class="time">
@@ -69,6 +59,8 @@
 
 import { mapGetters } from 'vuex'
 
+import api from '../api'
+
 export default {
     data() {
         return {
@@ -80,11 +72,29 @@ export default {
             'musicLists',
             'audio',
             'showListenList',
-            'playing'
-        ])
+            'playing',
+            'lyric'
+        ]),
+        lyrics() {
+            let lyrics = ''
+            if(this.lyric) {
+                let arr = this.lyric.split('\n')
+                for(let item of arr) {
+                    if(item) {
+                        let arr2 = item.split(']')
+                        if(arr2) {
+                            lyrics += `<p style='margin: 10px 0'>${arr2[1]}</p>`
+                        }
+                    }
+                }
+            } else {
+                lyrics = '暂无歌词~'
+            }
+            return lyrics
+        }
     },
     created() {
-
+        this.$store.dispatch('getLyric', 439915614)
     },
     mounted() {
 
@@ -103,6 +113,7 @@ export default {
                     this.$store.dispatch('setPreAudio', i)
                     this.$nextTick(() => {
                         this.$store.dispatch('setPlaying', true)
+                        this.$store.dispatch('getLyric', this.audio.id)
                     })
                     return
                 }
@@ -115,6 +126,7 @@ export default {
                     this.$store.dispatch('setNextAudio', i)
                     this.$nextTick(() => {
                         this.$store.dispatch('setPlaying', true)
+                        this.$store.dispatch('getLyric', this.audio.id)
                     })
                     return
                 }
@@ -160,8 +172,8 @@ export default {
         color: #fff;
         position: absolute;
         top: px2rem(300px);
-        left: 50%;
-        transform: translateX(-50%);
+        width: 100%;
+        text-align: center;
     }
     .operation {
         position: absolute;
@@ -235,9 +247,12 @@ export default {
                 text-align: center;
                 font-size: px2rem(30px);
                 overflow: auto; // transform: translateY(20px);
-                p {
-                    margin: px2rem(20px) 0;
-                    transform: translateY(-20px);
+                // p {
+                //     margin: px2rem(20px) 0;
+                //     transform: translateY(-20px);
+                // }
+                .roll-lyric {
+                    transform: translateY(0px);
                 }
             }
         }

@@ -10,7 +10,7 @@ const state = {
 		"imgUrl": "http://p4.music.126.net/lDyytkTaPYVTb1Vpide6AA==/18591642115187138.jpg",
         "mp3Url": "http://m2.music.126.net/qv3RI4K7ABKJ0TyAdb3taw==/3250156397064860.mp3"
     },
-    // lyric:
+    lyric: '',
     currentIndex: 0, // 当前播放的歌曲位置
     playing: false, // 是否正在播放
 }
@@ -49,13 +49,26 @@ const actions = {
     },
     deleteMusic({ commit }, index) {
         commit(types.DELETE_MUSIC, index)
+    },
+    getLyric({ commit }, id) {
+        api.MusicLyric({id})
+            .then((res) => {
+                // console.log(res.lrc.lyric)
+                res.lrc ? commit(types.GET_LYRIC, res.lrc.lyric) : commit(types.GET_LYRIC, '')
+            })
+            .catch((res) => {
+                // console.log(res.lrc.lyric)
+                res.lrc ? commit(types.GET_LYRIC, res.lrc.lyric) : commit(types.GET_LYRIC, '')
+            })
+        
     }
 }
 
 const getters = {
     musicLists: state => state.musicLists,
     audio: state => state.audio,
-    playing: state => state.playing
+    playing: state => state.playing,
+    lyric: state => state.lyric
 }
 
 const mutations = {
@@ -79,6 +92,9 @@ const mutations = {
     [types.DELETE_MUSIC](state, index) {
         state.musicLists.splice(index, 1)
     },
+    [types.GET_LYRIC](state, playload) {
+        state.lyric = playload
+    }
     // [types.GET_TRAVELS_SEARCH_KEY](state, params) {
     //     state.searchKey = params
     // },
