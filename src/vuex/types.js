@@ -4,7 +4,8 @@ export const SET_NEXT_AUDIO = 'SET_NEXT_AUDIO'
 export const SET_PRE_AUDIO = 'SET_PRE_AUDIO'
 export const SET_PLAYING = 'SET_PLAYING'
 export const DELETE_MUSIC = 'DELETE_MUSIC'
-export const GET_LYRIC = 'GET_LYRIC'
+export const GET_MUSIC_LYRIC = 'GET_MUSIC_LYRIC'
+export const GET_MUSIC_TIME = 'GET_MUSIC_TIME'
 
 //com
 export const COM_SHOW_LISTEN_LIST = 'COM_SHOW_LISTEN_LIST'  //试听列表

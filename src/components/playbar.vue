@@ -25,7 +25,7 @@
                  @click="showList()"><i class="icon">&#xe927;</i></div>
         </div>
         <div class="progress-bar">
-            <div class="play"></div>
+            <div class="play" :style="{width: (now / duration).toFixed(3)*100 + '%'}"></div>
         </div>
         <audio preload
                ref="myAudio"
@@ -48,7 +48,8 @@ export default {
     },
     data() {
         return {
-
+            now: '',
+            duration: '200.045714'
         }
     },
     computed: {
@@ -60,16 +61,11 @@ export default {
         ])
     },
     mounted() {
-        // let timer = setInterval(() => {
-        //     console.log(this.$refs.myAudio.currentTime)
-        // }, 1000)
-        // this.$refs.myAudio.addEventListener('play', () => {
-        //     console.log(this.$refs.myAudio.currentTime)
-        //     setInterval(() => {
-        //         console.log(this.$refs.myAudio.currentTime)
-        //     }, 1000)
-        //     // console.log(this.$refs.myAudio.currentTime)
-        // })
+        this.$refs.myAudio.addEventListener('play', () => {
+            setInterval(() => {
+                this.now = this.$refs.myAudio.currentTime
+            }, 1000)
+        })
     },
     methods: {
         _play() {
@@ -88,6 +84,7 @@ export default {
                     this.$store.dispatch('setNextAudio', i)
                     this.$nextTick(() => {
                         this.$store.dispatch('setPlaying', true)
+                        this.$store.dispatch('getMusicInfo', this.audio.id)
                     })
                     return
                 }
@@ -109,6 +106,13 @@ export default {
         deep: true,
         playing() {
             this.playing ? this.$refs.myAudio.play() : this.$refs.myAudio.pause()
+            
+        },
+        audio() {
+            // console.log(this.$refs.myAudio.duration)
+            this.now = 0
+            this.duration = this.$refs.myAudio.duration
+            this.$store.dispatch('getMusicTime', this.$refs.myAudio.duration)
         }
     }
 }
@@ -166,7 +170,6 @@ export default {
         background: linear-gradient(#902541, #902444);
         .play {
             height: 100%;
-            width: 60%;
             background: #fe7498;
         }
     }

@@ -2,7 +2,7 @@
     <div class="home">
         <v-banner :image="image"></v-banner>
         <v-nav></v-nav>
-        <v-music-list :music-lists="musicLists"></v-music-list>
+        <router-view></router-view>
         <v-play v-show="showPlay"></v-play>
     </div>
 </template>
@@ -11,7 +11,6 @@
 
 import banner from '@/components/banner'
 import nav from '@/components/nav'
-import musicList from '@/components/musicList'
 import play from '@/components/play'
 
 import { mapGetters } from 'vuex'
@@ -20,7 +19,6 @@ export default {
     components: {
         'v-banner': banner,
         'v-nav': nav,
-        'v-music-list': musicList,
         'v-play': play,
     },
     data() {
@@ -41,7 +39,6 @@ export default {
     },
     computed: {
         ...mapGetters([
-			'musicLists',
             'showPlay'
 		])
     }

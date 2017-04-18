@@ -16,17 +16,19 @@
                 <div class="m-name">{{audio.name}}</div>
                 <div class="s-name">{{audio.sname}}</div>
                 <div class="lyric">
-                    <div class="roll-lyric" v-html="lyrics"></div>
+                    <div class="roll-lyric"
+                         v-html="lyrics"></div>
                 </div>
             </div>
             <div class="time">
                 <div class="n-time">3:25</div>
-                <div class="t-time">4:15</div>
+                <div class="t-time">{{totalTime}}</div>
             </div>
             <div class="control">
                 <div>
                     <div class="loop"><i class="icon">&#xe819;</i></div>
-                    <div class="pre" @click="_pre()"><i class="icon">&#xe61e;</i></div>
+                    <div class="pre"
+                         @click="_pre()"><i class="icon">&#xe61e;</i></div>
                     <div class="pause">
                         <i class="icon"
                            v-if="playing"
@@ -73,16 +75,17 @@ export default {
             'audio',
             'showListenList',
             'playing',
-            'lyric'
+            'lyric',
+            'size'
         ]),
         lyrics() {
             let lyrics = ''
-            if(this.lyric) {
+            if (this.lyric) {
                 let arr = this.lyric.split('\n')
-                for(let item of arr) {
-                    if(item) {
+                for (let item of arr) {
+                    if (item) {
                         let arr2 = item.split(']')
-                        if(arr2) {
+                        if (arr2) {
                             lyrics += `<p style='margin: 10px 0'>${arr2[1]}</p>`
                         }
                     }
@@ -91,10 +94,19 @@ export default {
                 lyrics = '暂无歌词~'
             }
             return lyrics
+        },
+        totalTime() {
+            let m, s
+            m = Math.floor(this.size / 60)
+            m = m.toString().length == 1 ? ('0' + m) : m
+            s = Math.floor(this.size - 60 * m)
+            s = s.toString().length == 1 ? ('0' + s) : s
+            return m + ':' + s
         }
     },
     created() {
-        this.$store.dispatch('getLyric', 439915614)
+        this.$store.dispatch('getMusicInfo', 439915614)
+        this.$store.dispatch('getMusicTime', 328.463673)
     },
     mounted() {
 
@@ -113,7 +125,7 @@ export default {
                     this.$store.dispatch('setPreAudio', i)
                     this.$nextTick(() => {
                         this.$store.dispatch('setPlaying', true)
-                        this.$store.dispatch('getLyric', this.audio.id)
+                        this.$store.dispatch('getMusicInfo', this.audio.id)
                     })
                     return
                 }
@@ -126,12 +138,12 @@ export default {
                     this.$store.dispatch('setNextAudio', i)
                     this.$nextTick(() => {
                         this.$store.dispatch('setPlaying', true)
-                        this.$store.dispatch('getLyric', this.audio.id)
+                        this.$store.dispatch('getMusicInfo', this.audio.id)
                     })
                     return
                 }
             }
-            
+
         },
         showList() {
             this.$store.dispatch('setShowListenList', true)
@@ -350,7 +362,7 @@ export default {
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: -1; 
+        z-index: -1;
         filter: blur(5px);
     }
 }

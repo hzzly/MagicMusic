@@ -1,20 +1,28 @@
 <template>
     <div class="nav">
-        <div class="nav-item active">
-            <div class="icon"><i class="icon">&#xe62f;</i></div>
-            <span>流行</span>
+        <div class="nav-item">
+            <router-link to="/popular">
+                <div class="icon"><i class="icon">&#xe62f;</i></div>
+                <span>流行</span>
+            </router-link>
         </div>
         <div class="nav-item">
-            <div class="icon"><i class="icon">&#xe635;</i></div>
-            <span>古典</span>
+            <router-link to="/classical">
+                <div class="icon"><i class="icon">&#xe635;</i></div>
+                <span>古典</span>
+            </router-link>
         </div>
         <div class="nav-item">
-            <div class="icon"><i class="icon">&#xe632;</i></div>
-            <span>纯音乐</span>
+            <router-link to="/light">
+                <div class="icon"><i class="icon">&#xe632;</i></div>
+                <span>纯音乐</span>
+            </router-link>
         </div>
         <div class="nav-item">
-            <div class="icon"><i class="icon">&#xe634;</i></div>
-            <span>电台</span>
+            <router-link to="/radio">
+                <div class="icon"><i class="icon">&#xe634;</i></div>
+                <span>电台</span>
+            </router-link>
         </div>
     </div>
 </template>
@@ -42,6 +50,12 @@
             flex: 1;
             font-size: px2rem(24px);
             cursor: pointer;
+            a {
+                display: block;
+                &.active {
+                    color: #fff;
+                }
+            }
             .icon {
                 font-size: px2rem(46px);
                 color: #eb234a;
@@ -50,9 +64,7 @@
                 display: block;
                 margin-top: px2rem(8px);
             }
-            &.active {
-                color: #fff;
-            }
+            
         }
     }
 </style>

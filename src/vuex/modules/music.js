@@ -11,6 +11,7 @@ const state = {
         "mp3Url": "http://m2.music.126.net/qv3RI4K7ABKJ0TyAdb3taw==/3250156397064860.mp3"
     },
     lyric: '',
+    size: 0,
     currentIndex: 0, // 当前播放的歌曲位置
     playing: false, // 是否正在播放
 }
@@ -50,17 +51,17 @@ const actions = {
     deleteMusic({ commit }, index) {
         commit(types.DELETE_MUSIC, index)
     },
-    getLyric({ commit }, id) {
+    getMusicInfo({ commit }, id) {
         api.MusicLyric({id})
             .then((res) => {
-                // console.log(res.lrc.lyric)
-                res.lrc ? commit(types.GET_LYRIC, res.lrc.lyric) : commit(types.GET_LYRIC, '')
+                res.lrc ? commit(types.GET_MUSIC_LYRIC, res.lrc.lyric) : commit(types.GET_MUSIC_LYRIC, '')
             })
             .catch((res) => {
-                // console.log(res.lrc.lyric)
-                res.lrc ? commit(types.GET_LYRIC, res.lrc.lyric) : commit(types.GET_LYRIC, '')
-            })
-        
+                res.lrc ? commit(types.GET_MUSIC_LYRIC, res.lrc.lyric) : commit(types.GET_MUSIC_LYRIC, '')
+            })  
+    },
+    getMusicTime({ commit }, size) {
+        commit(types.GET_MUSIC_TIME, size)
     }
 }
 
@@ -68,7 +69,8 @@ const getters = {
     musicLists: state => state.musicLists,
     audio: state => state.audio,
     playing: state => state.playing,
-    lyric: state => state.lyric
+    lyric: state => state.lyric,
+    size: state => state.size
 }
 
 const mutations = {
@@ -92,8 +94,11 @@ const mutations = {
     [types.DELETE_MUSIC](state, index) {
         state.musicLists.splice(index, 1)
     },
-    [types.GET_LYRIC](state, playload) {
+    [types.GET_MUSIC_LYRIC](state, playload) {
         state.lyric = playload
+    },
+    [types.GET_MUSIC_TIME](state, playload) {
+        state.size = playload
     }
     // [types.GET_TRAVELS_SEARCH_KEY](state, params) {
     //     state.searchKey = params
