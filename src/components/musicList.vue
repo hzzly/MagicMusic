@@ -111,6 +111,9 @@ export default {
                 font-size: px2rem(32px);
                 font-weight: bold;
                 vertical-align: middle;
+                // white-space:nowrap;
+                // overflow:hidden;
+                // text-overflow:ellipsis;
                 .tag {
                     font-size: px2rem(20px);
                     color: #e53f6f;

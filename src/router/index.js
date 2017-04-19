@@ -15,7 +15,7 @@ import radio from '@/pages/radio'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   linkActiveClass: 'active',
   routes: [
     {

@@ -6,7 +6,8 @@
     </div>
     <!--<router-view></router-view>-->
     <v-playbar v-show="playBar"></v-playbar>
-
+    <v-play v-show="showPlay"></v-play>
+  
     <!--公用组件-->
     <v-sidebar></v-sidebar>
   </div>
@@ -15,28 +16,46 @@
 <script>
 import header from '@/components/header'
 import playbar from '@/components/playbar'
+import play from '@/components/play'
 import sidebar from '@/components/sidebar'
 
 import { mapGetters } from 'vuex'
+
+import api from './api'
 
 export default {
   name: 'app',
   components: {
     'v-header': header,
     'v-playbar': playbar,
+    'v-play': play,
     'v-sidebar': sidebar,
   },
+  created() {
+    if (!this.audioUrl) {
+      api.MusicUrl(this.audio.id)
+        .then(res => {
+          this.$store.dispatch('setAudioUrl', res.data[0].url)
+        })
+        .catch(res => {
+          this.$store.dispatch('setAudioUrl', res.data[0].url)
+        })
+    }
+  },
   computed: {
-    
     playBar() {
+      // return this.$route.path.split('/')[1] == 'search' ? false : true
       return true
     },
     header() {
-      return true
+      return this.$route.path.split('/')[1] == 'search' ? false : true
     },
     ...mapGetters([
-			'showSidebar'
-		]),
+      'showSidebar',
+      'showPlay',
+      'audio',
+      'audioUrl'
+    ]),
   }
 }
 </script>
@@ -46,18 +65,18 @@ export default {
 
 @font-face {
   font-family: 'icon';  /* project id 277165 */
-  src: url('//at.alicdn.com/t/font_mo3kwjmv7nb9ms4i.eot');
-  src: url('//at.alicdn.com/t/font_mo3kwjmv7nb9ms4i.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_mo3kwjmv7nb9ms4i.woff') format('woff'),
-  url('//at.alicdn.com/t/font_mo3kwjmv7nb9ms4i.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_mo3kwjmv7nb9ms4i.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_kmywdojzhchj8aor.eot');
+  src: url('//at.alicdn.com/t/font_kmywdojzhchj8aor.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_kmywdojzhchj8aor.woff') format('woff'),
+  url('//at.alicdn.com/t/font_kmywdojzhchj8aor.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_kmywdojzhchj8aor.svg#iconfont') format('svg');
 }
 
 .icon {
-    font-family: "icon" !important;
-    font-size: 18px;
-    font-style: normal;
-    color: #ffffff;
+  font-family: "icon" !important;
+  font-size: 18px;
+  font-style: normal;
+  color: #ffffff;
 }
 
 #app {

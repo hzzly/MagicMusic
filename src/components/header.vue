@@ -12,7 +12,11 @@
                 <router-link to="/user">我的</router-link>
             </div>
         </div>
-        <div class="header-icon"><i class="icon">&#xe638;</i></div>
+        <div class="header-icon">
+            <router-link to="/search">
+                <i class="icon">&#xe638;</i>
+            </router-link>
+        </div>
     </div>
 </template>
 

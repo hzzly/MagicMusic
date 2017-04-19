@@ -3,7 +3,6 @@
         <v-banner :image="image"></v-banner>
         <v-nav></v-nav>
         <router-view></router-view>
-        <v-play v-show="showPlay"></v-play>
     </div>
 </template>
 
@@ -11,17 +10,14 @@
 
 import banner from '@/components/banner'
 import nav from '@/components/nav'
-import play from '@/components/play'
 
 import { mapGetters } from 'vuex'
 
-import api from '../api'
 
 export default {
     components: {
         'v-banner': banner,
         'v-nav': nav,
-        'v-play': play,
     },
     data() {
         return {
@@ -36,17 +32,9 @@ export default {
     },
     created() {
         this.$router.push('popular')
-        api.MusicUrl(this.audio.id)
-            .then(res => {
-                this.$store.dispatch('setAudioUrl', res.data[0].url)
-            })
-            .catch(res => {
-                this.$store.dispatch('setAudioUrl', res.data[0].url)
-            })
     },
     computed: {
         ...mapGetters([
-            'showPlay',
             'audio'
         ])
     }
