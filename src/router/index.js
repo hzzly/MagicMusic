@@ -4,6 +4,7 @@ import home from '@/pages/home'
 import collection from '@/pages/collection'
 import user from '@/pages/user'
 import login from '@/pages/login'
+import search from '@/pages/search'
 import popular from '@/pages/popular'
 import classical from '@/pages/classical'
 import light from '@/pages/light'
@@ -54,6 +55,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: login
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: search
     },
   ]
 })

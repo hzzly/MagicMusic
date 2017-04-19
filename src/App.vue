@@ -29,10 +29,10 @@ export default {
   computed: {
     
     playBar() {
-      return true
+      return false
     },
     header() {
-      return true
+      return false
     },
     ...mapGetters([
 			'showSidebar'
