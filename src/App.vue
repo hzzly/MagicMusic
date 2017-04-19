@@ -29,10 +29,10 @@ export default {
   computed: {
     
     playBar() {
-      return false
+      return true
     },
     header() {
-      return false
+      return true
     },
     ...mapGetters([
 			'showSidebar'
@@ -46,13 +46,12 @@ export default {
 
 @font-face {
   font-family: 'icon';  /* project id 277165 */
-  src: url('//at.alicdn.com/t/font_2mcgaw7j3pvnp14i.eot');
-  src: url('//at.alicdn.com/t/font_2mcgaw7j3pvnp14i.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_2mcgaw7j3pvnp14i.woff') format('woff'),
-  url('//at.alicdn.com/t/font_2mcgaw7j3pvnp14i.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_2mcgaw7j3pvnp14i.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_mo3kwjmv7nb9ms4i.eot');
+  src: url('//at.alicdn.com/t/font_mo3kwjmv7nb9ms4i.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_mo3kwjmv7nb9ms4i.woff') format('woff'),
+  url('//at.alicdn.com/t/font_mo3kwjmv7nb9ms4i.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_mo3kwjmv7nb9ms4i.svg#iconfont') format('svg');
 }
-
 
 .icon {
     font-family: "icon" !important;
