@@ -57,21 +57,24 @@ export default {
             'musicLists',
             'audio',
             'showListenList',
-            'playing'
+            'playing',
+            'size'
         ])
     },
     mounted() {
+        let timer
         this.$refs.myAudio.addEventListener('play', () => {
-            setInterval(() => {
+            timer = setInterval(() => {
+                this.duration = this.$refs.myAudio.duration
                 this.now = this.$refs.myAudio.currentTime
             }, 1000)
+        })
+        this.$refs.myAudio.addEventListener('pause', () => {
+            clearInterval(timer)
         })
     },
     methods: {
         _play() {
-            console.log(this.$refs.myAudio.src)
-            // this.playing ? this.$refs.myAudio.pause() : this.$refs.myAudio.play()
-            // this.playing = !this.playing
             this.$store.dispatch('setPlaying', true)
         },
         _pause() {
@@ -98,22 +101,24 @@ export default {
             console.log('showPlay')
             this.$store.dispatch('setShowPlay', true)
         },
-        changeProcess() {
-
-        }
     },
     watch: {
-        deep: true,
         playing() {
             this.playing ? this.$refs.myAudio.play() : this.$refs.myAudio.pause()
-            
         },
         audio() {
-            // console.log(this.$refs.myAudio.duration)
             this.now = 0
-            this.duration = this.$refs.myAudio.duration
-            this.$store.dispatch('getMusicTime', this.$refs.myAudio.duration)
-        }
+            this.$refs.myAudio.addEventListener('loadedmetadata', () => {
+                this.$store.dispatch('getMusicTime', this.$refs.myAudio.duration)
+            })
+            this.$refs.myAudio.addEventListener('error', () => {
+                alert('获取音乐出错')
+                // this.$store.dispatch('getMusicTime', this.$refs.myAudio.duration)
+            })
+            // setTimeout(() => {
+                
+            // },500)
+        },
     }
 }
 </script>

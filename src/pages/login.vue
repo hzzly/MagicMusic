@@ -53,18 +53,20 @@ export default {
             // this.$store.dispatch('setLoadingState', true)
             api.Login(data)
                 .then(res => {
-                    // console.log(res)
-                    console.log(res.data)
-                    console.log(res)
-                    if(res.data.code == 200) {
+                    if(res.code == 200) {
                         // let userInfo = Object.assign()
                         // this.$store.dispatch('setLoadingState', false)
                         // this.setUserInfo(res.data)
-                        this.$router.replace('/home')
+                        this.$router.replace('/')
                     }
                 })
-                .catch(error => {
-                    console.log(error)
+                .catch(res => {
+                    if(res.code == 200) {
+                        // let userInfo = Object.assign()
+                        // this.$store.dispatch('setLoadingState', false)
+                        // this.setUserInfo(res.data)
+                        this.$router.replace('/')
+                    }
                 })
         }
     }
@@ -81,6 +83,8 @@ export default {
     color: #fff;
     text-align: center;
     overflow: hidden;
+    position: absolute;
+    top: 0;
     .mask {
         position: fixed;
         top: 0;

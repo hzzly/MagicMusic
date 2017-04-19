@@ -4,14 +4,14 @@ import * as types from '../types'
 const state = {
     musicLists: [],
     audio: {
-		"name": "刚好遇见你",
-		"id": 439915614,
-		"sname": "李玉刚",
-		"imgUrl": "http://p4.music.126.net/lDyytkTaPYVTb1Vpide6AA==/18591642115187138.jpg",
-        "mp3Url": "http://m2.music.126.net/qv3RI4K7ABKJ0TyAdb3taw==/3250156397064860.mp3"
+		"name": "成都",
+		"id": 436514312,
+		"sname": "赵雷",
+		"imgUrl": "http://p4.music.126.net/34YW1QtKxJ_3YnX9ZzKhzw==/2946691234868155.jpg",
+        "mp3Url": "http://m2.music.126.net/7o5D4dA6271VktgawcbZFA==/18665309393829604.mp3"
     },
     lyric: '',
-    size: 0,
+    size: '200.045714',
     currentIndex: 0, // 当前播放的歌曲位置
     playing: false, // 是否正在播放
 }

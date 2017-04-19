@@ -33,13 +33,15 @@ export default {
         }
     },
     created() {
+        this.$router.push('popular')
         if (this.musicLists.length == 0) {
             this.$store.dispatch('getMusicLists')
         }
     },
     computed: {
         ...mapGetters([
-            'showPlay'
+            'showPlay',
+            'musicLists'
 		])
     }
 

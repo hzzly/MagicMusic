@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="time">
-                <div class="n-time">3:25</div>
+                <div class="n-time">{{nowTime}}</div>
                 <div class="t-time">{{totalTime}}</div>
             </div>
             <div class="control">
@@ -66,7 +66,7 @@ import api from '../api'
 export default {
     data() {
         return {
-
+            now: ''
         }
     },
     computed: {
@@ -102,6 +102,14 @@ export default {
             s = Math.floor(this.size - 60 * m)
             s = s.toString().length == 1 ? ('0' + s) : s
             return m + ':' + s
+        },
+        nowTime() {
+            let m, s
+            m = Math.floor(this.now / 60)
+            m = m.toString().length == 1 ? ('0' + m) : m
+            s = Math.floor(this.now - 60 * m)
+            s = s.toString().length == 1 ? ('0' + s) : s
+            return m + ':' + s
         }
     },
     created() {
@@ -109,7 +117,16 @@ export default {
         this.$store.dispatch('getMusicTime', 328.463673)
     },
     mounted() {
-
+        let timer,
+           audioDOM = document.querySelector('audio')
+        audioDOM.addEventListener('play', () => {
+            timer = setInterval(() => {
+                this.now = audioDOM.currentTime
+            }, 1000)
+        })
+        audioDOM.addEventListener('pause', () => {
+            clearInterval(timer)
+        })
     },
     methods: {
         _play() {

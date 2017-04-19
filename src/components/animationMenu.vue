@@ -2,7 +2,7 @@
     <transition name="move">
         <div class="menu"
              v-show="item.menuShow">
-            <div class="inner inner-1" @click="_delete(index)"><i class="icon">&#xe612;</i></div>
+            <div class="inner inner-1" @click="_delete(index)"><i class="icon">&#xe639;</i></div>
             <div class="inner inner-2" @click="_share(index)"><i class="icon">&#xe64c;</i></div>
             <div class="inner inner-3"
                  @click="_love(index)"><i class="icon">&#xe615;</i></div>

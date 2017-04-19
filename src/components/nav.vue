@@ -52,6 +52,7 @@
             cursor: pointer;
             a {
                 display: block;
+                color: #746ca8;
                 &.active {
                     color: #fff;
                 }

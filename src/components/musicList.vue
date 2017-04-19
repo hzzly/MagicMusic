@@ -40,6 +40,7 @@ export default {
 
     },
     methods: {
+        //http://hjingren.cn:3000/user/playlist?uid=468310461
         _play(music) {
             this.$store.dispatch('setPlaying', false)
             this.$store.dispatch('setAudio', music)

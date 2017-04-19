@@ -2,9 +2,15 @@
     <div class="header">
         <div class="header-icon" @click="showSidebar"><i class="icon">&#xe692;</i></div>
         <div class="header-cont">
-            <div class="nav-item active">推荐</div>
-            <div class="nav-item">音乐集</div>
-            <div class="nav-item">我的</div>
+            <div class="nav-item">
+                <router-link to="/">推荐</router-link>
+            </div>
+            <div class="nav-item">
+                <router-link to="/collection">音乐集</router-link>
+            </div>
+            <div class="nav-item">
+                <router-link to="/user">我的</router-link>
+            </div>
         </div>
         <div class="header-icon"><i class="icon">&#xe638;</i></div>
     </div>
@@ -51,9 +57,13 @@ export default {
             flex: 1;
             font-weight: 700;
             cursor: pointer;
-        }
-        .active {
-            color: #eb234a;
+            a {
+                display: block;
+                color: #746ca8;
+                &.active {
+                    color: #eb234a;
+                }
+            }
         }
     }
 }
