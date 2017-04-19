@@ -15,6 +15,8 @@ import play from '@/components/play'
 
 import { mapGetters } from 'vuex'
 
+import api from '../api'
+
 export default {
     components: {
         'v-banner': banner,
@@ -34,15 +36,19 @@ export default {
     },
     created() {
         this.$router.push('popular')
-        if (this.musicLists.length == 0) {
-            this.$store.dispatch('getMusicLists')
-        }
+        api.MusicUrl(this.audio.id)
+            .then(res => {
+                this.$store.dispatch('setAudioUrl', res.data[0].url)
+            })
+            .catch(res => {
+                this.$store.dispatch('setAudioUrl', res.data[0].url)
+            })
     },
     computed: {
         ...mapGetters([
             'showPlay',
-            'musicLists'
-		])
+            'audio'
+        ])
     }
 
 }

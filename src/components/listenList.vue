@@ -1,19 +1,19 @@
 <template>
     <div class="listen-list">
         <div class="num">
-            <i class="icon">&#xe6ae;</i> 循环播放({{musicLists.length}}首)
+            <i class="icon">&#xe6ae;</i> 循环播放({{listenLists.length}}首)
         </div>
         <div class="list">
             <transition-group name="slide"
                               tag="div"
                               class="list-wrapper">
                 <div class="item"
-                     v-for="(item, index) in musicLists"
+                     v-for="(item, index) in listenLists"
                      :key="item">
                     <p :class="{'current': currentIndex == index}"
                        @click="_play(item)">
                         {{item.name}}
-                        <span>-- {{item.sname}}</span>
+                        <span>-- {{item.ar[0].name}}</span>
                         <i class="icon"
                            v-show="currentIndex == index">&#xe641;</i></p>
                     <div class="delete"
@@ -32,6 +32,8 @@
 
 import { mapGetters } from 'vuex'
 
+import api from '../api'
+
 export default {
     data() {
         return {
@@ -45,9 +47,17 @@ export default {
         _play(music) {
             this.$store.dispatch('setPlaying', false)
             this.$store.dispatch('setAudio', music)
-            this.$store.dispatch('getMusicInfo', music.id)
-            this.$nextTick(() => {
+            api.MusicUrl(music.id)
+                .then(res => {
+                    this.$store.dispatch('setAudioUrl', res.data[0].url)
+                })
+                .catch(res => {
+                    this.$store.dispatch('setAudioUrl', res.data[0].url)
+                })
+            let audioDOM = document.querySelector('audio')
+            audioDOM.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('setPlaying', true)
+                this.$store.dispatch('getMusicInfo', music.id)
             })
             this.$store.dispatch('setShowListenList', false)
         },
@@ -60,13 +70,13 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'musicLists',
+            'listenLists',
             'audio',
             'showListenList'
         ]),
         currentIndex() {
-            for (let i = 0; i < this.musicLists.length; i++) {
-                if (this.musicLists[i].name === this.audio.name) {
+            for (let i = 0; i < this.listenLists.length; i++) {
+                if (this.listenLists[i].name === this.audio.name) {
                     return i
                 }
             }

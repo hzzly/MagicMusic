@@ -1,5 +1,10 @@
 export const GET_MUSIC_LISTS = 'GET_MUSIC_LISTS'   //获取音乐列表
+export const GET_POPULAR_LISTS = 'GET_POPULAR_LISTS'
+export const GET_CLASSICAL_LISTS = 'GET_CLASSICAL_LISTS'
+export const GET_LIGHT_LISTS = 'GET_LIGHT_LISTS'
+export const GET_RADIO_LISTS = 'GET_RADIO_LISTS'
 export const SET_AUDIO = 'SET_AUDIO'
+export const SET_AUDIO_URL = 'SET_AUDIO_URL'
 export const SET_NEXT_AUDIO = 'SET_NEXT_AUDIO'
 export const SET_PRE_AUDIO = 'SET_PRE_AUDIO'
 export const SET_PLAYING = 'SET_PLAYING'

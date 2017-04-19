@@ -3,13 +3,13 @@
         <div class="play-box">
             <div class="music-avatar"
                  @click="showPlay()">
-                <img :src="audio.imgUrl"
+                <img :src="audio.al.picUrl"
                      alt="">
             </div>
             <div class="music-info"
                  @click="showPlay()">
                 <div class="music-name">{{audio.name}}</div>
-                <div class="music-s">{{audio.sname}}</div>
+                <div class="music-s">{{audio.ar[0].name}}</div>
             </div>
             <div class="music-play">
                 <i class="icon"
@@ -29,7 +29,7 @@
         </div>
         <audio preload
                ref="myAudio"
-               :src="audio.mp3Url"
+               :src="audioUrl"
                @ended="_next()"></audio>
         <transition name="fold">
             <v-listen-list v-show="showListenList"></v-listen-list>
@@ -42,6 +42,8 @@ import listenList from '@/components/listenList'
 
 import { mapGetters } from 'vuex'
 
+import api from '../api'
+
 export default {
     components: {
         'v-listen-list': listenList
@@ -49,17 +51,18 @@ export default {
     data() {
         return {
             now: '',
-            duration: '200.045714'
+            duration: '200.045714',
         }
     },
     computed: {
         ...mapGetters([
-            'musicLists',
+            'listenLists',
             'audio',
+            'audioUrl',
             'showListenList',
             'playing',
             'size'
-        ])
+        ]),
     },
     mounted() {
         let timer
@@ -75,23 +78,53 @@ export default {
     },
     methods: {
         _play() {
-            this.$store.dispatch('setPlaying', true)
+            if(this.audioUrl) {
+                this.$store.dispatch('setPlaying', true)
+            }
         },
         _pause() {
             this.$store.dispatch('setPlaying', false)
         },
         _next() {
             this.$store.dispatch('setPlaying', false)
-            for (let i = 0; i < this.musicLists.length; i++) {
-                if (this.musicLists[i].name === this.audio.name) {
+            for (let i = 0; i < this.listenLists.length; i++) {
+                if (this.listenLists[i].name === this.audio.name) {
                     this.$store.dispatch('setNextAudio', i)
-                    this.$nextTick(() => {
+                    console.log(this.audio.id)
+                    api.MusicUrl(this.audio.id)
+                        .then(res => {
+                            this.$store.dispatch('setAudioUrl', res.data[0].url)
+                        })
+                        .catch(res => {
+                            this.$store.dispatch('setAudioUrl', res.data[0].url)
+                        })
+                    let audioDOM = document.querySelector('audio')
+                    audioDOM.addEventListener('loadedmetadata', () => {
                         this.$store.dispatch('setPlaying', true)
                         this.$store.dispatch('getMusicInfo', this.audio.id)
                     })
+                    // this.$nextTick(() => {
+                    //     this.$store.dispatch('setPlaying', true)
+                    //     this.$store.dispatch('getMusicInfo', this.audio.id)
+                    // })
                     return
                 }
             }
+
+            // this.$store.dispatch('setPlaying', false)
+            // this.$store.dispatch('setAudio', music)
+            // api.MusicUrl(music.id)
+            //     .then(res => {
+            //         this.$store.dispatch('setAudioUrl', res.data[0].url)
+            //     })
+            //     .catch(res => {
+            //         this.$store.dispatch('setAudioUrl', res.data[0].url)
+            //     })
+            // let audioDOM = document.querySelector('audio')
+            // audioDOM.addEventListener('loadedmetadata', () => {
+            //     this.$store.dispatch('setPlaying', true)
+            //     this.$store.dispatch('getMusicInfo', music.id)
+            // })
             
         },
         showList() {

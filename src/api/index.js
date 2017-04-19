@@ -71,16 +71,45 @@ export default {
      },
 
      /**
+     * popularmusic列表
+     */
+     PopularList() {
+         return fetchGet('/playlist/detail', {id: 3778678})
+     },
+
+     /**
+     * classicalmusic列表
+     */
+     ClassicalList() {
+         return fetchGet('/playlist/detail', {id: 71384707})
+     },
+
+     /**
+     * lightmusic列表
+     */
+     LightList() {
+         return fetchGet('/playlist/detail', {id: 26467411})
+     },
+
+     /**
+     * radiomusic列表
+     */
+     RadioList() {
+         return fetchGet('/playlist/detail', {id: 897089})
+     },
+
+     /**
+      * music歌词
+      */
+      MusicUrl(id) {
+        return fetchGet('/music/url', {id})
+      },
+
+     /**
       * music歌词
       */
       MusicLyric(id) {
         return fetchGet('/lyric', id)
       },
 
-      /**
-       * Music时间
-       */
-      MusicTime(id) {
-          return fetchGet('/music/url', id)
-      }
 }

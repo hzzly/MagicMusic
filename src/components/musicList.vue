@@ -4,14 +4,14 @@
              v-for="(item, index) in musicList">
             <div class="avatar"
                  @click="_play(item)">
-                <img :src="item.imgUrl"
+                <img :src="item.al.picUrl"
                      alt="">
             </div>
             <div class="info"
                  @click="_play(item)">
                 <div class="music-name">{{item.name}}<i class="tag"
                        v-show="item.sq">SQ</i></div>
-                <div class="music-s">{{item.sname}}</div>
+                <div class="music-s">{{item.ar[0].name}}</div>
                 <div class="music-hot"
                      v-show="item.hot"><i class="icon">&#xe650;</i>{{item.hot}}</div>
             </div>
@@ -26,6 +26,10 @@
 <script>
 import animationMenu from '@/components/animationMenu'
 
+import Vue from 'vue'
+
+import api from '../api'
+
 export default {
     components: {
         animationMenu
@@ -39,17 +43,32 @@ export default {
         }
 
     },
+    created() {
+        for(let item of this.musicList) {
+            Vue.set(item, 'menuShow', false)
+        }
+    },
     methods: {
         //http://hjingren.cn:3000/user/playlist?uid=468310461
         _play(music) {
             this.$store.dispatch('setPlaying', false)
             this.$store.dispatch('setAudio', music)
-            this.$nextTick(() => {
+            api.MusicUrl(music.id)
+                .then(res => {
+                    this.$store.dispatch('setAudioUrl', res.data[0].url)
+                })
+                .catch(res => {
+                    this.$store.dispatch('setAudioUrl', res.data[0].url)
+                })
+            let audioDOM = document.querySelector('audio')
+            audioDOM.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('setPlaying', true)
                 this.$store.dispatch('getMusicInfo', music.id)
             })
         },
         _showOperation(index) {
+            console.log(index)
+            
             for(let i = 0; i<this.musicList.length; i++) {
                 if(i !== index ) {
                     this.musicList[i].menuShow = false
