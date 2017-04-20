@@ -59,24 +59,24 @@ const state = {
 }
 
 const actions = {
-    /**
-     * 获取音乐列表
-     */
-    getMusicLists({ commit }) {
-        if (localStorage.musics !== '[]' && localStorage.musics) {
-            commit(types.GET_MUSIC_LISTS, JSON.parse(localStorage.musics))
-            return;
-        }
-        api.MusicList()
-            .then(res => {
-                commit(types.GET_MUSIC_LISTS, res.musicData)
-                localStorage.musics = JSON.stringify(res.musicData)
-            })
-            .catch(res => {
-                commit(types.GET_MUSIC_LISTS, res.musicData)
-                localStorage.musics = JSON.stringify(res.musicData)
-            })
-    },
+    // /**
+    //  * 获取音乐列表
+    //  */
+    // getMusicLists({ commit }) {
+    //     if (localStorage.musics !== '[]' && localStorage.musics) {
+    //         commit(types.GET_MUSIC_LISTS, JSON.parse(localStorage.musics))
+    //         return;
+    //     }
+    //     api.MusicList()
+    //         .then(res => {
+    //             commit(types.GET_MUSIC_LISTS, res.musicData)
+    //             // localStorage.musics = JSON.stringify(res.musicData)
+    //         })
+    //         .catch(res => {
+    //             commit(types.GET_MUSIC_LISTS, res.musicData)
+    //             // localStorage.musics = JSON.stringify(res.musicData)
+    //         })
+    // },
     addListenLists({ commit }, music) {
         commit(types.ADD_LISTEN_LISTS, music)
     },
@@ -88,11 +88,11 @@ const actions = {
         api.PopularList()
             .then(res => {
                 commit(types.GET_POPULAR_LISTS, res.playlist.tracks)
-                localStorage.popularmusics = JSON.stringify(res.playlist.tracks)
+                localStorage.popularmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
             .catch(res => {
                 commit(types.GET_POPULAR_LISTS, res.playlist.tracks)
-                localStorage.popularmusics = JSON.stringify(res.playlist.tracks)
+                localStorage.popularmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
     },
     getClassicalLists({ commit }) {
@@ -103,11 +103,11 @@ const actions = {
         api.ClassicalList()
             .then(res => {
                 commit(types.GET_CLASSICAL_LISTS, res.playlist.tracks)
-                localStorage.classicalmusics = JSON.stringify(res.playlist.tracks)
+                localStorage.classicalmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
             .catch(res => {
                 commit(types.GET_CLASSICAL_LISTS, res.playlist.tracks)
-                localStorage.classicalmusics = JSON.stringify(res.playlist.tracks)
+                localStorage.classicalmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
     },
     getLightLists({ commit }) {
@@ -118,11 +118,11 @@ const actions = {
         api.LightList()
             .then(res => {
                 commit(types.GET_LIGHT_LISTS, res.playlist.tracks)
-                localStorage.lightmusics = JSON.stringify(res.playlist.tracks)
+                localStorage.lightmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
             .catch(res => {
                 commit(types.GET_LIGHT_LISTS, res.playlist.tracks)
-                localStorage.lightmusics = JSON.stringify(res.playlist.tracks)
+                localStorage.lightmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
     },
     getRadioLists({ commit }) {
@@ -133,11 +133,11 @@ const actions = {
         api.RadioList()
             .then(res => {
                 commit(types.GET_RADIO_LISTS, res.playlist.tracks)
-                localStorage.radiomusics = JSON.stringify(res.playlist.tracks)
+                localStorage.radiomusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
             .catch(res => {
                 commit(types.GET_RADIO_LISTS, res.playlist.tracks)
-                localStorage.radiomusics = JSON.stringify(res.playlist.tracks)
+                localStorage.radiomusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
     },
     setAudio({ commit }, music) {
@@ -159,11 +159,13 @@ const actions = {
         commit(types.DELETE_MUSIC, index)
     },
     getMusicInfo({ commit }, id) {
+        console.log(id)
         api.MusicLyric({ id })
             .then((res) => {
                 res.lrc ? commit(types.GET_MUSIC_LYRIC, res.lrc.lyric) : commit(types.GET_MUSIC_LYRIC, '')
             })
             .catch((res) => {
+                console.log(res)
                 res.lrc ? commit(types.GET_MUSIC_LYRIC, res.lrc.lyric) : commit(types.GET_MUSIC_LYRIC, '')
             })
     },
@@ -176,6 +178,9 @@ const getters = {
     musicLists: state => state.musicLists,
     listenLists: state => state.listenLists,
     popularLists: state => state.popularLists.slice(0, 30),
+    radioLists: state => state.radioLists.slice(0, 30),
+    lightLists: state => state.lightLists.slice(0, 30),
+    classicalLists: state => state.classicalLists.slice(0, 30),
     audio: state => state.audio,
     audioUrl: state => state.audioUrl,
     playing: state => state.playing,
@@ -188,19 +193,6 @@ const mutations = {
         state.musicLists = res
     },
     [types.ADD_LISTEN_LISTS](state, music) {
-        // for(let item of state.listenLists) {
-        //     console.log(music)
-        //     if(music.ar) {
-        //         if(item.name !== music.name && item.ar[0].name !== music.ar[0].name) {
-        //             state.listenLists.push(music)
-        //         }
-        //     } else {
-        //         if(item.name !== music.name && item.artists[0].name !== music.artists[0].name) {
-        //             state.listenLists.push(music)
-        //         }
-        //     }
-
-        // }
         state.listenLists.push(music)
     },
     [types.GET_POPULAR_LISTS](state, res) {

@@ -1,5 +1,5 @@
 <template>
-    <v-music-list :music-lists="musicLists">
+    <v-music-list :music-lists="lightLists">
     </v-music-list>
 </template>
 
@@ -20,8 +20,13 @@ export default {
     },
     computed: {
         ...mapGetters([
-			'musicLists',
+            'lightLists'
 		])
+    },
+    created() {
+        if (this.lightLists.length == 0) {
+            this.$store.dispatch('getLightLists')
+        }
     }
 }
 </script>

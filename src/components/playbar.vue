@@ -123,7 +123,6 @@ export default {
             this.$store.dispatch('setShowListenList', true)
         },
         showPlay() {
-            console.log('showPlay')
             this.$store.dispatch('setShowPlay', true)
         },
     },
