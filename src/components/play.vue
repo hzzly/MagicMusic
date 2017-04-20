@@ -14,8 +14,10 @@
         <div class="content">
             <div class="lyrics">
                 <div class="m-name">{{audio.name}}</div>
-                <div class="s-name" v-if="audio.ar">{{audio.ar[0].name}}</div>
-                <div class="s-name" v-else>{{audio.artists[0].name}}</div>
+                <div class="s-name"
+                     v-if="audio.ar">{{audio.ar[0].name}}</div>
+                <div class="s-name"
+                     v-else>{{audio.artists[0].name}}</div>
                 <div class="lyric">
                     <div class="roll-lyric"
                          v-html="lyrics"></div>
@@ -125,7 +127,7 @@ export default {
     },
     mounted() {
         let timer,
-           audioDOM = document.querySelector('audio')
+            audioDOM = document.querySelector('audio')
         audioDOM.addEventListener('play', () => {
             timer = setInterval(() => {
                 this.now = audioDOM.currentTime
@@ -146,44 +148,43 @@ export default {
             this.$store.dispatch('setPlaying', false)
             for (let i = 0; i < this.listenLists.length; i++) {
                 if (this.listenLists[i].name === this.audio.name) {
-                    console.log(i)
                     this.$store.dispatch('setPreAudio', i)
-                    api.MusicUrl(this.audio.id)
-                        .then(res => {
-                            this.$store.dispatch('setAudioUrl', res.data[0].url)
-                        })
-                        .catch(res => {
-                            this.$store.dispatch('setAudioUrl', res.data[0].url)
-                        })
-                    let audioDOM = document.querySelector('audio')
-                    audioDOM.addEventListener('loadedmetadata', () => {
-                        this.$store.dispatch('setPlaying', true)
-                        this.$store.dispatch('getMusicInfo', this.audio.id)
-                    })
-                    return
+                    break
                 }
             }
+            api.MusicUrl(this.audio.id)
+                .then(res => {
+                    this.$store.dispatch('setAudioUrl', res.data[0].url)
+                })
+                .catch(res => {
+                    this.$store.dispatch('setAudioUrl', res.data[0].url)
+                })
+            let audioDOM = document.querySelector('audio')
+            audioDOM.addEventListener('loadedmetadata', () => {
+                this.$store.dispatch('setPlaying', true)
+                this.$store.dispatch('getMusicInfo', this.audio.id)
+            })
         },
         _next() {
             this.$store.dispatch('setPlaying', false)
             for (let i = 0; i < this.listenLists.length; i++) {
                 if (this.listenLists[i].name === this.audio.name) {
                     this.$store.dispatch('setNextAudio', i)
-                    api.MusicUrl(this.audio.id)
-                        .then(res => {
-                            this.$store.dispatch('setAudioUrl', res.data[0].url)
-                        })
-                        .catch(res => {
-                            this.$store.dispatch('setAudioUrl', res.data[0].url)
-                        })
-                    let audioDOM = document.querySelector('audio')
-                    audioDOM.addEventListener('loadedmetadata', () => {
-                        this.$store.dispatch('setPlaying', true)
-                        this.$store.dispatch('getMusicInfo', this.audio.id)
-                    })
-                    return
+                    break
                 }
             }
+            api.MusicUrl(this.audio.id)
+                .then(res => {
+                    this.$store.dispatch('setAudioUrl', res.data[0].url)
+                })
+                .catch(res => {
+                    this.$store.dispatch('setAudioUrl', res.data[0].url)
+                })
+            let audioDOM = document.querySelector('audio')
+            audioDOM.addEventListener('loadedmetadata', () => {
+                this.$store.dispatch('setPlaying', true)
+                this.$store.dispatch('getMusicInfo', this.audio.id)
+            })
         },
         showList() {
             this.$store.dispatch('setShowListenList', true)

@@ -13,7 +13,8 @@
                     <p :class="{'current': currentIndex == index}"
                        @click="_play(item)">
                         {{item.name}}
-                        <span>-- {{item.ar[0].name}}</span>
+                        <span v-if="item.ar">-- {{item.ar[0].name}}</span>
+                        <span v-else>-- {{item.artists[0].name}}</span>
                         <i class="icon"
                            v-show="currentIndex == index">&#xe641;</i></p>
                     <div class="delete"
@@ -124,6 +125,9 @@ export default {
             cursor: pointer;
             p {
                 flex: 1;
+                white-space: nowrap;
+                overflow:hidden;
+                text-overflow:ellipsis;
                 span {
                     color: rgba(255, 255, 255, .6);
                     font-size: px2rem(24px);

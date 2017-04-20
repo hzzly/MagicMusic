@@ -2,7 +2,7 @@
     <transition name="move">
         <div class="menu"
              v-show="item.menuShow">
-            <div class="inner inner-1" @click="_delete(index)"><i class="icon">&#xe639;</i></div>
+            <div class="inner inner-1" @click.once="_add(index)"><i class="icon">&#xe639;</i></div>
             <div class="inner inner-2" @click="_share(index)"><i class="icon">&#xe64c;</i></div>
             <div class="inner inner-3"
                  @click="_love(index)"><i class="icon">&#xe615;</i></div>
@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import { mapGetters } from 'vuex'
 export default {
     props: {
         item: Object,
@@ -21,12 +23,31 @@ export default {
 
         }
     },
+    computed: {
+        ...mapGetters([
+            'listenLists'
+        ])
+    },
     methods: {
         _love(index) {
             console.log(index)
         },
-        _delete(index) {
-            console.log(index)
+        _add(index) {
+            let x = this.listenLists.findIndex((music) => {
+                if(this.item.ar) {
+                    return music.name == this.item.name && music.ar[0].name == this.item.ar[0].name
+                } else {
+                    return music.name == this.item.name && music.artists[0].name == this.item.artists[0].name
+                }
+            })
+            console.log(x)
+            if(x !== -1) {
+                alert('已存在')
+                Vue.set(this.item, 'menuShow', false)
+            } else {
+                this.$store.dispatch('addListenLists', this.item)
+                Vue.set(this.item, 'menuShow', false)
+            }
         },
         _share(index) {
             console.log(index)

@@ -79,11 +79,16 @@ export default {
                     this.searchLists = res.result.songs
                 })
         },
-        _delete(index) {
-
-        },
         search(e) {
             console.log(e.target.textContent)
+            api.MusicSearch(e.target.textContent)
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(res => {
+                    console.log(res.result.songs)
+                    this.searchLists = res.result.songs
+                })
         },
         _delete(index) {
             this.searchHistory.splice(index, 1)

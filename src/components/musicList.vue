@@ -35,6 +35,7 @@
 import animationMenu from '@/components/animationMenu'
 
 import Vue from 'vue'
+import { mapGetters } from 'vuex'
 
 import api from '../api'
 
@@ -51,6 +52,11 @@ export default {
         }
 
     },
+    computed: {
+        ...mapGetters([
+            'listenLists'
+        ])
+    },
     created() {
         for (let item of this.musicList) {
             Vue.set(item, 'menuShow', false)
@@ -61,6 +67,17 @@ export default {
         _play(music) {
             this.$store.dispatch('setPlaying', false)
             this.$store.dispatch('setAudio', music)
+            let x = this.listenLists.findIndex((item) => {
+                // console.log(music.artists)
+                if(item.ar && music.ar) {
+                    return item.name == music.name && item.ar[0].name == music.ar[0].name
+                } else if(item.artists && music.artists) {
+                    return item.name == music.name && item.artists[0].name == music.artists[0].name
+                }
+            })
+            if(x === -1) {
+                this.$store.dispatch('addListenLists', music)
+            }
             if (music.mp3Url) {
                 this.$store.dispatch('setAudioUrl', music.mp3Url)
             } else {
@@ -119,12 +136,13 @@ export default {
         }
         .info {
             flex: 1;
+            white-space:nowrap;
+                overflow:hidden;
+                text-overflow:ellipsis;
             .music-name {
                 font-size: px2rem(32px);
                 font-weight: bold;
-                vertical-align: middle; // white-space:nowrap;
-                // overflow:hidden;
-                // text-overflow:ellipsis;
+                vertical-align: middle; 
                 .tag {
                     font-size: px2rem(20px);
                     color: #e53f6f;

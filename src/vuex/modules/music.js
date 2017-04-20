@@ -9,6 +9,20 @@ const state = {
     radioLists: [],
     listenLists: [
         {
+            "name": "刚好遇见你",
+            "id": 439915614,
+            "ar": [
+                {
+                    "id": 4130,
+                    "name": "李玉刚",
+                }
+            ],
+            "al": {
+                "name": "刚好遇见你",
+                "picUrl": "http://p3.music.126.net/lDyytkTaPYVTb1Vpide6AA==/18591642115187138.jpg",
+            },
+        },
+        {
             "name": "暧昧",
             "id": 471385043,
             "ar": [
@@ -22,34 +36,20 @@ const state = {
                 "picUrl": "http://p4.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg",
             }
         },
-        {
-            "name": "刚好遇见你",
-            "id": 439915614,
-            "ar": [
-                {
-                    "id": 4130,
-                    "name": "李玉刚",
-                }
-            ],
-            "al": {
-                "name": "刚好遇见你",
-                "picUrl": "http://p3.music.126.net/lDyytkTaPYVTb1Vpide6AA==/18591642115187138.jpg",
-            },
-        }
     ],
     audio: {
-        "name": "暧昧",
-        "id": 471385043,
+        "name": "刚好遇见你",
+        "id": 439915614,
         "ar": [
             {
-                "id": 5781,
-                "name": "薛之谦",
+                "id": 4130,
+                "name": "李玉刚",
             }
         ],
         "al": {
-            "name": "暧昧",
-            "picUrl": "http://p4.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg",
-        }
+            "name": "刚好遇见你",
+            "picUrl": "http://p3.music.126.net/lDyytkTaPYVTb1Vpide6AA==/18591642115187138.jpg",
+        },
     },
     audioUrl: '',
     lyric: '',
@@ -76,6 +76,9 @@ const actions = {
                 commit(types.GET_MUSIC_LISTS, res.musicData)
                 localStorage.musics = JSON.stringify(res.musicData)
             })
+    },
+    addListenLists({ commit }, music) {
+        commit(types.ADD_LISTEN_LISTS, music)
     },
     getPopularLists({ commit }) {
         if (localStorage.popularmusics !== '[]' && localStorage.popularmusics) {
@@ -184,6 +187,22 @@ const mutations = {
     [types.GET_MUSIC_LISTS](state, res) {
         state.musicLists = res
     },
+    [types.ADD_LISTEN_LISTS](state, music) {
+        // for(let item of state.listenLists) {
+        //     console.log(music)
+        //     if(music.ar) {
+        //         if(item.name !== music.name && item.ar[0].name !== music.ar[0].name) {
+        //             state.listenLists.push(music)
+        //         }
+        //     } else {
+        //         if(item.name !== music.name && item.artists[0].name !== music.artists[0].name) {
+        //             state.listenLists.push(music)
+        //         }
+        //     }
+
+        // }
+        state.listenLists.push(music)
+    },
     [types.GET_POPULAR_LISTS](state, res) {
         state.popularLists = res
     },
@@ -222,15 +241,6 @@ const mutations = {
     [types.GET_MUSIC_TIME](state, playload) {
         state.size = playload
     }
-    // [types.GET_TRAVELS_SEARCH_KEY](state, params) {
-    //     state.searchKey = params
-    // },
-    // [types.GET_TRAVELS_PAGE_NUM](state) {
-    //     state.searchKey['page'] += 1
-    // },
-    // [types.GET_TRAVELS_SCORLL_STATUS](state, status) {
-    //     state.scroll = status
-    // }
 }
 
 export default {

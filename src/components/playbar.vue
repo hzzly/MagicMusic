@@ -3,16 +3,20 @@
         <div class="play-box">
             <div class="music-avatar"
                  @click="showPlay()">
-                <img v-if="audio.al" :src="audio.al.picUrl"
+                <img v-if="audio.al"
+                     :src="audio.al.picUrl"
                      alt="">
-                <img v-else :src="audio.album.picUrl"
+                <img v-else
+                     :src="audio.album.picUrl"
                      alt="">
             </div>
             <div class="music-info"
                  @click="showPlay()">
                 <div class="music-name">{{audio.name}}</div>
-                <div class="music-s" v-if="audio.ar">{{audio.ar[0].name}}</div>
-                <div class="music-s" v-else>{{audio.artists[0].name}}</div>
+                <div class="music-s"
+                     v-if="audio.ar">{{audio.ar[0].name}}</div>
+                <div class="music-s"
+                     v-else>{{audio.artists[0].name}}</div>
             </div>
             <div class="music-play">
                 <i class="icon"
@@ -28,7 +32,8 @@
                  @click="showList()"><i class="icon">&#xe927;</i></div>
         </div>
         <div class="progress-bar">
-            <div class="play" :style="{width: (now / duration).toFixed(3)*100 + '%'}"></div>
+            <div class="play"
+                 :style="{width: (now / duration).toFixed(3)*100 + '%'}"></div>
         </div>
         <audio preload
                ref="myAudio"
@@ -81,7 +86,7 @@ export default {
     },
     methods: {
         _play() {
-            if(this.audioUrl) {
+            if (this.audioUrl) {
                 this.$store.dispatch('setPlaying', true)
             }
         },
@@ -93,25 +98,26 @@ export default {
             for (let i = 0; i < this.listenLists.length; i++) {
                 if (this.listenLists[i].name === this.audio.name) {
                     this.$store.dispatch('setNextAudio', i)
-                    if(this.audio.mp3Url) {
-                        this.$store.dispatch('setAudioUrl', this.audio.mp3Url)
-                    } else {
-                         api.MusicUrl(this.audio.id)
-                            .then(res => {
-                                this.$store.dispatch('setAudioUrl', res.data[0].url)
-                            })
-                            .catch(res => {
-                                this.$store.dispatch('setAudioUrl', res.data[0].url)
-                            })
-                    }
-                    let audioDOM = document.querySelector('audio')
-                    audioDOM.addEventListener('loadedmetadata', () => {
-                        this.$store.dispatch('setPlaying', true)
-                        this.$store.dispatch('getMusicInfo', this.audio.id)
-                    })
-                    return
+                    break
                 }
             }
+            if (this.audio.mp3Url) {
+                this.$store.dispatch('setAudioUrl', this.audio.mp3Url)
+            } else {
+                api.MusicUrl(this.audio.id)
+                    .then(res => {
+                        this.$store.dispatch('setAudioUrl', res.data[0].url)
+                    })
+                    .catch(res => {
+                        this.$store.dispatch('setAudioUrl', res.data[0].url)
+                    })
+            }
+            let audioDOM = document.querySelector('audio')
+            audioDOM.addEventListener('loadedmetadata', () => {
+                this.$store.dispatch('setPlaying', true)
+                console.log(1)
+                this.$store.dispatch('getMusicInfo', this.audio.id)
+            })
         },
         showList() {
             this.$store.dispatch('setShowListenList', true)
@@ -193,10 +199,12 @@ export default {
             background: #fe7498;
         }
     }
-    .fold-enter-active, .fold-leave-active {
+    .fold-enter-active,
+    .fold-leave-active {
         transition: transform .3s ease-in;
     }
-    .fold-enter, .fold-leave-active {
+    .fold-enter,
+    .fold-leave-active {
         transform: translate3d(0, 100%, 0);
     }
 }
