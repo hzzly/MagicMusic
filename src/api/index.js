@@ -112,4 +112,11 @@ export default {
         return fetchGet('/lyric', id)
       },
 
+      /**
+      * music搜索
+      */
+      MusicSearch(keywords) {
+        return fetchGet('/search', {keywords})
+      },
+
 }

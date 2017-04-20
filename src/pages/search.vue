@@ -5,7 +5,7 @@
                  @click="_back"><i class="icon">&#xe608;</i></div>
             <div class="input">
                 <input type="text"
-                       v-model="key"
+                       v-model="keywords"
                        placeholder="搜索音乐、歌手">
             </div>
             <div class="h-icon"
@@ -29,7 +29,7 @@
                         <div class="item"
                              v-for="(item, index) in searchHistory"
                              :key="item">
-                            <p @click="_searach(item)">
+                            <p @click="_search(item)">
                                 <i class="icon">&#xe613;</i>
                                 <span>{{item}}</span>
                             </p>
@@ -48,15 +48,18 @@
 import musicList from '@/components/musicList'
 
 import { mapGetters } from 'vuex'
+
+import api from '../api'
+
 export default {
     components: {
         'v-music-list': musicList,
     },
     data() {
         return {
-            key: '',
+            keywords: '',
             searchLists: [],
-            searchHistory: ['前端', '童话镇'],
+            searchHistory: ['前端', '童话镇', '刚好遇见你'],
             hotLists: []
         }
     },
@@ -64,14 +67,26 @@ export default {
         _back() {
             window.history.back()
         },
-        _search() {
-
+        _search(keywords) {
+            this.searchLists = []
+            let key = keywords ? keywords : this.keywords
+            api.MusicSearch(key)
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(res => {
+                    console.log(res.result.songs)
+                    this.searchLists = res.result.songs
+                })
         },
         _delete(index) {
 
         },
         search(e) {
             console.log(e.target.textContent)
+        },
+        _delete(index) {
+            this.searchHistory.splice(index, 1)
         }
     }
 }

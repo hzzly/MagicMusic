@@ -3,13 +3,16 @@
         <div class="play-box">
             <div class="music-avatar"
                  @click="showPlay()">
-                <img :src="audio.al.picUrl"
+                <img v-if="audio.al" :src="audio.al.picUrl"
+                     alt="">
+                <img v-else :src="audio.album.picUrl"
                      alt="">
             </div>
             <div class="music-info"
                  @click="showPlay()">
                 <div class="music-name">{{audio.name}}</div>
-                <div class="music-s">{{audio.ar[0].name}}</div>
+                <div class="music-s" v-if="audio.ar">{{audio.ar[0].name}}</div>
+                <div class="music-s" v-else>{{audio.artists[0].name}}</div>
             </div>
             <div class="music-play">
                 <i class="icon"
@@ -90,42 +93,25 @@ export default {
             for (let i = 0; i < this.listenLists.length; i++) {
                 if (this.listenLists[i].name === this.audio.name) {
                     this.$store.dispatch('setNextAudio', i)
-                    console.log(this.audio.id)
-                    api.MusicUrl(this.audio.id)
-                        .then(res => {
-                            this.$store.dispatch('setAudioUrl', res.data[0].url)
-                        })
-                        .catch(res => {
-                            this.$store.dispatch('setAudioUrl', res.data[0].url)
-                        })
+                    if(this.audio.mp3Url) {
+                        this.$store.dispatch('setAudioUrl', this.audio.mp3Url)
+                    } else {
+                         api.MusicUrl(this.audio.id)
+                            .then(res => {
+                                this.$store.dispatch('setAudioUrl', res.data[0].url)
+                            })
+                            .catch(res => {
+                                this.$store.dispatch('setAudioUrl', res.data[0].url)
+                            })
+                    }
                     let audioDOM = document.querySelector('audio')
                     audioDOM.addEventListener('loadedmetadata', () => {
                         this.$store.dispatch('setPlaying', true)
                         this.$store.dispatch('getMusicInfo', this.audio.id)
                     })
-                    // this.$nextTick(() => {
-                    //     this.$store.dispatch('setPlaying', true)
-                    //     this.$store.dispatch('getMusicInfo', this.audio.id)
-                    // })
                     return
                 }
             }
-
-            // this.$store.dispatch('setPlaying', false)
-            // this.$store.dispatch('setAudio', music)
-            // api.MusicUrl(music.id)
-            //     .then(res => {
-            //         this.$store.dispatch('setAudioUrl', res.data[0].url)
-            //     })
-            //     .catch(res => {
-            //         this.$store.dispatch('setAudioUrl', res.data[0].url)
-            //     })
-            // let audioDOM = document.querySelector('audio')
-            // audioDOM.addEventListener('loadedmetadata', () => {
-            //     this.$store.dispatch('setPlaying', true)
-            //     this.$store.dispatch('getMusicInfo', music.id)
-            // })
-            
         },
         showList() {
             this.$store.dispatch('setShowListenList', true)
@@ -146,11 +132,7 @@ export default {
             })
             this.$refs.myAudio.addEventListener('error', () => {
                 alert('获取音乐出错')
-                // this.$store.dispatch('getMusicTime', this.$refs.myAudio.duration)
             })
-            // setTimeout(() => {
-                
-            // },500)
         },
     }
 }
@@ -211,13 +193,6 @@ export default {
             background: #fe7498;
         }
     }
-    // &.fold-enter-active {
-    //     transform: translate3d(0, 0, 0);
-    // }
-    // &.fold-enter,
-    // &.fold-leave-active {
-    //     transform: translate3d(0, -100%, 0);
-    // }
     .fold-enter-active, .fold-leave-active {
         transition: transform .3s ease-in;
     }

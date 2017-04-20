@@ -1,31 +1,23 @@
 <template>
     <div class="music-list">
         <div class="list-item"
-             v-for="(item, index) in musicList">
-            <div class="avatar"
+             v-for="(item, index) in searchList">
+             <div class="avatar"
                  @click="_play(item)">
-                <img v-if="item.al"
-                     :src="item.al.picUrl"
-                     alt="">
-                <img v-else
-                     :src="item.album.picUrl"
+                <img :src="item.album.picUrl"
                      alt="">
             </div>
             <div class="info"
                  @click="_play(item)">
                 <div class="music-name">{{item.name}}<i class="tag"
                        v-show="item.sq">SQ</i></div>
-                <div class="music-s"
-                     v-if="item.ar">{{item.ar[0].name}}</div>
-                <div class="music-s"
-                     v-else>{{item.artists[0].name}}</div>
+                <div class="music-s">{{item.artists[0].name}}</div>
                 <div class="music-hot"
                      v-show="item.hot"><i class="icon">&#xe650;</i>{{item.hot}}</div>
             </div>
             <div class="operation"
                  @click="_showOperation(index)"><i class="icon">&#xe605;</i></div>
-            <animation-menu :item="item"
-                            :index="index"></animation-menu>
+            <animation-menu :item="item" :index="index"></animation-menu>
         </div>
     
     </div>
@@ -43,35 +35,26 @@ export default {
         animationMenu
     },
     props: {
-        musicLists: Array
+        searchLists: Array
     },
     data() {
         return {
-            musicList: this.musicLists
+            searchList: this.searchLists
         }
 
     },
     created() {
-        for (let item of this.musicList) {
+        for(let item of this.searchLists) {
             Vue.set(item, 'menuShow', false)
         }
     },
     methods: {
         //http://hjingren.cn:3000/user/playlist?uid=468310461
         _play(music) {
+            console.log(music)
             this.$store.dispatch('setPlaying', false)
             this.$store.dispatch('setAudio', music)
-            if (music.mp3Url) {
-                this.$store.dispatch('setAudioUrl', music.mp3Url)
-            } else {
-                api.MusicUrl(music.id)
-                    .then(res => {
-                        this.$store.dispatch('setAudioUrl', res.data[0].url)
-                    })
-                    .catch(res => {
-                        this.$store.dispatch('setAudioUrl', res.data[0].url)
-                    })
-            }
+            this.$store.dispatch('setAudioUrl', music.mp3Url)
             let audioDOM = document.querySelector('audio')
             audioDOM.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('setPlaying', true)
@@ -80,13 +63,13 @@ export default {
         },
         _showOperation(index) {
             console.log(index)
-
-            for (let i = 0; i < this.musicList.length; i++) {
-                if (i !== index) {
-                    this.musicList[i].menuShow = false
+            
+            for(let i = 0; i<this.searchLists.length; i++) {
+                if(i !== index ) {
+                    this.searchLists[i].menuShow = false
                 }
             }
-            this.musicList[index].menuShow = !this.musicList[index].menuShow
+            this.searchLists[index].menuShow = !this.searchLists[index].menuShow
         },
     }
 }
@@ -122,7 +105,8 @@ export default {
             .music-name {
                 font-size: px2rem(32px);
                 font-weight: bold;
-                vertical-align: middle; // white-space:nowrap;
+                vertical-align: middle;
+                // white-space:nowrap;
                 // overflow:hidden;
                 // text-overflow:ellipsis;
                 .tag {

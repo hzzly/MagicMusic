@@ -207,7 +207,7 @@ const mutations = {
         state.audio = state.listenLists[i]
     },
     [types.SET_PRE_AUDIO](state, index) {
-        let i = index === 0 ? state.musicLists.length - 1 : (--index)
+        let i = index === 0 ? state.listenLists.length - 1 : (--index)
         state.audio = state.listenLists[i]
     },
     [types.SET_PLAYING](state, status) {
