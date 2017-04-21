@@ -6,7 +6,9 @@ import * as types from '../types'
 const state = {
     showListenList: false,
     showSidebar: false,
-    showPlay: false
+    showPlay: false,
+    showToast: false,
+    alertMsg: ''
 }
 
 const actions = {
@@ -19,11 +21,18 @@ const actions = {
     setShowPlay({ commit }, status) {
         commit(types.COM_SHOW_PLAY, status)
     },
+    setAlertMsg({ commit }, msg) {
+        commit(types.COM_ALERT_MSG, msg)
+    },
+    setShowAlertMsg({ commit }, status) {
+        commit(types.COM_SHOW_ALERT_MSG, status)
+    },
 }
 
 const getters = {
     showListenList: state => state.showListenList,
     showSidebar: state => state.showSidebar,
+    showToast: state => state.showToast,
     showPlay: state => state.showPlay,
 }
 
@@ -37,6 +46,12 @@ const mutations = {
     },
     [types.COM_SHOW_PLAY](state, status) {
         state.showPlay = status
+    },
+    [types.COM_ALERT_MSG](state, msg) {
+        state.alertMsg = msg
+    },
+    [types.COM_SHOW_ALERT_MSG](state, status) {
+        state.showToast = status
     },
     // [types.COM_LOADING_STATUS](state, status) {
     //     state.loading = status

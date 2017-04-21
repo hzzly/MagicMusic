@@ -2,14 +2,18 @@
   <div id="app">
     <v-header v-show="header"></v-header>
     <div class="container">
-      <router-view></router-view>
+      <transition :name="tansitionName">
+        <router-view></router-view>
+      </transition>
     </div>
-    <!--<router-view></router-view>-->
     <v-playbar v-show="playBar"></v-playbar>
-    <v-play v-show="showPlay"></v-play>
-  
+
     <!--公用组件-->
     <v-sidebar></v-sidebar>
+    <v-toast v-show="showToast"></v-toast>
+    <transition name="fold">
+      <v-play v-show="showPlay"></v-play>
+    </transition>
   </div>
 </template>
 
@@ -18,6 +22,7 @@ import header from '@/components/header'
 import playbar from '@/components/playbar'
 import play from '@/components/play'
 import sidebar from '@/components/sidebar'
+import toast from '@/components/toast'
 
 import { mapGetters } from 'vuex'
 
@@ -30,6 +35,7 @@ export default {
     'v-playbar': playbar,
     'v-play': play,
     'v-sidebar': sidebar,
+    'v-toast': toast,
   },
   created() {
     if (!this.audioUrl) {
@@ -42,6 +48,11 @@ export default {
         })
     }
   },
+  data() {
+    return {
+      tansitionName: 'slide-right'
+    }
+  },
   computed: {
     playBar() {
       // return this.$route.path.split('/')[1] == 'search' ? false : true
@@ -52,6 +63,7 @@ export default {
     },
     ...mapGetters([
       'showSidebar',
+      'showToast',
       'showPlay',
       'audio',
       'audioUrl'
@@ -86,10 +98,46 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
+  background: rgba(8, 5, 58, 0.9);
   .container {
     flex: 1;
     overflow: auto;
     overflow-x: hidden;
+  }
+  .slide-left-enter-active {
+    animation: slideLeft .3s;
+  }
+  .slide-right-enter-active {
+    animation: slideRight .3s;
+  }
+
+  .fold-enter-active,
+  .fold-leave-active {
+    transition: transform .3s ease-in;
+  }
+  .fold-enter,
+  .fold-leave-active {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
   }
 }
 </style>

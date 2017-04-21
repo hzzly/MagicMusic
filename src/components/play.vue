@@ -3,13 +3,13 @@
         <div class="head">
             <div class="h-icon"
                  @click="hidePlay"><i class="icon">&#xe8e2;</i></div>
-            <div class="h-icon"><i class="icon">&#xe93b;</i></div>
+            <div class="h-icon" @click="showToast"><i class="icon">&#xe93b;</i></div>
         </div>
         <div class="name">{{audio.name}}</div>
         <div class="operation">
-            <div class="love"><i class="icon">&#xe615;</i></div>
-            <div class="msg"><i class="icon">&#xe603;</i></div>
-            <div class="share"><i class="icon">&#xe64c;</i></div>
+            <div class="love" @click="showToast"><i class="icon">&#xe615;</i></div>
+            <div class="msg" @click="showToast"><i class="icon">&#xe603;</i></div>
+            <div class="share" @click="showToast"><i class="icon">&#xe64c;</i></div>
         </div>
         <div class="content">
             <div class="lyrics">
@@ -29,7 +29,7 @@
             </div>
             <div class="control">
                 <div>
-                    <div class="loop"><i class="icon">&#xe819;</i></div>
+                    <div class="loop" @click="showToast"><i class="icon">&#xe819;</i></div>
                     <div class="pre"
                          @click="_pre()"><i class="icon">&#xe61e;</i></div>
                     <div class="pause">
@@ -46,7 +46,7 @@
                          @click="showList()"><i class="icon">&#xe60f;</i></div>
                 </div>
             </div>
-            <div class="process">
+            <div class="process" @click="showToast">
                 <div class="line"></div>
                 <div class="pro"></div>
             </div>
@@ -71,6 +71,7 @@
 import { mapGetters } from 'vuex'
 
 import api from '../api'
+import * as _ from '../util/tool'
 
 export default {
     data() {
@@ -199,6 +200,9 @@ export default {
         },
         hidePlay() {
             this.$store.dispatch('setShowPlay', false)
+        },
+        showToast() {
+            _.toast('开发中，敬请期待...')
         }
     }
 }

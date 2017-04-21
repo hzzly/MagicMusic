@@ -13,6 +13,7 @@
 <script>
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
+import * as _ from '../util/tool'
 export default {
     props: {
         item: Object,
@@ -30,7 +31,7 @@ export default {
     },
     methods: {
         _love(index) {
-            console.log(index)
+            _.toast('开发中，敬请期待...')
         },
         _add(index) {
             let x = this.listenLists.findIndex((music) => {
@@ -50,7 +51,7 @@ export default {
             }
         },
         _share(index) {
-            console.log(index)
+            _.toast('开发中，敬请期待...')
         }
     }
 }

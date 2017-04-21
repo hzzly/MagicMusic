@@ -53,7 +53,6 @@ const state = {
     audioUrl: '',
     lyric: '',
     size: '',
-    currentIndex: 0, // 当前播放的歌曲位置
     playing: false, // 是否正在播放
 }
 
