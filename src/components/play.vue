@@ -122,7 +122,7 @@ export default {
         }
     },
     created() {
-        this.$store.dispatch('getMusicInfo', 439915614)
+        this.$store.dispatch('getMusicInfo', 471385043)
         this.$store.dispatch('getMusicTime', 328.463673)
     },
     mounted() {
@@ -152,13 +152,17 @@ export default {
                     break
                 }
             }
-            api.MusicUrl(this.audio.id)
-                .then(res => {
-                    this.$store.dispatch('setAudioUrl', res.data[0].url)
-                })
-                .catch(res => {
-                    this.$store.dispatch('setAudioUrl', res.data[0].url)
-                })
+            if (this.audio.mp3Url) {
+                this.$store.dispatch('setAudioUrl', this.audio.mp3Url)
+            } else {
+                api.MusicUrl(this.audio.id)
+                    .then(res => {
+                        this.$store.dispatch('setAudioUrl', res.data[0].url)
+                    })
+                    .catch(res => {
+                        this.$store.dispatch('setAudioUrl', res.data[0].url)
+                    })
+            }
             let audioDOM = document.querySelector('audio')
             audioDOM.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('setPlaying', true)
@@ -173,13 +177,17 @@ export default {
                     break
                 }
             }
-            api.MusicUrl(this.audio.id)
-                .then(res => {
-                    this.$store.dispatch('setAudioUrl', res.data[0].url)
-                })
-                .catch(res => {
-                    this.$store.dispatch('setAudioUrl', res.data[0].url)
-                })
+            if (this.audio.mp3Url) {
+                this.$store.dispatch('setAudioUrl', this.audio.mp3Url)
+            } else {
+                api.MusicUrl(this.audio.id)
+                    .then(res => {
+                        this.$store.dispatch('setAudioUrl', res.data[0].url)
+                    })
+                    .catch(res => {
+                        this.$store.dispatch('setAudioUrl', res.data[0].url)
+                    })
+            }
             let audioDOM = document.querySelector('audio')
             audioDOM.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('setPlaying', true)

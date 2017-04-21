@@ -2,7 +2,6 @@ import api from '../../api'
 import * as types from '../types'
 
 const state = {
-    musicLists: [],
     popularLists: [],
     classicalLists: [],
     lightLists: [],
@@ -38,18 +37,18 @@ const state = {
         },
     ],
     audio: {
-        "name": "刚好遇见你",
-        "id": 439915614,
+        "name": "暧昧",
+        "id": 471385043,
         "ar": [
             {
-                "id": 4130,
-                "name": "李玉刚",
+                "id": 5781,
+                "name": "薛之谦",
             }
         ],
         "al": {
-            "name": "刚好遇见你",
-            "picUrl": "http://p3.music.126.net/lDyytkTaPYVTb1Vpide6AA==/18591642115187138.jpg",
-        },
+            "name": "暧昧",
+            "picUrl": "http://p4.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg",
+        }
     },
     audioUrl: '',
     lyric: '',
@@ -59,27 +58,11 @@ const state = {
 }
 
 const actions = {
-    // /**
-    //  * 获取音乐列表
-    //  */
-    // getMusicLists({ commit }) {
-    //     if (localStorage.musics !== '[]' && localStorage.musics) {
-    //         commit(types.GET_MUSIC_LISTS, JSON.parse(localStorage.musics))
-    //         return;
-    //     }
-    //     api.MusicList()
-    //         .then(res => {
-    //             commit(types.GET_MUSIC_LISTS, res.musicData)
-    //             // localStorage.musics = JSON.stringify(res.musicData)
-    //         })
-    //         .catch(res => {
-    //             commit(types.GET_MUSIC_LISTS, res.musicData)
-    //             // localStorage.musics = JSON.stringify(res.musicData)
-    //         })
-    // },
+    //添加到试听列表
     addListenLists({ commit }, music) {
         commit(types.ADD_LISTEN_LISTS, music)
     },
+    //获取热门流行歌曲
     getPopularLists({ commit }) {
         if (localStorage.popularmusics !== '[]' && localStorage.popularmusics) {
             commit(types.GET_POPULAR_LISTS, JSON.parse(localStorage.popularmusics))
@@ -95,6 +78,7 @@ const actions = {
                 localStorage.popularmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
     },
+    //获取古典歌曲
     getClassicalLists({ commit }) {
         if (localStorage.classicalmusics !== '[]' && localStorage.classicalmusics) {
             commit(types.GET_CLASSICAL_LISTS, JSON.parse(localStorage.classicalmusics))
@@ -110,6 +94,7 @@ const actions = {
                 localStorage.classicalmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
     },
+    //获取轻音乐歌曲
     getLightLists({ commit }) {
         if (localStorage.lightmusics !== '[]' && localStorage.lightmusics) {
             commit(types.GET_LIGHT_LISTS, JSON.parse(localStorage.lightmusics))
@@ -125,6 +110,7 @@ const actions = {
                 localStorage.lightmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
     },
+    //获取电台歌曲
     getRadioLists({ commit }) {
         if (localStorage.radiomusics !== '[]' && localStorage.radiomusics) {
             commit(types.GET_RADIO_LISTS, JSON.parse(localStorage.radiomusics))
@@ -140,42 +126,47 @@ const actions = {
                 localStorage.radiomusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
     },
+    //设置此时播放的音乐
     setAudio({ commit }, music) {
         commit(types.SET_AUDIO, music)
     },
+    //设置播放的音乐url
     setAudioUrl({ commit }, url) {
         commit(types.SET_AUDIO_URL, url)
     },
+    //上一曲
     setNextAudio({ commit }, index) {
         commit(types.SET_NEXT_AUDIO, index)
     },
+    //下一曲
     setPreAudio({ commit }, index) {
         commit(types.SET_PRE_AUDIO, index)
     },
+    //播放、暂停
     setPlaying({ commit }, status) {
         commit(types.SET_PLAYING, status)
     },
+    //删除试听列表的歌曲
     deleteMusic({ commit }, index) {
         commit(types.DELETE_MUSIC, index)
     },
+    //获取歌词
     getMusicInfo({ commit }, id) {
-        console.log(id)
         api.MusicLyric({ id })
             .then((res) => {
                 res.lrc ? commit(types.GET_MUSIC_LYRIC, res.lrc.lyric) : commit(types.GET_MUSIC_LYRIC, '')
             })
             .catch((res) => {
-                console.log(res)
                 res.lrc ? commit(types.GET_MUSIC_LYRIC, res.lrc.lyric) : commit(types.GET_MUSIC_LYRIC, '')
             })
     },
+    //歌曲总时间
     getMusicTime({ commit }, size) {
         commit(types.GET_MUSIC_TIME, size)
     }
 }
 
 const getters = {
-    musicLists: state => state.musicLists,
     listenLists: state => state.listenLists,
     popularLists: state => state.popularLists.slice(0, 30),
     radioLists: state => state.radioLists.slice(0, 30),
@@ -189,9 +180,6 @@ const getters = {
 }
 
 const mutations = {
-    [types.GET_MUSIC_LISTS](state, res) {
-        state.musicLists = res
-    },
     [types.ADD_LISTEN_LISTS](state, music) {
         state.listenLists.push(music)
     },

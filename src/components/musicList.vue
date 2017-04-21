@@ -67,8 +67,9 @@ export default {
         _play(music) {
             this.$store.dispatch('setPlaying', false)
             this.$store.dispatch('setAudio', music)
+            //查找试听列表中有没有点击中的歌
             let x = this.listenLists.findIndex((item) => {
-                // console.log(music.artists)
+                //判断是否是搜索列表里的(搜索结果字段不一样)
                 if(item.ar && music.ar) {
                     return item.name == music.name && item.ar[0].name == music.ar[0].name
                 } else if(item.artists && music.artists) {
@@ -96,8 +97,6 @@ export default {
             })
         },
         _showOperation(index) {
-            console.log(index)
-
             for (let i = 0; i < this.musicList.length; i++) {
                 if (i !== index) {
                     this.musicList[i].menuShow = false

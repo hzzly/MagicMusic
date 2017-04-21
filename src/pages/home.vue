@@ -11,9 +11,6 @@
 import banner from '@/components/banner'
 import nav from '@/components/nav'
 
-import { mapGetters } from 'vuex'
-
-
 export default {
     components: {
         'v-banner': banner,
@@ -33,12 +30,6 @@ export default {
     created() {
         this.$router.push('popular')
     },
-    computed: {
-        ...mapGetters([
-            'audio'
-        ])
-    }
-
 }
 </script>
 
