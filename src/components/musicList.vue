@@ -1,7 +1,7 @@
 <template>
     <div class="music-list">
         <div class="list-item"
-             v-for="(item, index) in musicList">
+             v-for="(item, index) in musicLists" v-show="!showLoading">
             <div class="avatar"
                  @click="_play(item)">
                 <img v-if="item.al"
@@ -27,12 +27,13 @@
             <animation-menu :item="item"
                             :index="index"></animation-menu>
         </div>
-    
+        <v-loading v-show="showLoading"></v-loading>
     </div>
 </template>
 
 <script>
 import animationMenu from '@/components/animationMenu'
+import VLoading from '@/components/loading'
 
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
@@ -41,24 +42,26 @@ import api from '../api'
 
 export default {
     components: {
-        animationMenu
+        animationMenu,
+        VLoading
     },
     props: {
         musicLists: Array
     },
     data() {
         return {
-            musicList: this.musicLists
+            // musicList: this.musicLists
         }
 
     },
     computed: {
         ...mapGetters([
-            'listenLists'
+            'listenLists',
+            'showLoading',
         ])
     },
     created() {
-        for (let item of this.musicList) {
+        for (let item of this.musicLists) {
             Vue.set(item, 'menuShow', false)
         }
     },
@@ -97,12 +100,12 @@ export default {
             })
         },
         _showOperation(index) {
-            for (let i = 0; i < this.musicList.length; i++) {
+            for (let i = 0; i < this.musicLists.length; i++) {
                 if (i !== index) {
-                    this.musicList[i].menuShow = false
+                    this.musicLists[i].menuShow = false
                 }
             }
-            this.musicList[index].menuShow = !this.musicList[index].menuShow
+            this.musicLists[index].menuShow = !this.musicLists[index].menuShow
         },
     }
 }
@@ -112,6 +115,7 @@ export default {
 @import '../assets/css/function.scss';
 .music-list {
     background: #28224e;
+    position: relative;
     .list-item {
         position: relative;
         height: px2rem(145px);

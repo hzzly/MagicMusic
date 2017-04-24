@@ -63,64 +63,88 @@ const actions = {
     },
     //获取热门流行歌曲
     getPopularLists({ commit }) {
+        commit(types.COM_SHOW_LOADING, true)
         if (localStorage.popularmusics !== '[]' && localStorage.popularmusics) {
-            commit(types.GET_POPULAR_LISTS, JSON.parse(localStorage.popularmusics))
+            setTimeout(() => {
+                commit(types.COM_SHOW_LOADING, false)
+                commit(types.GET_POPULAR_LISTS, JSON.parse(localStorage.popularmusics))
+            }, 500)
             return;
         }
         api.PopularList()
             .then(res => {
+                commit(types.COM_SHOW_LOADING, false)
                 commit(types.GET_POPULAR_LISTS, res.playlist.tracks)
                 localStorage.popularmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
             .catch(res => {
+                commit(types.COM_SHOW_LOADING, false)
                 commit(types.GET_POPULAR_LISTS, res.playlist.tracks)
                 localStorage.popularmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
     },
     //获取古典歌曲
     getClassicalLists({ commit }) {
+        commit(types.COM_SHOW_LOADING, true)
         if (localStorage.classicalmusics !== '[]' && localStorage.classicalmusics) {
-            commit(types.GET_CLASSICAL_LISTS, JSON.parse(localStorage.classicalmusics))
+            setTimeout(() => {
+                commit(types.COM_SHOW_LOADING, false)
+                commit(types.GET_CLASSICAL_LISTS, JSON.parse(localStorage.classicalmusics))
+            }, 500)
             return;
         }
         api.ClassicalList()
             .then(res => {
+                commit(types.COM_SHOW_LOADING, false)
                 commit(types.GET_CLASSICAL_LISTS, res.playlist.tracks)
                 localStorage.classicalmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
             .catch(res => {
+                commit(types.COM_SHOW_LOADING, false)
                 commit(types.GET_CLASSICAL_LISTS, res.playlist.tracks)
                 localStorage.classicalmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
     },
     //获取轻音乐歌曲
     getLightLists({ commit }) {
+        commit(types.COM_SHOW_LOADING, true)
         if (localStorage.lightmusics !== '[]' && localStorage.lightmusics) {
-            commit(types.GET_LIGHT_LISTS, JSON.parse(localStorage.lightmusics))
+            setTimeout(() => {
+                commit(types.COM_SHOW_LOADING, false)
+                commit(types.GET_LIGHT_LISTS, JSON.parse(localStorage.lightmusics))
+            }, 500)
             return;
         }
         api.LightList()
             .then(res => {
+                commit(types.COM_SHOW_LOADING, false)
                 commit(types.GET_LIGHT_LISTS, res.playlist.tracks)
                 localStorage.lightmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
             .catch(res => {
+                commit(types.COM_SHOW_LOADING, false)
                 commit(types.GET_LIGHT_LISTS, res.playlist.tracks)
                 localStorage.lightmusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
     },
     //获取电台歌曲
     getRadioLists({ commit }) {
+        commit(types.COM_SHOW_LOADING, true)
         if (localStorage.radiomusics !== '[]' && localStorage.radiomusics) {
-            commit(types.GET_RADIO_LISTS, JSON.parse(localStorage.radiomusics))
+            setTimeout(() => {
+                commit(types.COM_SHOW_LOADING, false)
+                commit(types.GET_RADIO_LISTS, JSON.parse(localStorage.radiomusics))
+            }, 500)
             return;
         }
         api.RadioList()
             .then(res => {
+                commit(types.COM_SHOW_LOADING, false)
                 commit(types.GET_RADIO_LISTS, res.playlist.tracks)
                 localStorage.radiomusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })
             .catch(res => {
+                commit(types.COM_SHOW_LOADING, false)
                 commit(types.GET_RADIO_LISTS, res.playlist.tracks)
                 localStorage.radiomusics = JSON.stringify(res.playlist.tracks.slice(0, 30))
             })

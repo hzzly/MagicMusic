@@ -68,6 +68,7 @@ export default {
             window.history.back()
         },
         _search(keywords) {
+            this.$store.dispatch('setShowLoading', true)
             this.searchLists = []
             let key = keywords ? keywords : this.keywords
             api.MusicSearch(key)
@@ -75,19 +76,23 @@ export default {
                     console.log(res)
                 })
                 .catch(res => {
-                    console.log(res.result.songs)
                     this.searchLists = res.result.songs
+                    setTimeout(() => {
+                        this.$store.dispatch('setShowLoading', false)
+                    }, 500)
                 })
         },
         search(e) {
-            console.log(e.target.textContent)
+            this.$store.dispatch('setShowLoading', true)
             api.MusicSearch(e.target.textContent)
                 .then(res => {
                     console.log(res)
                 })
                 .catch(res => {
-                    console.log(res.result.songs)
                     this.searchLists = res.result.songs
+                    setTimeout(() => {
+                        this.$store.dispatch('setShowLoading', false)
+                    }, 500)
                 })
         },
         _delete(index) {

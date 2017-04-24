@@ -19,3 +19,4 @@ export const COM_SHOW_SIDE_BAR = 'COM_SHOW_SIDE_BAR' //侧边栏
 export const COM_SHOW_PLAY = 'COM_SHOW_PLAY' //播放页
 export const COM_ALERT_MSG = 'COM_ALERT_MSG'
 export const COM_SHOW_ALERT_MSG = 'COM_SHOW_ALERT_MSG'
+export const COM_SHOW_LOADING = 'COM_SHOW_LOADING'
