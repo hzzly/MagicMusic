@@ -6,7 +6,7 @@
                      v-on:swipeleft="nextPic"
                      v-on:swiperight="prePic">
                 <template v-if="typeof item === 'object'">
-                    <img :src="item.src"
+                    <img v-lazy="item.src"
                          @click="target(index)">
                     <span :class="{tag:item.tagName}"
                           :style="item.tagStyle">{{item.tagName}}</span>
@@ -22,10 +22,6 @@
                 @click="target(index)"
                 :class="[move[index]]"></em>
         </li>
-        <!--<li class="control">
-                    <em @click="prePic"></em>
-                    <em @click="nextPic"></em>
-                </li>-->
     </ul>
 </template>
 <script>
@@ -99,29 +95,6 @@ export default {
     height: px2rem(350px);
     // padding-top: px2rem(10px);
     background: rgba(8, 5, 58, .9);
-}
-
-.control {
-    em {
-        &:first-child,
-        &:last-child {
-            position: absolute;
-            display: block;
-            width: 30px;
-            height: 30px;
-            background-size: cover;
-            z-index: 100;
-            cursor: pointer;
-        }
-        &:first-child {
-            left: 0px;
-            background-image: url('../assets/pre.png');
-        }
-        &:last-child {
-            right: 0px;
-            background-image: url('../assets/next.png');
-        }
-    }
 }
 
 li {

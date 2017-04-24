@@ -4,10 +4,10 @@
             <div class="music-avatar"
                  @click="showPlay()">
                 <img v-if="audio.al"
-                     :src="audio.al.picUrl"
+                     v-lazy="audio.al.picUrl"
                      alt="">
                 <img v-else
-                     :src="audio.album.picUrl"
+                     v-lazy="audio.album.picUrl"
                      alt="">
             </div>
             <div class="music-info"

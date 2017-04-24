@@ -15,6 +15,7 @@
     "qs": "^6.4.0",
     "sass-loader": "^6.0.3",
     "vue": "^2.2.2",
+    "vue-lazyload": "^1.0.3",
     "vue-router": "^2.3.0",
     "vue-touch": "git://github.com/vuejs/vue-touch.git#next",
     "vuex": "^2.3.0"

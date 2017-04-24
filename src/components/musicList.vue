@@ -4,11 +4,10 @@
              v-for="(item, index) in musicLists" v-show="!showLoading">
             <div class="avatar"
                  @click="_play(item)">
-                <img v-if="item.al"
-                     :src="item.al.picUrl"
+                <img v-if="item.al" v-lazy="item.al.picUrl"
                      alt="">
                 <img v-else
-                     :src="item.album.picUrl"
+                     v-lazy="item.album.picUrl"
                      alt="">
             </div>
             <div class="info"
