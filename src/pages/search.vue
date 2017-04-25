@@ -62,7 +62,6 @@ export default {
             show: false,
             keywords: '',
             searchLists: [],
-            searchHistory: JSON.parse(localStorage.searchHistory) || [],
             hotLists: ['暧昧','成都','童话镇','刚好遇见你','告白气球','前端','演员','Fade','See You Again','咱们屯里人(粤语版)','南山南','薛之谦','李玉刚','汪峰','周杰伦']
         }
     },
@@ -80,6 +79,9 @@ export default {
                 s.add(this.hotLists[arrIndex])
             }
             return [...s]
+        },
+        searchHistory() {
+            return localStorage.searchHistory ? JSON.parse(localStorage.searchHistory) : ['前端', '童话镇', '刚好遇见你']
         }
     },
     methods: {

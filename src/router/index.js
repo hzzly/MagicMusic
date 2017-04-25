@@ -5,6 +5,7 @@ import collection from '@/pages/collection'
 import user from '@/pages/user'
 import login from '@/pages/login'
 import search from '@/pages/search'
+import rank from '@/pages/rank'
 import popular from '@/pages/popular'
 import classical from '@/pages/classical'
 import light from '@/pages/light'
@@ -61,5 +62,10 @@ export default new Router({
       name: 'search',
       component: search
     },
+    {
+      path: '/rank',
+      name: 'rank',
+      component: rank
+    }
   ]
 })

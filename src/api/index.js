@@ -5,7 +5,7 @@ import qs from 'qs'
 // axios 配置
 axios.defaults.timeout = 5000;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-axios.defaults.baseURL = 'http://hjingren.cn:3000';
+axios.defaults.baseURL = 'http://localhost:3000/';
 
 //POST传参序列化
 axios.interceptors.request.use((config) => {
@@ -117,6 +117,13 @@ export default {
       */
       MusicSearch(keywords) {
         return fetchGet('/search', {keywords})
+      },
+
+      /**
+      * 排行榜
+      */
+      MusicRank(idx) {
+        return fetchGet('/top_list', {idx})
       },
 
 }

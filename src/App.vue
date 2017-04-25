@@ -55,11 +55,10 @@ export default {
   },
   computed: {
     playBar() {
-      // return this.$route.path.split('/')[1] == 'search' ? false : true
       return true
     },
     header() {
-      return this.$route.path.split('/')[1] == 'search' ? false : true
+      return this.$route.path.split('/')[1] == 'search' || this.$route.path.split('/')[1] == 'rank' ? false : true
     },
     ...mapGetters([
       'showSidebar',
