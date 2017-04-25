@@ -2,7 +2,9 @@
     <div class="search">
         <div class="head">
             <div class="h-icon"
-                 @click="_back"><i class="icon">&#xe608;</i></div>
+                 @click="_back" v-if="!show"><i class="icon">&#xe608;</i></div>
+            <div class="h-icon"
+                 @click="_show" v-else><i class="icon">&#xe608;</i></div>
             <div class="input">
                 <input type="text"
                        v-model="keywords"
@@ -13,13 +15,13 @@
         </div>
         <div class="search-list">
             <v-music-list :music-lists="searchLists"
-                          v-if="searchLists.length"></v-music-list>
+                          v-if="show"></v-music-list>
             <div class="hot-key"
                  v-else>
                 <div class="title">热门搜索</div>
                 <div class="hot-list">
                     <ul>
-                        <li @click="search">暧昧</li>
+                        <li v-for="item in hotList" @click="_search(item)">{{item}}</li>
                     </ul>
                 </div>
                 <div class="search-history">
@@ -57,18 +59,47 @@ export default {
     },
     data() {
         return {
+            show: false,
             keywords: '',
             searchLists: [],
-            searchHistory: ['前端', '童话镇', '刚好遇见你'],
-            hotLists: []
+            searchHistory: JSON.parse(localStorage.searchHistory) || [],
+            hotLists: ['暧昧','成都','童话镇','刚好遇见你','告白气球','前端','演员','Fade','See You Again','咱们屯里人(粤语版)','南山南','薛之谦','李玉刚','汪峰','周杰伦']
+        }
+    },
+    created() {
+        if (!localStorage.searchHistory) {
+            let searchHistory = ['前端', '童话镇', '刚好遇见你']
+            localStorage.searchHistory = JSON.stringify(searchHistory)
+        } 
+    },
+    computed: {
+        hotList() {
+            let s = new Set()
+            for(let i = 0; i < 6; i++) {
+                let arrIndex = Math.floor(Math.random()*this.hotLists.length)
+                s.add(this.hotLists[arrIndex])
+            }
+            return [...s]
         }
     },
     methods: {
         _back() {
             window.history.back()
         },
+        _show() {
+            this.show = false
+        },
         _search(keywords) {
+            this.show = true
             this.$store.dispatch('setShowLoading', true)
+            if (this.keywords) {
+                localStorage.searchHistory = JSON.stringify([this.keywords, ...JSON.parse(localStorage.searchHistory)])
+            }
+            let searchHistory = JSON.parse(localStorage.searchHistory)
+            let find = searchHistory.findIndex((val) => {
+                return val === keywords
+            })
+            find === -1 ? localStorage.searchHistory = JSON.stringify([keywords, ...searchHistory]) : ''
             this.searchLists = []
             let key = keywords ? keywords : this.keywords
             api.MusicSearch(key)
@@ -82,20 +113,12 @@ export default {
                     }, 500)
                 })
         },
-        search(e) {
-            this.$store.dispatch('setShowLoading', true)
-            api.MusicSearch(e.target.textContent)
-                .then(res => {
-                    console.log(res)
-                })
-                .catch(res => {
-                    this.searchLists = res.result.songs
-                    setTimeout(() => {
-                        this.$store.dispatch('setShowLoading', false)
-                    }, 500)
-                })
-        },
         _delete(index) {
+            let searchHistory = JSON.parse(localStorage.searchHistory)
+            searchHistory.forEach((item, sindex) => {
+                index === sindex ? searchHistory.splice(index, 1) : ''
+            })
+            localStorage.searchHistory = JSON.stringify(searchHistory)
             this.searchHistory.splice(index, 1)
         }
     }
@@ -157,8 +180,8 @@ export default {
                     display: flex;
                     flex-wrap: wrap;
                     li {
-                        padding: px2rem(7px) px2rem(18px);
-                        font-size: px2rem(24px);
+                        padding: px2rem(10px) px2rem(26px);
+                        font-size: px2rem(26px);
                         color: rgba(255, 255, 255, .9);
                         border: 1px solid rgba(255, 255, 255, .3);
                         margin-right: px2rem(20px);

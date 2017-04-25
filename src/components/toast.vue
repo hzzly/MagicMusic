@@ -24,18 +24,19 @@
         z-index: 1099;
         .alert-wrap {
             position: fixed;
-            width: px2rem(250px);
-            height: px2rem(90px);
+            // width: px2rem(250px);
+            // height: px2rem(90px);
             line-height: px2rem(90px);
             text-align: center;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            border-radius: px2rem(45px);
+            border-radius: px2rem(50px);
             background: rgba(0, 0, 0, 0.6);
             .text {
-                font-size: 14px;
+                font-size: 16px;
                 color: #fff;
+                padding: px2rem(6px) px2rem(40px);
             }
         }
     }

@@ -41,7 +41,6 @@ export default {
                     return music.name == this.item.name && music.artists[0].name == this.item.artists[0].name
                 }
             })
-            console.log(x)
             if(x !== -1) {
                 _.toast('试听列表中已存在')
                 Vue.set(this.item, 'menuShow', false)

@@ -15,7 +15,7 @@ import store from './vuex/store'
 import VueLazyLoad from 'vue-lazyload'
 
 //懒加载的默认图片 
-import def_lazy_img from './assets/img/loading.gif'
+import def_lazy_img from '../static/img/loading.gif'
 //使用懒加载组件
 Vue.use(VueLazyLoad,{
   loading: def_lazy_img

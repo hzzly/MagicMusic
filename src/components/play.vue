@@ -466,6 +466,7 @@ export default {
                 height: 500px;
                 .lyric {
                     height: px2rem(200px);
+                    width: 460px;
                     font-size: px2rem(25px);
                 }
             }

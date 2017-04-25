@@ -51,6 +51,7 @@ import listenList from '@/components/listenList'
 import { mapGetters } from 'vuex'
 
 import api from '../api'
+import * as _ from '../util/tool'
 
 export default {
     components: {
@@ -135,7 +136,7 @@ export default {
                 this.$store.dispatch('getMusicTime', this.$refs.myAudio.duration)
             })
             this.$refs.myAudio.addEventListener('error', () => {
-                alert('获取音乐出错')
+                _.toast('获取音乐出错...')
             })
         },
     }
