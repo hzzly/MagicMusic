@@ -43,9 +43,10 @@ export default {
             })
             console.log(x)
             if(x !== -1) {
-                alert('已存在')
+                _.toast('试听列表中已存在')
                 Vue.set(this.item, 'menuShow', false)
             } else {
+                _.toast('已添加到试听列表')
                 this.$store.dispatch('addListenLists', this.item)
                 Vue.set(this.item, 'menuShow', false)
             }

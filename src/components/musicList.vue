@@ -49,20 +49,13 @@ export default {
     },
     data() {
         return {
-            // musicList: this.musicLists
         }
-
     },
     computed: {
         ...mapGetters([
             'listenLists',
             'showLoading',
         ])
-    },
-    created() {
-        for (let item of this.musicLists) {
-            Vue.set(item, 'menuShow', false)
-        }
     },
     methods: {
         //http://hjingren.cn:3000/user/playlist?uid=468310461
@@ -106,6 +99,13 @@ export default {
             }
             this.musicLists[index].menuShow = !this.musicLists[index].menuShow
         },
+    },
+    watch: {
+        musicLists() {
+            for (let item of this.musicLists) {
+                Vue.set(item, 'menuShow', false)
+            }
+        }
     }
 }
 </script>

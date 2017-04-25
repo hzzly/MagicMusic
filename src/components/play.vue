@@ -20,7 +20,7 @@
                      v-else>{{audio.artists[0].name}}</div>
                 <div class="lyric">
                     <div class="roll-lyric"
-                         v-html="lyrics"></div>
+                         v-html="lyrics" ref="lyric"></div>
                 </div>
             </div>
             <div class="time">
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-
+import Vue from 'vue'
 import { mapGetters } from 'vuex'
 
 import api from '../api'
@@ -76,7 +76,9 @@ import * as _ from '../util/tool'
 export default {
     data() {
         return {
-            now: ''
+            now: '',
+            lyricArr: [],
+            pDom: []
         }
     },
     computed: {
@@ -90,13 +92,19 @@ export default {
         ]),
         lyrics() {
             let lyrics = ''
+            this.lyricArr = []
             if (this.lyric) {
                 let arr = this.lyric.split('\n')
                 for (let item of arr) {
                     if (item) {
                         let arr2 = item.split(']')
+                        // console.log(arr2[0])
+                        // console.log(arr2[0].substring(1,3)*60)
+                        // console.log(arr2[0].substring(4))
+                        this.lyricArr.push(arr2[0].substring(1,3)*60+arr2[0].substring(4)*1)
+                        // console.log(this.lyricArr)
                         if (arr2) {
-                            lyrics += `<p style='margin: 10px 0'>${arr2[1]}</p>`
+                            lyrics += `<p class='lyrichook' style='margin: 10px 0'>${arr2[1]}</p>`
                         }
                     }
                 }
@@ -124,14 +132,25 @@ export default {
     },
     created() {
         this.$store.dispatch('getMusicInfo', 471385043)
-        this.$store.dispatch('getMusicTime', 328.463673)
+        this.$store.dispatch('getMusicTime', 312.241633)
     },
     mounted() {
         let timer,
             audioDOM = document.querySelector('audio')
         audioDOM.addEventListener('play', () => {
+            this.pDOM = [...document.querySelectorAll('.lyrichook')]
             timer = setInterval(() => {
                 this.now = audioDOM.currentTime
+                this.lyricArr.forEach((item, index) => {
+                    if (parseInt(item) == parseInt(this.now)) {
+                        this.pDOM.forEach((p) => {
+                            p.style.color = 'rgba(255,255,255,.8)'
+                        });
+                        this.pDOM[index].style.color = '#f12c61'
+                        this.$refs.lyric.style.transform = `translateY(-${(index-2)*25}px)`
+                        
+                    } 
+                });
             }, 1000)
         })
         audioDOM.addEventListener('pause', () => {
@@ -204,6 +223,16 @@ export default {
         showToast() {
             _.toast('开发中，敬请期待...')
         }
+    },
+    watch: {
+        size() {
+            this.$refs.lyric.style.transform = 'translateY(0px)'
+        },
+        lyrics() {
+            this.$nextTick(() => {
+                this.pDOM = [...document.querySelectorAll('.lyrichook')]
+            })
+        },
     }
 }
 </script>
@@ -305,7 +334,7 @@ export default {
                 text-align: center;
             }
             .lyric {
-                width: px2rem(500px);
+                width: px2rem(700px);
                 height: px2rem(250px);
                 margin: px2rem(40px) auto;
                 color: rgba(255, 255, 255, .8);
@@ -317,6 +346,7 @@ export default {
                 //     transform: translateY(-20px);
                 // }
                 .roll-lyric {
+                    transition: transform .5s;
                     transform: translateY(0px);
                 }
             }
