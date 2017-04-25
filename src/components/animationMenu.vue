@@ -34,11 +34,16 @@ export default {
             _.toast('开发中，敬请期待...')
         },
         _add(index) {
+            console.log(this.item.artists[0].name)
             let x = this.listenLists.findIndex((music) => {
                 if(this.item.ar) {
                     return music.name == this.item.name && music.ar[0].name == this.item.ar[0].name
                 } else {
-                    return music.name == this.item.name && music.artists[0].name == this.item.artists[0].name
+                    if (music.ar) {
+                        return music.name == this.item.name && music.ar[0].name == this.item.artists[0].name
+                    } else {
+                        return music.name == this.item.name && music.artists[0].name == this.item.artists[0].name
+                    }
                 }
             })
             if(x !== -1) {
