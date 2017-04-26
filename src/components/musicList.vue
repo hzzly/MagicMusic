@@ -87,7 +87,6 @@ export default {
             let audioDOM = document.querySelector('audio')
             audioDOM.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('setPlaying', true)
-                this.$store.dispatch('getMusicInfo', music.id)
             })
         },
         _showOperation(index) {

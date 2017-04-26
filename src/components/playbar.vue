@@ -116,7 +116,6 @@ export default {
             let audioDOM = document.querySelector('audio')
             audioDOM.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('setPlaying', true)
-                this.$store.dispatch('getMusicInfo', this.audio.id)
             })
         },
         showList() {
@@ -131,9 +130,10 @@ export default {
             this.playing ? this.$refs.myAudio.play() : this.$refs.myAudio.pause()
         },
         audio() {
+            this.$store.dispatch('getMusicInfo', this.audio.id)
             this.now = 0
             this.$refs.myAudio.addEventListener('loadedmetadata', () => {
-                this.$store.dispatch('getMusicTime', this.$refs.myAudio.duration)
+                this.$store.dispatch('getMusicTime', this.$refs.myAudio.duration)      
             })
             this.$refs.myAudio.addEventListener('error', () => {
                 _.toast('获取音乐出错...')

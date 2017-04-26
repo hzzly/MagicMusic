@@ -48,7 +48,7 @@
             </div>
             <div class="process" @click="showToast">
                 <div class="line"></div>
-                <div class="pro" :style="{transform: `translateX(${translateX}) rotate(${-523 + 56.5*((now / size).toFixed(3))}deg)`}"></div>
+                <div class="pro" :style="{transform: `translateX(${translateX}) rotate(${deg*1 + 56.5*((now / size).toFixed(3))}deg)`}"></div>
             </div>
         </div>
         <div class="background">
@@ -79,7 +79,8 @@ export default {
             now: '',
             lyricArr: [],
             pDom: [],
-            deg: -500
+            deg: '',
+            translateX: ''
         }
     },
     computed: {
@@ -130,14 +131,11 @@ export default {
             s = s.toString().length == 1 ? ('0' + s) : s
             return m + ':' + s
         },
-        translateX() {
-            let cwidth = document.body.clientWidth
-            return cwidth === 460 ? '-3.73333rem' : '-2.98667rem'
-        }
     },
     created() {
         this.$store.dispatch('getMusicInfo', 471385043)
         this.$store.dispatch('getMusicTime', 312.241633)
+        this.resize()
     },
     mounted() {
         let timer,
@@ -160,6 +158,9 @@ export default {
         })
         audioDOM.addEventListener('pause', () => {
             clearInterval(timer)
+        })
+        window.addEventListener('resize', () => {
+            this.resize()
         })
     },
     methods: {
@@ -191,7 +192,6 @@ export default {
             let audioDOM = document.querySelector('audio')
             audioDOM.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('setPlaying', true)
-                this.$store.dispatch('getMusicInfo', this.audio.id)
             })
         },
         _next() {
@@ -216,7 +216,6 @@ export default {
             let audioDOM = document.querySelector('audio')
             audioDOM.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('setPlaying', true)
-                this.$store.dispatch('getMusicInfo', this.audio.id)
             })
         },
         showList() {
@@ -227,7 +226,17 @@ export default {
         },
         showToast() {
             _.toast('开发中，敬请期待...')
-        }
+        },
+        resize() {
+            let cwidth = document.body.clientWidth
+            if(cwidth === 460) {
+                this.translateX = '-3.73333rem'
+                this.deg = '-523'
+            } else {
+                this.translateX = '-2.98667rem'
+                this.deg = '-527'
+            }
+        },
     },
     watch: {
         size() {
