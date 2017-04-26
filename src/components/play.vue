@@ -48,7 +48,7 @@
             </div>
             <div class="process" @click="showToast">
                 <div class="line"></div>
-                <div class="pro"></div>
+                <div class="pro" :style="{transform: `translateX(${translateX}) rotate(${-523 + 56.5*((now / size).toFixed(3))}deg)`}"></div>
             </div>
         </div>
         <div class="background">
@@ -78,7 +78,8 @@ export default {
         return {
             now: '',
             lyricArr: [],
-            pDom: []
+            pDom: [],
+            deg: -500
         }
     },
     computed: {
@@ -128,6 +129,10 @@ export default {
             s = Math.floor(this.now - 60 * m)
             s = s.toString().length == 1 ? ('0' + s) : s
             return m + ':' + s
+        },
+        translateX() {
+            let cwidth = document.body.clientWidth
+            return cwidth === 460 ? '-3.73333rem' : '-2.98667rem'
         }
     },
     created() {
@@ -433,7 +438,7 @@ export default {
                 height: px2rem(1200px);
                 border-radius: 50%;
                 position: absolute;
-                transform: translateX(px2rem(-224px)) rotate(-528deg); //-462
+                transform: translateX(-2.98667rem) rotate(-528deg); //-462
                 border: 2px solid #fff;
                 border-bottom-color: transparent;
             }
