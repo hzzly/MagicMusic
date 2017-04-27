@@ -29,8 +29,7 @@
                                       tag="div"
                                       class="list-wrapper">
                         <div class="item"
-                             v-for="(item, index) in searchHistory"
-                             :key="item">
+                             v-for="(item, index) in searchHistory" :key="'a'+index">
                             <p @click="_search(item)">
                                 <i class="icon">&#xe613;</i>
                                 <span>{{item}}</span>
@@ -62,7 +61,8 @@ export default {
             show: false,
             keywords: '',
             searchLists: [],
-            hotLists: ['暧昧','成都','童话镇','刚好遇见你','告白气球','前端','演员','Fade','See You Again','咱们屯里人(粤语版)','南山南','薛之谦','李玉刚','汪峰','周杰伦']
+            hotLists: ['暧昧','成都','童话镇','刚好遇见你','告白气球','前端','演员','Fade','See You Again','咱们屯里人(粤语版)','南山南','薛之谦','李玉刚','汪峰','周杰伦'],
+            searchHistory: localStorage.searchHistory ? JSON.parse(localStorage.searchHistory) : ['前端', '童话镇', '刚好遇见你']
         }
     },
     created() {
@@ -80,7 +80,7 @@ export default {
             }
             return [...s]
         },
-        searchHistory() {
+        searchHistorys() {
             return localStorage.searchHistory ? JSON.parse(localStorage.searchHistory) : ['前端', '童话镇', '刚好遇见你']
         }
     },
