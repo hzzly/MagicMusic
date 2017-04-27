@@ -41,7 +41,6 @@ export default {
     },
     methods: {
         _login() {
-            //id=468310461  122595746
             if (!this.email || !this.password) {
                 // _.alert('请填写完整')
                 return
