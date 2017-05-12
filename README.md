@@ -4,6 +4,7 @@
 >注：本项目为开源项目，不能用于商业应用，仅供学习。
 
 [温馨提示：pc浏览f12手机模式最佳,手机建议wifi下访问]
+
 **demo地址：** [http://hjingren.cn/magic-music](http://hjingren.cn/magic-music)
 欢迎大家的star啦😄~
 
@@ -12,13 +13,10 @@
 ``` bash
 # install dependencies
 npm install
-
 # serve with hot reload at localhost:8080
 npm run dev
-
 # build for production with minification
 npm run build
-
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
@@ -28,6 +26,20 @@ API
 $ git clone git@github.com:Binaryify/NeteaseCloudMusicApi.git
 $ npm install
 $ node app.js
+```
+## 跨域
+> 在 clone 下来的api中的 `app.js` 中添加如下代码
+
+```javascript
+//设置跨域访问  
+app.all('*', function(req, res, next) {  
+    res.header("Access-Control-Allow-Origin", "*");  
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");  
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");  
+    res.header("X-Powered-By",' 3.2.1')  
+    res.header("Content-Type", "application/json;charset=utf-8");  
+    next();  
+});  
 ```
 
 👉老铁们，准备发车(技能点)：

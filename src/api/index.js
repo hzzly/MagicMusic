@@ -63,13 +63,6 @@ export default {
         return fetchGet('/login', params)
     },
 
-    /**
-     * music列表
-     */
-     MusicList() {
-         return fetchGet('/musiclist')
-     },
-
      /**
      * popularmusic列表
      */
