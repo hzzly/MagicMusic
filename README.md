@@ -28,7 +28,7 @@ $ npm install
 $ node app.js
 ```
 ## 跨域
-> 在 clone 下来的api中的 `app.js` 中添加如下代码
+> 在 clone 下来的api中的 `app.js` 中添加如下代码(这是API中的app.js，好多人说找不到！！！)
 
 ```javascript
 //设置跨域访问  
