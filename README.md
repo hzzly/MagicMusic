@@ -5,7 +5,7 @@
 
 [温馨提示：pc浏览f12手机模式最佳,手机建议wifi下访问]
 
-**demo地址：** [http://hjingren.cn/magic-music](http://hjingren.cn/magic-music)
+**demo地址：** [http://hzzly.net/magic-music](http://hzzly.net/magic-music)
 欢迎大家的star啦😄~
 
 ## Build Setup
@@ -47,7 +47,7 @@ app.all('*', function(req, res, next) {
 > * [vue-router文档](https://router.vuejs.org/zh-cn/)
 > * [vuex文档](https://vuex.vuejs.org/zh-cn/) 不想看文档的可以看看我这篇博客[vuex学习实践笔记](https://hzzly.github.io/2017/04/04/vuex%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/)
 > * [axios文档](https://www.npmjs.com/package/axios) 或者这篇博客 [Vuex2 与 Axios 开发](https://blog.ygxdxx.com/2017/02/01/Vuex2&Axios-Develop/)(我也是参考这篇，感谢作者😁)
-> * [es6(阮一峰的es6入门)](http://es6.ruanyifeng.com/) 可以参考[我的es6之路](https://hzzly.github.io/tags/es6/)(还在继续,轻喷)
+> * [es6(阮一峰的es6入门)](http://es6.ruanyifeng.com/) 可以参考[我的es6之路](http://hjingren.cn/tag/#es6)(还在继续,轻喷)
 > * [webpack2(中文网站)](https://doc.webpack-china.org/)
 > * [Promise (浅谈Promise)](https://hzzly.github.io/2017/03/25/%E6%B5%85%E8%B0%88Promise/)
 > * [flex (Web的flex弹性盒模型)](https://hzzly.github.io/2017/03/03/Web%E7%9A%84Flex%E5%BC%B9%E6%80%A7%E7%9B%92%E6%A8%A1%E5%9E%8B/)
