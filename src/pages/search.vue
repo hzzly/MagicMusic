@@ -106,9 +106,6 @@ export default {
             let key = keywords ? keywords : this.keywords
             api.MusicSearch(key)
                 .then(res => {
-                    console.log(res)
-                })
-                .catch(res => {
                     this.searchLists = res.result.songs
                     setTimeout(() => {
                         this.$store.dispatch('setShowLoading', false)

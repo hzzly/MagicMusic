@@ -1,17 +1,11 @@
 <template>
     <div class="play">
-        <div class="head">
-            <div class="h-icon"
-                 @click="hidePlay"><i class="icon">&#xe8e2;</i></div>
-            <div class="h-icon" @click="showToast"><i class="icon">&#xe93b;</i></div>
-        </div>
-        <div class="name">{{audio.name}}</div>
-        <div class="operation">
-            <div class="love" @click="showToast"><i class="icon">&#xe615;</i></div>
-            <div class="msg" @click="showToast"><i class="icon">&#xe603;</i></div>
-            <div class="share" @click="showToast"><i class="icon">&#xe64c;</i></div>
-        </div>
         <div class="content">
+            <div class="head">
+                <div class="h-icon"
+                    @click="hidePlay"><i class="icon">&#xe8e2;</i></div>
+                <div class="h-icon" @click="showToast"><i class="icon">&#xe93b;</i></div>
+            </div>
             <div class="lyrics">
                 <div class="m-name">{{audio.name}}</div>
                 <div class="s-name"
@@ -150,7 +144,7 @@ export default {
                             p.style.color = 'rgba(255,255,255,.8)'
                         });
                         this.pDOM[index].style.color = '#f12c61'
-                        this.$refs.lyric.style.transform = `translateY(-${(index-2)*25}px)`
+                        this.$refs.lyric.style.transform = `translateY(-${(index-7)*25}px)`
                         
                     } 
                 });
@@ -185,9 +179,6 @@ export default {
                     .then(res => {
                         this.$store.dispatch('setAudioUrl', res.data[0].url)
                     })
-                    .catch(res => {
-                        this.$store.dispatch('setAudioUrl', res.data[0].url)
-                    })
             }
             let audioDOM = document.querySelector('audio')
             audioDOM.addEventListener('loadedmetadata', () => {
@@ -207,9 +198,6 @@ export default {
             } else {
                 api.MusicUrl(this.audio.id)
                     .then(res => {
-                        this.$store.dispatch('setAudioUrl', res.data[0].url)
-                    })
-                    .catch(res => {
                         this.$store.dispatch('setAudioUrl', res.data[0].url)
                     })
             }
@@ -261,81 +249,29 @@ export default {
     width: 100%;
     background: rgba(0, 0, 0, .5);
     overflow: hidden;
-    .head {
-        height: px2rem(100px);
-        line-height: px2rem(100px);
-        text-align: center;
-        display: flex;
-        justify-content: space-between;
-        .h-icon {
-            width: px2rem(100px);
-            cursor: pointer;
-            .icon {
-                font-size: px2rem(46px);
-            }
-        }
-    }
-    .name {
-        font-size: px2rem(60px); // font-weight: bold;
-        color: #fff;
-        position: absolute;
-        top: px2rem(300px);
-        width: 100%;
-        text-align: center;
-    }
-    .operation {
-        position: absolute;
-        right: px2rem(100px);
-        top: px2rem(430px);
-        z-index: 50;
-        >div {
-            width: px2rem(80px);
-            height: px2rem(80px);
-            line-height: px2rem(80px);
-            text-align: center;
-            border-radius: 50%;
-            background: #f12c61;
-            position: relative;
-            cursor: pointer;
-            .icon {
-                font-size: px2rem(46px);
-            }
-        }
-        .love {
-            right: px2rem(150px);
-            top: px2rem(60px);
-            line-height: px2rem(90px);
-        }
-        .msg {
-            right: px2rem(50px);
-            background: #45c4a6;
-        }
-        .share {
-            right: px2rem(-50px);
-            top: px2rem(-58px);
-            background: #7a3dfd;
-        }
-    }
     .content {
         height: 100%;
         overflow: hidden;
         position: relative;
-        .lyrics {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: px2rem(850px);
-            background: rgba(40, 34, 78, .9);
-
-            &::after {
-                content: '';
-                position: absolute;
-                top: px2rem(-147.6px);
-                width: 0;
-                height: 0; // border-left: px2rem(750px) solid rgba(40, 34, 78, .9);
-                border-bottom: px2rem(150px) solid rgba(40, 34, 78, .9);
-                border-right: px2rem(750px) solid transparent;
+        background: rgba(40, 34, 78, .7);
+        .head {
+            height: px2rem(100px);
+            line-height: px2rem(100px);
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(40, 34, 78, .2);
+            .h-icon {
+                width: px2rem(100px);
+                cursor: pointer;
+                .icon {
+                    font-size: px2rem(46px);
+                }
             }
+        }
+        .lyrics {
+            width: 100%;
+            height: 100%;
             .m-name {
                 font-size: px2rem(38px);
                 text-align: center;
@@ -349,19 +285,15 @@ export default {
             }
             .lyric {
                 width: px2rem(700px);
-                height: px2rem(250px);
+                height: px2rem(750px);
                 margin: px2rem(40px) auto;
                 color: rgba(255, 255, 255, .8);
                 text-align: center;
                 font-size: px2rem(30px);
-                overflow: auto; // transform: translateY(20px);
-                // p {
-                //     margin: px2rem(20px) 0;
-                //     transform: translateY(-20px);
-                // }
+                overflow: auto; 
                 .roll-lyric {
                     transition: transform .5s;
-                    transform: translateY(0px);
+                    transform: translateY(200px);
                 }
             }
         }
@@ -371,7 +303,7 @@ export default {
             line-height: px2rem(50px);
             text-align: center;
             position: absolute;
-            bottom: px2rem(320px);
+            bottom: px2rem(220px);
             color: #fff;
             display: flex;
             justify-content: space-between;
@@ -382,7 +314,7 @@ export default {
         }
         .control {
             position: absolute;
-            bottom: px2rem(-860px); // width: px2rem(900px);
+            bottom: px2rem(-960px); // width: px2rem(900px);
             width: px2rem(1200px);
             left: px2rem(-225px);
             height: px2rem(1200px);
@@ -428,7 +360,7 @@ export default {
         }
         .process {
             position: absolute;
-            bottom: px2rem(270px);
+            bottom: px2rem(170px);
             width: 100%;
             height: px2rem(100px);
             overflow: hidden;
@@ -467,28 +399,22 @@ export default {
 @media screen and(min-width: 769px) {
     .play {
         width: 460px;
-        .name {
-            top: px2rem(250px);
-        }
-        .operation {
-            top: px2rem(350px);
-        }
         .content {
             width: 460px;
             overflow: hidden;
             .lyrics {
-                height: 500px;
+                height: 580px;
                 .lyric {
-                    height: px2rem(200px);
+                    height: 75%;
                     width: 460px;
                     font-size: px2rem(25px);
                 }
             }
             .time {
-                bottom: px2rem(250px);
+                bottom: px2rem(150px);
             }
             .control {
-                bottom: px2rem(-925px);
+                bottom: px2rem(-1020px);
                 left: px2rem(-280px);
                 >div {
                     width: px2rem(550px);
@@ -513,7 +439,7 @@ export default {
                 }
             }
             .process {
-                bottom: px2rem(220px);
+                bottom: px2rem(125px);
                 overflow: hidden;
                 height: px2rem(75px);
                 .line {

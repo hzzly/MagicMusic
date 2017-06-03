@@ -109,9 +109,6 @@ export default {
                     .then(res => {
                         this.$store.dispatch('setAudioUrl', res.data[0].url)
                     })
-                    .catch(res => {
-                        this.$store.dispatch('setAudioUrl', res.data[0].url)
-                    })
             }
             let audioDOM = document.querySelector('audio')
             audioDOM.addEventListener('loadedmetadata', () => {

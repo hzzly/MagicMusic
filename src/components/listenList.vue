@@ -38,7 +38,6 @@ import api from '../api'
 export default {
     data() {
         return {
-            // musicList: this.musicLists
         }
     },
     methods: {
@@ -50,9 +49,6 @@ export default {
             this.$store.dispatch('setAudio', music)
             api.MusicUrl(music.id)
                 .then(res => {
-                    this.$store.dispatch('setAudioUrl', res.data[0].url)
-                })
-                .catch(res => {
                     this.$store.dispatch('setAudioUrl', res.data[0].url)
                 })
             let audioDOM = document.querySelector('audio')
