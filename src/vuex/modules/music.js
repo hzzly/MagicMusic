@@ -6,7 +6,7 @@ const state = {
     classicalLists: [],
     lightLists: [],
     radioLists: [],
-    listenLists: JSON.parse(localStorage.musiclists) || [
+    listenLists: localStorage.musiclists ? JSON.parse(localStorage.musiclists) : [
         {
             "name": "刚好遇见你",
             "id": 439915614,
@@ -36,7 +36,7 @@ const state = {
             }
         },
     ],
-    audio: {
+    audio: localStorage.musiclists ? JSON.parse(localStorage.musiclists).slice(0, 1) : [{
         "name": "暧昧",
         "id": 471385043,
         "ar": [
@@ -49,7 +49,7 @@ const state = {
             "name": "暧昧",
             "picUrl": "http://p4.music.126.net/ap8OhyOkOPOz5M1A7VhgAA==/18822539557778052.jpg",
         }
-    },
+    }],
     audioUrl: '',
     lyric: '',
     size: '',
@@ -63,6 +63,9 @@ const actions = {
     },
     removeListenLists({ commit }) {
         commit(types.REMOVE_LISTEN_LISTS)
+    },
+    addAllToListenLists({ commit }, musiclists) {
+        commit(types.ADD_ALL_TO_LISTEN_LISTS, musiclists)
     },
     //获取热门流行歌曲
     getPopularLists({ commit }) {
@@ -191,6 +194,10 @@ const mutations = {
         state.listenLists = []
         localStorage.musiclists = []
     },
+    [types.ADD_ALL_TO_LISTEN_LISTS](state, musiclists) {
+        state.listenLists = musiclists
+        localStorage.musiclists = JSON.stringify(state.listenLists)
+    },
     [types.GET_POPULAR_LISTS](state, res) {
         state.popularLists = res
     },
@@ -204,18 +211,18 @@ const mutations = {
         state.radioLists = res
     },
     [types.SET_AUDIO](state, music) {
-        state.audio = music
+        state.audio = [music]
     },
     [types.SET_AUDIO_URL](state, url) {
         state.audioUrl = url
     },
     [types.SET_NEXT_AUDIO](state, index) {
         let i = index === state.listenLists.length - 1 ? 0 : (++index)
-        state.audio = state.listenLists[i]
+        state.audio = [state.listenLists[i]]
     },
     [types.SET_PRE_AUDIO](state, index) {
         let i = index === 0 ? state.listenLists.length - 1 : (--index)
-        state.audio = state.listenLists[i]
+        state.audio = [state.listenLists[i]]
     },
     [types.SET_PLAYING](state, status) {
         state.playing = status

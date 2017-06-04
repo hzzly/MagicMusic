@@ -3,20 +3,20 @@
         <div class="play-box">
             <div class="music-avatar"
                  @click="showPlay()">
-                <img v-if="audio.al"
-                     v-lazy="audio.al.picUrl"
+                <img v-if="audio[0].al"
+                     v-lazy="audio[0].al.picUrl"
                      alt="">
                 <img v-else
-                     v-lazy="audio.album.picUrl"
+                     v-lazy="audio[0].album.picUrl"
                      alt="">
             </div>
             <div class="music-info"
                  @click="showPlay()">
-                <div class="music-name">{{audio.name}}</div>
+                <div class="music-name">{{audio[0].name}}</div>
                 <div class="music-s"
-                     v-if="audio.ar">{{audio.ar[0].name}}</div>
+                     v-if="audio[0].ar">{{audio[0].ar[0].name}}</div>
                 <div class="music-s"
-                     v-else>{{audio.artists[0].name}}</div>
+                     v-else>{{audio[0].artists[0].name}}</div>
             </div>
             <div class="music-play">
                 <i class="icon"
@@ -98,24 +98,19 @@ export default {
             this.$store.dispatch('setPlaying', false)
             this.$store.dispatch('setShowPlayLoading', true)
             for (let i = 0; i < this.listenLists.length; i++) {
-                if (this.listenLists[i].name === this.audio.name) {
+                if (this.listenLists[i].name === this.audio[0].name) {
                     this.$store.dispatch('setNextAudio', i)
                     break
                 }
             }
-            if (this.audio.mp3Url) {
-                this.$store.dispatch('setAudioUrl', this.audio.mp3Url)
+            if (this.audio[0].mp3Url) {
+                this.$store.dispatch('setAudioUrl', this.audio[0].mp3Url)
             } else {
-                api.MusicUrl(this.audio.id)
+                api.MusicUrl(this.audio[0].id)
                     .then(res => {
                         this.$store.dispatch('setAudioUrl', res.data[0].url)
                     })
             }
-            let audioDOM = document.querySelector('audio')
-            audioDOM.addEventListener('loadedmetadata', () => {
-                this.$store.dispatch('setPlaying', true)
-                this.$store.dispatch('setShowPlayLoading', false)
-            })
         },
         showList() {
             this.$store.dispatch('setShowListenList', true)
@@ -129,7 +124,7 @@ export default {
             this.playing ? this.$refs.myAudio.play() : this.$refs.myAudio.pause()
         },
         audio() {
-            this.$store.dispatch('getMusicInfo', this.audio.id)
+            this.$store.dispatch('getMusicInfo', this.audio[0].id)
             this.now = 0
             this.$refs.myAudio.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('getMusicTime', this.$refs.myAudio.duration)      

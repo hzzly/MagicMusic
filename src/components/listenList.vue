@@ -55,9 +55,7 @@ export default {
                 })
             let audioDOM = document.querySelector('audio')
             audioDOM.addEventListener('loadedmetadata', () => {
-                this.$store.dispatch('setPlaying', true)
                 this.$store.dispatch('getMusicInfo', music.id)
-                this.$store.dispatch('setShowPlayLoading', false)
             })
             this.$store.dispatch('setShowListenList', false)
         },
@@ -79,7 +77,7 @@ export default {
         ]),
         currentIndex() {
             for (let i = 0; i < this.listenLists.length; i++) {
-                if (this.listenLists[i].name === this.audio.name) {
+                if (this.listenLists[i].name === this.audio[0].name) {
                     return i
                 }
             }
@@ -104,7 +102,7 @@ export default {
     .num {
         display: flex;
         justify-content: space-between;
-        height: px2rem(90px);
+        flex: 0 0 px2rem(90px);
         line-height: px2rem(90px);
         font-size: px2rem(28px);
         span {

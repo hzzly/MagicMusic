@@ -2,9 +2,9 @@
     <div class="search">
         <div class="head">
             <div class="h-icon"
-                 @click="_back"><i class="icon">&#xe608;</i></div>
-            <div class="title">{{title}}</div>
-            <div class="h-icon"></div>
+                 @click="_back"><i class="icon">&#xe608;</i> <span class="title">{{title}}</span></div>
+            <!--<div class="title"></div>-->
+            <div class="h-icon right-c" @click="_addAll"><i class="icon">&#xe606;</i>播放全部</div>
         </div>
         <div class="search-list">
             <v-music-list :music-lists="rankLists"></v-music-list>
@@ -20,6 +20,7 @@ import musicList from '@/components/musicList'
 import { mapGetters } from 'vuex'
 
 import api from '../api'
+import * as _ from '../util/tool'
 
 export default {
     components: {
@@ -67,9 +68,9 @@ export default {
         _back() {
             window.history.back()
         },
-        
-        _search(keywords) {
-            
+        _addAll() {
+            this.$store.dispatch('addAllToListenLists', this.rankLists)
+            _.toast('已添加到试听列表')
         },
     }
 }
@@ -90,16 +91,27 @@ export default {
         justify-content: space-between; // box-shadow: 0 10px 20px rgba(0, 0, 0, .8);
         border-bottom: 1px solid rgba(255, 255, 255, .3);
         .h-icon {
-            width: px2rem(100px);
+            // width: px2rem(100px);
             cursor: pointer;
+            font-size: px2rem(26px);
+            color: #fff;
             .icon {
+                display: inline-block;
+                width: px2rem(100px);                
                 font-size: px2rem(46px);
             }
+            .title {
+                display: inline-block;
+                font-size: px2rem(32px);
+            }
         }
-        .title {
-            flex: 1;
-            font-size: px2rem(32px);
-            color: #fff;
+        .right-c {
+            margin-right: px2rem(20px);
+            .icon {
+                width: px2rem(60px);            
+                font-size: px2rem(34px);
+                vertical-align: middle;
+            }
         }
     }
     .search-list {

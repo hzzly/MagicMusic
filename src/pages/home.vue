@@ -25,11 +25,19 @@ export default {
                 'http://p3.music.126.net/fuGZBbYxyRQX43vrtXe5FA==/19005058486178477.jpg',
                 'http://p4.music.126.net/4I-kNYnRSND9I52NSB1AtQ==/19032546276883221.jpg'
             ],
+            fixed: false
         }
     },
     created() {
         this.$router.push('popular')
     },
+    mounted() {
+        let audioDOM = document.querySelector('audio')
+            audioDOM.addEventListener('loadedmetadata', () => {
+                this.$store.dispatch('setPlaying', true)
+                this.$store.dispatch('setShowPlayLoading', false)
+            })
+    }
 }
 </script>
 

@@ -7,11 +7,11 @@
                 <div class="h-icon" @click="showToast"><i class="icon">&#xe93b;</i></div>
             </div>
             <div class="lyrics">
-                <div class="m-name">{{audio.name}}</div>
+                <div class="m-name">{{audio[0].name}}</div>
                 <div class="s-name"
-                     v-if="audio.ar">{{audio.ar[0].name}}</div>
+                     v-if="audio[0].ar">{{audio[0].ar[0].name}}</div>
                 <div class="s-name"
-                     v-else>{{audio.artists[0].name}}</div>
+                     v-else>{{audio[0].artists[0].name}}</div>
                 <div class="lyric">
                     <div class="roll-lyric"
                          v-html="lyrics" ref="lyric"></div>
@@ -46,12 +46,12 @@
             </div>
         </div>
         <div class="background">
-            <img :src="audio.al.picUrl"
+            <img :src="audio[0].al.picUrl"
                  width="100%"
                  height="100%"
                  alt=""
-                 v-if="audio.al">
-            <img :src="audio.album.picUrl"
+                 v-if="audio[0].al">
+            <img :src="audio[0].album.picUrl"
                  width="100%"
                  height="100%"
                  alt=""
@@ -168,47 +168,37 @@ export default {
             this.$store.dispatch('setPlaying', false)
             this.$store.dispatch('setShowPlayLoading', true)
             for (let i = 0; i < this.listenLists.length; i++) {
-                if (this.listenLists[i].name === this.audio.name) {
+                if (this.listenLists[i].name === this.audio[0].name) {
                     this.$store.dispatch('setPreAudio', i)
                     break
                 }
             }
-            if (this.audio.mp3Url) {
-                this.$store.dispatch('setAudioUrl', this.audio.mp3Url)
+            if (this.audio[0].mp3Url) {
+                this.$store.dispatch('setAudioUrl', this.audio[0].mp3Url)
             } else {
-                api.MusicUrl(this.audio.id)
+                api.MusicUrl(this.audio[0].id)
                     .then(res => {
                         this.$store.dispatch('setAudioUrl', res.data[0].url)
                     })
             }
-            let audioDOM = document.querySelector('audio')
-            audioDOM.addEventListener('loadedmetadata', () => {
-                this.$store.dispatch('setPlaying', true)
-                this.$store.dispatch('setShowPlayLoading', false)
-            })
         },
         _next() {
             this.$store.dispatch('setPlaying', false)
             this.$store.dispatch('setShowPlayLoading', true)
             for (let i = 0; i < this.listenLists.length; i++) {
-                if (this.listenLists[i].name === this.audio.name) {
+                if (this.listenLists[i].name === this.audio[0].name) {
                     this.$store.dispatch('setNextAudio', i)
                     break
                 }
             }
-            if (this.audio.mp3Url) {
-                this.$store.dispatch('setAudioUrl', this.audio.mp3Url)
+            if (this.audio[0].mp3Url) {
+                this.$store.dispatch('setAudioUrl', this.audio[0].mp3Url)
             } else {
-                api.MusicUrl(this.audio.id)
+                api.MusicUrl(this.audio[0].id)
                     .then(res => {
                         this.$store.dispatch('setAudioUrl', res.data[0].url)
                     })
             }
-            let audioDOM = document.querySelector('audio')
-            audioDOM.addEventListener('loadedmetadata', () => {
-                this.$store.dispatch('setPlaying', true)
-                this.$store.dispatch('setShowPlayLoading', false)
-            })
         },
         showList() {
             this.$store.dispatch('setShowListenList', true)

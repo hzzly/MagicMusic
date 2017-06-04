@@ -82,11 +82,6 @@ export default {
                         this.$store.dispatch('setAudioUrl', res.data[0].url)
                     })
             }
-            let audioDOM = document.querySelector('audio')
-            audioDOM.addEventListener('loadedmetadata', () => {
-                this.$store.dispatch('setPlaying', true)
-                this.$store.dispatch('setShowPlayLoading', false)
-            })
         },
         _showOperation(index) {
             for (let i = 0; i < this.musicLists.length; i++) {

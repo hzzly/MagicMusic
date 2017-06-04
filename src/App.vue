@@ -42,7 +42,7 @@ export default {
 	},
 	created() {
 		if (!this.audioUrl) {
-			api.MusicUrl(this.audio.id)
+			api.MusicUrl(this.audio[0].id)
 				.then(res => {
 					this.$store.dispatch('setAudioUrl', res.data[0].url)
 				})
@@ -102,6 +102,7 @@ export default {
 	background: rgba(8, 5, 58, 0.9);
 	.play-loading {
 		top: 8rem;
+		z-index: 99;
 	}
 	.container {
 		flex: 1;
