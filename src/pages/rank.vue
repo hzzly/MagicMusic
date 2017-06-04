@@ -40,9 +40,6 @@ export default {
         this.$store.dispatch('setShowLoading', true)
         api.MusicRank(this.idx)
             .then((res) => {
-                console.log(res)
-            })
-            .catch((res) => {
                 this.rankLists = res.result.tracks
                 setTimeout(() => {
                     this.$store.dispatch('setShowLoading', false)

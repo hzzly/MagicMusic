@@ -9,6 +9,7 @@ const state = {
     showPlay: false,
     showToast: false,
     showLoading: false,
+    showPlayLoading: false,
     alertMsg: ''
 }
 
@@ -30,6 +31,9 @@ const actions = {
     },
     setShowLoading({ commit }, status) {
         commit(types.COM_SHOW_LOADING, status)
+    },
+    setShowPlayLoading({ commit }, status) {
+        commit(types.COM_SHOW_PLAY_LOADING, status)
     }
 }
 
@@ -38,6 +42,7 @@ const getters = {
     showSidebar: state => state.showSidebar,
     showToast: state => state.showToast,
     showLoading: state => state.showLoading,
+    showPlayLoading: state => state.showPlayLoading,
     showPlay: state => state.showPlay,
 }
 
@@ -60,6 +65,9 @@ const mutations = {
     },
     [types.COM_SHOW_LOADING](state, status) {
         state.showLoading = status
+    },
+    [types.COM_SHOW_PLAY_LOADING](state, status) {
+        state.showPlayLoading = status
     },
 }
 

@@ -11,6 +11,7 @@
 		<!--公用组件-->
 		<v-sidebar></v-sidebar>
 		<v-toast v-show="showToast"></v-toast>
+		<v-loading v-show="showPlayLoading" class="play-loading"></v-loading>
 		<transition name="fold">
 			<v-play v-show="showPlay"></v-play>
 		</transition>
@@ -23,6 +24,7 @@ import playbar from '@/components/playbar'
 import play from '@/components/play'
 import sidebar from '@/components/sidebar'
 import toast from '@/components/toast'
+import loading from '@/components/loading'
 
 import { mapGetters } from 'vuex'
 
@@ -36,14 +38,12 @@ export default {
 		'v-play': play,
 		'v-sidebar': sidebar,
 		'v-toast': toast,
+		'v-loading': loading
 	},
 	created() {
 		if (!this.audioUrl) {
 			api.MusicUrl(this.audio.id)
 				.then(res => {
-					this.$store.dispatch('setAudioUrl', res.data[0].url)
-				})
-				.catch(res => {
 					this.$store.dispatch('setAudioUrl', res.data[0].url)
 				})
 		}
@@ -65,7 +65,8 @@ export default {
 			'showToast',
 			'showPlay',
 			'audio',
-			'audioUrl'
+			'audioUrl',
+			'showPlayLoading'
 		]),
 	}
 }
@@ -99,6 +100,9 @@ export default {
 	flex-direction: column;
 	height: 100%;
 	background: rgba(8, 5, 58, 0.9);
+	.play-loading {
+		top: 8rem;
+	}
 	.container {
 		flex: 1;
 		overflow: auto;

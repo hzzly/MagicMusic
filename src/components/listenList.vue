@@ -47,6 +47,7 @@ export default {
         _play(music) {
             this.$store.dispatch('setPlaying', false)
             this.$store.dispatch('setAudio', music)
+            this.$store.dispatch('setShowPlayLoading', true)
             api.MusicUrl(music.id)
                 .then(res => {
                     this.$store.dispatch('setAudioUrl', res.data[0].url)
@@ -55,6 +56,7 @@ export default {
             audioDOM.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('setPlaying', true)
                 this.$store.dispatch('getMusicInfo', music.id)
+                this.$store.dispatch('setShowPlayLoading', false)
             })
             this.$store.dispatch('setShowListenList', false)
         },

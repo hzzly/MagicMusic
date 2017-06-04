@@ -166,6 +166,7 @@ export default {
         },
         _pre() {
             this.$store.dispatch('setPlaying', false)
+            this.$store.dispatch('setShowPlayLoading', true)
             for (let i = 0; i < this.listenLists.length; i++) {
                 if (this.listenLists[i].name === this.audio.name) {
                     this.$store.dispatch('setPreAudio', i)
@@ -183,10 +184,12 @@ export default {
             let audioDOM = document.querySelector('audio')
             audioDOM.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('setPlaying', true)
+                this.$store.dispatch('setShowPlayLoading', false)
             })
         },
         _next() {
             this.$store.dispatch('setPlaying', false)
+            this.$store.dispatch('setShowPlayLoading', true)
             for (let i = 0; i < this.listenLists.length; i++) {
                 if (this.listenLists[i].name === this.audio.name) {
                     this.$store.dispatch('setNextAudio', i)
@@ -204,6 +207,7 @@ export default {
             let audioDOM = document.querySelector('audio')
             audioDOM.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('setPlaying', true)
+                this.$store.dispatch('setShowPlayLoading', false)
             })
         },
         showList() {
