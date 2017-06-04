@@ -1,7 +1,8 @@
 <template>
     <div class="listen-list">
         <div class="num">
-            <i class="icon">&#xe6ae;</i> 循环播放({{listenLists.length}}首)
+            <span><i class="icon">&#xe6ae;</i> 循环播放({{listenLists.length}}首)</span>
+            <span @click="_deleteListenLists"><i class="icon">&#xe612;</i> 清空</span>
         </div>
         <div class="list">
             <transition-group name="slide"
@@ -65,6 +66,9 @@ export default {
                 return
             }
             this.$store.dispatch('deleteMusic', index)
+        },
+        _deleteListenLists() {
+            this.$store.dispatch('removeListenLists')
         }
     },
     computed: {
@@ -97,15 +101,19 @@ export default {
     color: #fff;
     display: flex;
     flex-direction: column;
-
     .num {
+        display: flex;
+        justify-content: space-between;
         height: px2rem(90px);
         line-height: px2rem(90px);
         font-size: px2rem(28px);
-        margin: 0 px2rem(15px);
-        .icon {
-            font-size: px2rem(34px);
+        span {
+            padding: 0 px2rem(30px);
+            .icon {
+                font-size: px2rem(34px);
+            }
         }
+        
     }
     .list {
         flex: 1;

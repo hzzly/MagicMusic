@@ -6,7 +6,7 @@ const state = {
     classicalLists: [],
     lightLists: [],
     radioLists: [],
-    listenLists: [
+    listenLists: JSON.parse(localStorage.musiclists) || [
         {
             "name": "刚好遇见你",
             "id": 439915614,
@@ -60,6 +60,9 @@ const actions = {
     //添加到试听列表
     addListenLists({ commit }, music) {
         commit(types.ADD_LISTEN_LISTS, music)
+    },
+    removeListenLists({ commit }) {
+        commit(types.REMOVE_LISTEN_LISTS)
     },
     //获取热门流行歌曲
     getPopularLists({ commit }) {
@@ -182,6 +185,11 @@ const getters = {
 const mutations = {
     [types.ADD_LISTEN_LISTS](state, music) {
         state.listenLists.push(music)
+        localStorage.musiclists = JSON.stringify(state.listenLists)
+    },
+    [types.REMOVE_LISTEN_LISTS](state) {
+        state.listenLists = []
+        localStorage.musiclists = []
     },
     [types.GET_POPULAR_LISTS](state, res) {
         state.popularLists = res
