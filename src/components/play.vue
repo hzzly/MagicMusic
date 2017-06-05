@@ -127,8 +127,6 @@ export default {
         },
     },
     created() {
-        this.$store.dispatch('getMusicInfo', 471385043)
-        this.$store.dispatch('getMusicTime', 312.241633)
         this.resize()
     },
     mounted() {
@@ -287,7 +285,7 @@ export default {
                 overflow: auto; 
                 .roll-lyric {
                     transition: transform .5s;
-                    transform: translateY(200px);
+                    // transform: translateY(200px);
                 }
             }
         }

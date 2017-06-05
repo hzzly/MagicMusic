@@ -66,6 +66,7 @@ const actions = {
     },
     addAllToListenLists({ commit }, musiclists) {
         commit(types.ADD_ALL_TO_LISTEN_LISTS, musiclists)
+        // commit(types.SET_AUDIO, musiclists[0])
     },
     //获取热门流行歌曲
     getPopularLists({ commit }) {
@@ -195,7 +196,7 @@ const mutations = {
         localStorage.musiclists = []
     },
     [types.ADD_ALL_TO_LISTEN_LISTS](state, musiclists) {
-        state.listenLists = musiclists
+        state.listenLists = [...state.listenLists, ...musiclists]
         localStorage.musiclists = JSON.stringify(state.listenLists)
     },
     [types.GET_POPULAR_LISTS](state, res) {

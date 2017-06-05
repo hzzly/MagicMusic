@@ -36,6 +36,7 @@ export default {
             audioDOM.addEventListener('loadedmetadata', () => {
                 this.$store.dispatch('setPlaying', true)
                 this.$store.dispatch('setShowPlayLoading', false)
+                this.$store.dispatch('getMusicTime', audioDOM.duration)
             })
     }
 }

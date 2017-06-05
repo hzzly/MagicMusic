@@ -47,6 +47,7 @@ export default {
 					this.$store.dispatch('setAudioUrl', res.data[0].url)
 				})
 		}
+		this.$store.dispatch('getMusicInfo', this.audio[0].id)
 	},
 	data() {
 		return {

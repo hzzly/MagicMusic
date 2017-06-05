@@ -126,9 +126,6 @@ export default {
         audio() {
             this.$store.dispatch('getMusicInfo', this.audio[0].id)
             this.now = 0
-            this.$refs.myAudio.addEventListener('loadedmetadata', () => {
-                this.$store.dispatch('getMusicTime', this.$refs.myAudio.duration)      
-            })
             this.$refs.myAudio.addEventListener('error', () => {
                 _.toast('获取音乐出错...')
             })

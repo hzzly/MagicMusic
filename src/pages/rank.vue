@@ -4,7 +4,7 @@
             <div class="h-icon"
                  @click="_back"><i class="icon">&#xe608;</i> <span class="title">{{title}}</span></div>
             <!--<div class="title"></div>-->
-            <div class="h-icon right-c" @click="_addAll"><i class="icon">&#xe606;</i>播放全部</div>
+            <div class="h-icon right-c" v-show="rankLists.length>0" @click="_addAll"><i class="icon">&#xe606;</i>播放全部</div>
         </div>
         <div class="search-list">
             <v-music-list :music-lists="rankLists"></v-music-list>
@@ -50,6 +50,7 @@ export default {
     computed: {
         ...mapGetters([
             'showLoading',
+            'audio'
         ]),
         title() {
             switch(this.idx) {
@@ -70,6 +71,7 @@ export default {
         },
         _addAll() {
             this.$store.dispatch('addAllToListenLists', this.rankLists)
+            // this.$store.dispatch('setAudioUrl', this.audio[0].mp3Url)
             _.toast('已添加到试听列表')
         },
     }
