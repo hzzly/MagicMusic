@@ -8,7 +8,7 @@
             <div class="name">hzzly</div>
             <div class="desc">
                 <p>本人大三狗一枚，就读的是江西一所普通的大学(非985,211)，但这并没有阻挡我对前端的热爱，
-                    自学两年多，做过两个外包项目以及两个个人的开源项目。欢迎带我入坑。</p>
+                    自学两年多，做过两个外包项目以及两个个人的开源项目。<span>求实习ing。</span></p>
             </div>
             <div class="about">
                 <div class="dynamic" @click="dynamics">
@@ -25,8 +25,8 @@
                 </div>
             </div>
             <div class="btn">
-                <a href="https://github.com/hzzly/MagicMusic" target="_blank">
-                    <i class="icon">&#xe6ed;</i>Github
+                <a href="http://hzzly.net/resume/" target="_blank">
+                    <i class="icon">&#xe63c;</i>关于我
                 </a>
             </div>
         </div>
@@ -119,6 +119,9 @@ export default {
             margin: px2rem(30px) px2rem(50px);
             p {
                 line-height: px2rem(36px);
+                span {
+                    font-weight: bold;
+                }
             }
         }
         .about {
@@ -159,7 +162,7 @@ export default {
             .icon {
                 font-size: px2rem(40px);
                 margin-right: px2rem(10px);
-                vertical-align: baseline;
+                vertical-align: middle;
                 transition: all .5s;
             }
             &:hover {

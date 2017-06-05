@@ -51,7 +51,6 @@ export default {
 	},
 	data() {
 		return {
-			tansitionName: 'slide-right'
 		}
 	},
 	computed: {
@@ -69,7 +68,15 @@ export default {
 			'audioUrl',
 			'showPlayLoading'
 		]),
-	}
+		tansitionName() {
+			switch(this.$route.path) {
+				case '/collection':
+					return 'slide-left'
+				default:
+					return 'slide-right'
+			}
+		}
+	},
 }
 </script>
 

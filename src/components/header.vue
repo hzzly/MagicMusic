@@ -3,7 +3,7 @@
         <div class="header-icon" @click="showSidebar"><i class="icon">&#xe692;</i></div>
         <div class="header-cont">
             <div class="nav-item">
-                <router-link to="/">推荐</router-link>
+                <router-link to="/home">推荐</router-link>
             </div>
             <div class="nav-item">
                 <router-link to="/collection">排行榜</router-link>

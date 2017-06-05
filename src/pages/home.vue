@@ -29,7 +29,7 @@ export default {
         }
     },
     created() {
-        this.$router.push('popular')
+        this.$router.push('/home/popular')
     },
     mounted() {
         let audioDOM = document.querySelector('audio')
