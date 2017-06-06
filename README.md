@@ -6,6 +6,7 @@
 [温馨提示：pc浏览f12手机模式最佳,手机建议wifi下访问]
 
 **demo地址：** [http://hzzly.net/magic-music](http://hzzly.net/magic-music)
+
 欢迎大家的star啦😄~
 
 ## Build Setup
@@ -86,12 +87,13 @@ app.all('*', function(req, res, next) {
 > - [x] 播放歌曲高亮
 > - [x] 切歌(单击切歌)
 > - [x] 删歌(点击右侧小X)
-> - [ ] 清空播放列表
-> - [ ] 本地缓存播放列表
+> - [x] 清空播放列表
+> - [x] 本地缓存播放列表
 
 #### 5、排行榜
 > - [x] 热门排行榜
 > - [x] 排行榜里的歌曲(单击播放)
+> - [x] 播放全部
 
 #### 6、音乐搜索
 输入搜索关键词，点击`放大镜`图标
@@ -106,176 +108,18 @@ app.all('*', function(req, res, next) {
 > - [x] 菜单
 >   - [x] 个人中心
 
-### API
-感谢作者把api整理的这么好(点个赞👍)
->[网易云音乐 NodeJS 版 API](https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=%e6%90%9c%e7%b4%a2%e9%9f%b3%e4%b9%90)
 
-### 开发心得与总结
+第一版文章：[DIY一个自己的音乐播放器](http://hjingren.cn/2017/04/27/%E2%80%99DIY%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8/)
 
-#### 1、轮播图
-首先感谢作者[ShanaMaid/vue-image-scroll](https://github.com/ShanaMaid/vue-image-scroll)开源的代码，我把代码copy下来自己进行了一点修改(没有手指滑动效果)，因为这是移动端，少不了的手指滑动切换，所以添加了[vue-touch](https://github.com/vuejs/vue-touch#next)(偷偷告诉你，vue-touch的next分支还是支持vue2.0的😜)。[代码传送门](https://github.com/hzzly/MagicMusic/blob/master/src/components/banner.vue)
-```javascript
-<li v-for="(item,index) in image" :class="[move[index]]">
-    <v-touch class="vuetouch"
-            v-on:swipeleft="nextPic"
-            v-on:swiperight="prePic">
-        ...
-    </v-touch>
-</li>
+第二版文章：[DIY一个人自己的音乐播放器2.0来袭](http://hjingren.cn/2017/06/05/DIY%E4%B8%80%E4%B8%AA%E4%BA%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A82-0%E6%9D%A5%E8%A2%AD/)
 
-methods: {
-    nextPic(event) {
-        let temp = this.move.pop()
-        this.move.unshift(temp)
-    },
-    prePic(event) {
-        let temp = this.move.shift()
-        this.move.push(temp)
-    },
-}
-```
-
-#### 2、歌曲操作(喜欢，分享，加入播放列表)动画、播放列表展开与删除歌曲动画
-> `Vue`提供了`transition`的封装组件，在下列情形中，可以给任何元素和组件添加 entering/leaving 过渡
->   * 条件渲染 （使用 v-if）
->   * 条件展示 （使用 v-show）
->   * 动态组件
->   * 组件根节点
-
-```javascript
-<transition name="move">
-    <div class="menu" v-show="item.menuShow">
-        ...
-    </div>
-</transition>
-
-<transition-group name="slide" tag="div" class="list-wrapper">
-    <div class="item" v-for="(item, index) in listenLists" :key="item">
-        ...
-    </div>
-</transition-group>
-```
-> `transition-group`一组过度动画，这里有个小坑的，之前看官网列表过渡的栗子，给每一项设置唯一的key值，一般都会用index。所以在做的时候就把index传给key，结果过渡老是不对，后来换成对应的`item`就正常了(生无可恋脸)。
-
-#### 3、直线进度条、弧形进度条
-> 西班牙建筑大师曾说过：“直线属于人类，曲线则归于上帝”。在这里我大胆的使用了弧形来作为进度条，(几大热门音乐APP貌似还没有弧形进度条😄)。
-
-这里我用到了Vue的**绑定内联样式**
-```javascript
-//首页底部直线进度条
-<div class="progress-bar">
-    <div class="play"
-        :style="{width: (now / duration).toFixed(3)*100 + '%'}"></div>
-</div>
-
-//播放页弧形进度条
-//因为用到了弧形，所以我这里用到了`border-radius`来使它变成一个大圆，然后平移`translateX`居中，其它不要的部分`overflow: hidden`。
-//这里用两个div来表示进度条，一条固定的进度条，一条慢慢增加。
-<div class="process" @click="showToast">
-    <div class="line"></div>
-    <div class="pro" :style="{transform: `translateX(${translateX}) rotate(${deg*1 + 56.5*((now / size).toFixed(3))}deg)`}"></div>
-</div>
-```
-
-#### 4、本地存储
-> 将一些数据缓存到localStorage，可以减少Http请求，从而优化页面加载时间。
-
-在这个项目中首页歌曲列表以及搜索历史用到了本地缓存，拿搜索历史来举栗：
-```javascript
-created() {
-    if (!localStorage.searchHistory) {
-        let searchHistory = ['前端', '童话镇', '刚好遇见你']
-        localStorage.searchHistory = JSON.stringify(searchHistory)
-    } 
-},
-methods: {
-    _search(keywords) {
-        //判断搜索列表中是否已存在
-        let searchHistory = JSON.parse(localStorage.searchHistory)
-        let find = searchHistory.findIndex((val) => {
-            return val === keywords
-        })
-        find === -1 ? localStorage.searchHistory = JSON.stringify([keywords, ...searchHistory]) : ''
-    }
-}
-```
-
-#### 5、图片懒加载
-使用了[vue-lazyload](https://github.com/hilongjw/vue-lazyload?from=gold)插件
-用法👉：
-```node
-$ npm install vue-lazyload
-```
-```javascript
-//main.js
-import VueLazyLoad from 'vue-lazyload'
-import def_lazy_img from '../static/img/loading.gif' //懒加载的默认图片
-Vue.use(VueLazyLoad,{
-    loading: def_lazy_img
-}) //使用懒加载组件
-
-//在使用img标签的地方使用
-<img v-lazy="item.al.picUrl" alt="">
-```
-
-#### 6、歌词滚动与高亮
-因为api提供的歌词包括时间，如：`[03:57.280]原谅我这一生不羁放纵爱自由`
-所以首先要进行字符串切割：
-```javascript
-<div class="lyric">
-    <div class="roll-lyric" v-html="lyrics" ref="lyric"></div>
-</div>
-
-computed: {
-    lyrics() {
-        let lyrics = ''
-        this.lyricArr = []
-        if (this.lyric) {
-            let arr = this.lyric.split('\n')
-            for (let item of arr) {
-                if (item) {
-                    let arr2 = item.split(']')
-                    this.lyricArr.push(arr2[0].substring(1,3)*60+arr2[0].substring(4)*1)
-                    if (arr2) {
-                        lyrics += `<p class='lyrichook' style='margin: 10px 0'>${arr2[1]}</p>`
-                    }
-                }
-            }
-        } else {
-            lyrics = '暂无歌词~'
-        }
-        return lyrics
-    }
-}
-```
-
-然后在播放的监听事件中与播放的当前做对比：
-```javascript
-this.$refs.myAudio.addEventListener('play', () => {
-    this.pDOM = [...document.querySelectorAll('.lyrichook')]
-    timer = setInterval(() => {
-        this.now = audioDOM.currentTime
-        this.lyricArr.forEach((item, index) => {
-            if (parseInt(item) == parseInt(this.now)) {
-                this.pDOM.forEach((p) => {
-                    p.style.color = 'rgba(255,255,255,.8)' //其它歌词清除高亮
-                });
-                this.pDOM[index].style.color = '#f12c61' //歌词高亮
-                this.$refs.lyric.style.transform = `translateY(-${(index-2)*25}px)` //歌词滚动
-            } 
-        });
-    }, 1000)
-})
-```
-到这就ok了😜
-
-#### 7、vuex状态管理
-推荐官方调试工具 [devtools extension](https://github.com/vuejs/vue-devtools)
-> 想进一步理解vuex，可以看这篇博客[vuex学习实践笔记](https://hzzly.github.io/2017/04/04/vuex%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/)
-
-之前看到好多人写的vuex，把整个项目的数据放到了一个state里，导致应用的所有状态集中到一个很大的对象。但是，当应用变得很大时，store 对象会变得臃肿不堪。
-> 所以我建议(个人见解，轻喷)：将 store 分割到模块（module）。每个模块拥有自己的 state、mutation、action、getters。这样方便管理与后期的维护。
 
 车已到站✌️。
 
 不知不觉写了这么多，老铁们凑合这看吧😁，觉得还行的可以点个star，**你的star是我继续开源创作的动力**，谢谢！！！
+
+
+### 广告
+
+2018届毕业生求职ing
+简历👉：[黄敬仁个人简历](http://hzzly.net/resume/)
