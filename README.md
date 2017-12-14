@@ -24,7 +24,7 @@ npm run build --report
 
 API
 ``` bash
-$ git clone git@github.com:Binaryify/NeteaseCloudMusicApi.git
+$ git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git
 $ npm install
 $ node app.js
 ```
