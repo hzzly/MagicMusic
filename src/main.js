@@ -21,8 +21,6 @@ Vue.use(VueLazyLoad,{
   loading: def_lazy_img
 })
 
-router.push('/home/popular')
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

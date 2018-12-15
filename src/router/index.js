@@ -11,20 +11,18 @@ import classical from '@/pages/classical'
 import light from '@/pages/light'
 import radio from '@/pages/radio'
 
-
-
 Vue.use(Router)
 
 export default new Router({
   // mode: 'history',
   linkActiveClass: 'active',
   routes: [
-    {
+		{
       path: '/home',
       name: 'home',
-      component: home,
-      children: [
-        {
+			component: home,
+			redirect: '/popular',
+      children: [{
           path: 'popular',
           component: popular
         },
