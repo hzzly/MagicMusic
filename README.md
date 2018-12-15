@@ -5,7 +5,7 @@
 
 [温馨提示：pc浏览f12手机模式最佳,手机建议wifi下访问,低版本浏览器可能有兼容性问题]
 
-**demo地址：** [http://hzzly.net/magic-music](http://hzzly.net/magic-music)
+<!-- **demo地址：** [http://hzzly.net/magic-music](http://hzzly.net/magic-music) -->
 
 欢迎大家的star啦😄~
 
@@ -22,25 +22,11 @@ npm run build
 npm run build --report
 ```
 
-API
+[API文档](https://binaryify.github.io/NeteaseCloudMusicApi/#/)
 ``` bash
 $ git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git
 $ npm install
-$ node app.js
-```
-## 跨域
-> 在 clone 下来的api中的 `app.js` 中添加如下代码(这是API中的app.js，不是项目中的，好多人说找不到！！！)
-
-```javascript
-//设置跨域访问  
-app.all('*', function(req, res, next) {  
-    res.header("Access-Control-Allow-Origin", "*");  
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");  
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");  
-    res.header("X-Powered-By",' 3.2.1')  
-    res.header("Content-Type", "application/json;charset=utf-8");  
-    next();  
-});  
+$ npm start
 ```
 
 👉老铁们，准备发车(技能点)：
@@ -119,8 +105,3 @@ app.all('*', function(req, res, next) {
 不知不觉写了这么多，老铁们凑合这看吧😁。
 MagicMusic还在不断努力的改进，觉得还行的可以点个star，**你的star是我继续开源创作的动力**，谢谢！！！
 
-
-### 广告
-
-2018届毕业生求职ing
-简历👉：[黄敬仁个人简历](http://hzzly.net/resume/)
