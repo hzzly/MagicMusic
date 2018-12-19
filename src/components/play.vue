@@ -1,5 +1,5 @@
 <template>
-  <div class="play">
+  <div class="play" v-if="listenLists.length > 0">
     <div class="content">
       <div class="head">
         <div class="h-icon" @click="hidePlay">
@@ -126,27 +126,6 @@ export default {
     this.resize()
   },
   mounted() {
-    let timer,
-      audioDOM = document.querySelector('audio')
-    audioDOM.addEventListener('play', () => {
-      this.pDOM = [...document.querySelectorAll('.lyrichook')]
-      timer = setInterval(() => {
-        this.now = audioDOM.currentTime
-        this.lyricArr.forEach((item, index) => {
-          if (parseInt(item) == parseInt(this.now)) {
-            this.pDOM.forEach((p) => {
-              p.style.color = 'rgba(255,255,255,.8)'
-            });
-            this.pDOM[index].style.color = '#f12c61'
-            this.$refs.lyric.style.transform = `translateY(-${(index - 7) * 25}px)`
-
-          }
-        });
-      }, 1000)
-    })
-    audioDOM.addEventListener('pause', () => {
-      clearInterval(timer)
-    })
     window.addEventListener('resize', () => {
       this.resize()
     })
@@ -215,6 +194,31 @@ export default {
     },
   },
   watch: {
+    playing() {
+      if (this.playing) {
+        let timer,
+          audioDOM = document.querySelector('audio')
+        audioDOM.addEventListener('play', () => {
+          this.pDOM = [...document.querySelectorAll('.lyrichook')]
+          timer = setInterval(() => {
+            this.now = audioDOM.currentTime
+            this.lyricArr.forEach((item, index) => {
+              if (parseInt(item) == parseInt(this.now)) {
+                this.pDOM.forEach((p) => {
+                  p.style.color = 'rgba(255,255,255,.8)'
+                });
+                this.pDOM[index].style.color = '#f12c61'
+                this.$refs.lyric.style.transform = `translateY(-${(index - 7) * 25}px)`
+
+              }
+            });
+          }, 1000)
+        })
+        audioDOM.addEventListener('pause', () => {
+          clearInterval(timer)
+        })
+      }
+    },
     size() {
       this.$refs.lyric.style.transform = 'translateY(0px)'
     },

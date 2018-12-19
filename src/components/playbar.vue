@@ -1,5 +1,5 @@
 <template>
-  <div class="playbar">
+  <div class="playbar" v-if="listenLists.length > 0">
     <div class="play-box">
       <div class="music-avatar" @click="showPlay()">
         <img v-if="audio[0].al" v-lazy="audio[0].al.picUrl" alt>
@@ -60,16 +60,6 @@ export default {
     ]),
   },
   mounted() {
-    let timer
-    this.$refs.myAudio.addEventListener('play', () => {
-      timer = setInterval(() => {
-        this.duration = this.$refs.myAudio.duration
-        this.now = this.$refs.myAudio.currentTime
-      }, 1000)
-    })
-    this.$refs.myAudio.addEventListener('pause', () => {
-      clearInterval(timer)
-    })
   },
   methods: {
     _play() {
@@ -107,14 +97,34 @@ export default {
   },
   watch: {
     playing() {
-      this.playing ? this.$refs.myAudio.play() : this.$refs.myAudio.pause()
+      if (this.playing) {
+        let timer
+        this.$refs.myAudio.addEventListener('play', () => {
+          timer = setInterval(() => {
+            this.duration = this.$refs.myAudio.duration
+            this.now = this.$refs.myAudio.currentTime
+          }, 1000)
+        })
+        this.$refs.myAudio.addEventListener('pause', () => {
+          clearInterval(timer)
+        })
+      }
+      
+      // const media = this.$refs.myAudio;
+      // const playPromise = media.play();
+      // if (playPromise !== null){
+      //     playPromise.catch(() => { media.play(); })
+      // }
+      // this.playing && this.$refs.myAudio ? this.$refs.myAudio.play() : this.$refs.myAudio.pause()
     },
     audio() {
-      this.$store.dispatch('getMusicInfo', this.audio[0].id)
-      this.now = 0
-      this.$refs.myAudio.addEventListener('error', () => {
-        _.toast('获取音乐出错...')
-      })
+      if (this.playing) {
+        this.$store.dispatch('getMusicInfo', this.audio[0].id)
+        this.now = 0
+        this.$refs.myAudio.addEventListener('error', () => {
+          _.toast('获取音乐出错...')
+        })
+      }
     },
   }
 }
@@ -124,6 +134,12 @@ export default {
 @import "../assets/css/function";
 
 .playbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
   background: #ea2448;
   transition: all 0.7s ease-in;
   .play-box {

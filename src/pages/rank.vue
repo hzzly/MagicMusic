@@ -1,152 +1,174 @@
 <template>
-  <div class="search">
-    <div class="head">
-      <div class="h-icon" @click="_back">
-        <i class="icon">&#xe608;</i>
-        <span class="title">{{title}}</span>
-      </div>
-      <!--<div class="title"></div>-->
-      <div class="h-icon right-c" v-show="rankLists.length>0" @click="_addAll">
-        <i class="icon">&#xe606;</i>播放全部
-      </div>
-    </div>
-    <div class="search-list">
-      <v-music-list :music-lists="rankLists"></v-music-list>
-      <div class="more" v-show="!showLoading">我是有底线的</div>
-    </div>
+  <div class="rank" ref="rank">
+    <v-scroll :data="rankList" class="ranklist" ref="ranklist">
+      <ul>
+        <li
+          @click="selectItem(item)"
+          class="item"
+          v-for="(item, i) in rankList"
+          :class="itemClass(i)"
+          :key="item.id"
+        >
+          <div class="img">
+            <img :src="item.coverImgUrl" alt>
+          </div>
+          <ul class="songlist">
+            <li class="song" v-for="(song, index) in item.tracks" :key="index">
+              <span>{{index + 1}}</span>
+              <span>{{song.first}}-{{song.second}}</span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </v-scroll>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-
-import musicList from '@/components/musicList'
-
-import { mapGetters } from 'vuex'
-
-import api from '../api'
-import * as _ from '../util/tool'
-
+import scroll from '@/components/scroll'
+import api from '@/api'
+import { playlistMixin } from 'common/js/mixin'
 export default {
-  components: {
-    'v-music-list': musicList,
+  mixins: [playlistMixin],
+  created() {
+    this._getRankList()
   },
   data() {
     return {
-      idx: 0,
-      rankLists: []
-    }
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.idx = to.params.idx
-    })
-  },
-  mounted() {
-    this.$store.dispatch('setShowLoading', true)
-    api.MusicRank(this.idx)
-      .then((res) => {
-        this.rankLists = res.playlist.tracks
-        setTimeout(() => {
-          this.$store.dispatch('setShowLoading', false)
-        }, 500)
-      })
-  },
-  computed: {
-    ...mapGetters([
-      'showLoading',
-      'audio'
-    ]),
-    title() {
-      switch (this.idx) {
-        case 0:
-          return '云音乐新歌榜'
-        case 1:
-          return '云音乐热歌榜'
-        case 2:
-          return '网易原创歌曲榜'
-        case 3:
-          return '云音乐飙升榜'
-      }
+      rankList: []
     }
   },
   methods: {
-    _back() {
-      window.history.back()
+    handlePlaylist(playlist) {
+      const bottom = playlist.length > 0 ? '60px' : ''
+      this.$refs.rank.style.bottom = bottom
+      this.$refs.ranklist.refresh()
     },
-    _addAll() {
-      this.$store.dispatch('addAllToListenLists', this.rankLists)
-      // this.$store.dispatch('setAudioUrl', this.audio[0].mp3Url)
-      _.toast('已添加到试听列表')
+    itemClass() {
+      const random = Math.floor(Math.random() * 4 + 1)
+      const obj = {
+        '1': 'red',
+        '2': 'green',
+        '3': 'purple',
+        '4': 'blue'
+      }
+      return obj[random]
     },
+    selectItem(item) {
+      this.$router.push({
+        path: `/rank/${item.id}`
+      })
+    },
+    _getRankList() {
+      api.RankList().then((res) => {
+        if (res.code === 200) {
+          this.rankList = res.list
+        }
+      })
+    },
+  },
+  computed: {
+  },
+  watch: {
+    rankList() {
+      setTimeout(() => {
+        this.$refs.ranklist.refresh()
+      }, 20)
+    }
+  },
+  components: {
+    'v-scroll': scroll,
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import "../assets/css/function.scss";
-.search {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  .head {
-    height: px2rem(100px);
-    line-height: px2rem(105px);
-    text-align: center;
-    background: #28224e;
-    display: flex;
-    justify-content: space-between; // box-shadow: 0 10px 20px rgba(0, 0, 0, .8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    .h-icon {
-      // width: px2rem(100px);
-      cursor: pointer;
-      font-size: px2rem(26px);
-      color: #fff;
-      .icon {
-        display: inline-block;
-        width: px2rem(100px);
-        font-size: px2rem(46px);
+.rank {
+  position: fixed;
+  width: 100%;
+  top: px2rem(176px);
+  bottom: 0;
+  z-index: 10;
+  .ranklist {
+    height: 100%;
+    overflow: hidden;
+    margin: 0 px2rem(20px);
+    .item {
+      height: px2rem(200px);
+      margin-top: px2rem(30px);
+      border-radius: px2rem(20px);
+      display: flex;
+      align-items: center;
+      &.red {
+        background: linear-gradient(
+          -45deg,
+          rgba(237, 46, 97, 0.5),
+          rgba(237, 46, 97, 1)
+        );
       }
-      .title {
-        display: inline-block;
-        font-size: px2rem(32px);
+      &.green {
+        background: linear-gradient(
+          -45deg,
+          rgba(69, 196, 166, 0.5),
+          rgba(69, 196, 166, 1)
+        );
       }
-    }
-    .right-c {
-      margin-right: px2rem(20px);
-      .icon {
-        width: px2rem(60px);
-        font-size: px2rem(34px);
-        vertical-align: middle;
+      &.purple {
+        background: linear-gradient(
+          -45deg,
+          rgba(122, 61, 253, 0.5),
+          rgba(122, 61, 253, 1)
+        );
       }
-    }
-  }
-  .search-list {
-    flex: 1;
-    overflow: auto;
-    overflow-x: hidden;
-    background: #28224e;
-    .more {
-      height: px2rem(100px);
-      line-height: px2rem(100px);
-      text-align: center;
-      color: rgba(255, 255, 255, 0.6);
-      position: relative;
-      &::before {
-        content: "";
-        position: absolute;
-        top: px2rem(50px);
-        left: px2rem(50px);
-        width: 33%;
-        border-bottom: 1px solid #3c3662;
+      &.blue {
+        background: linear-gradient(
+          -45deg,
+          rgba(19, 122, 253, 0.5),
+          rgba(19, 122, 253, 1)
+        );
       }
-      &::after {
-        content: "";
-        position: absolute;
-        top: px2rem(50px);
-        right: px2rem(50px);
-        width: 33%;
-        border-bottom: 1px solid #3c3662;
+
+      .img {
+        width: px2rem(180px);
+        height: px2rem(180px);
+        border-radius: px2rem(10px);
+        overflow: hidden;
+        margin-left: px2rem(10px);
+        img {
+          width: 100%;
+        }
       }
+      .songlist {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 px2rem(30px);
+        color: hsla(0, 0%, 100%, 0.6);
+        overflow: hidden;
+        font-size: 12px;
+        .song {
+          line-height: px2rem(50px);
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+      // .desc {
+      //   margin-left: px2rem(20px);
+      //   color: #fff;
+      //   .title {
+      //     font-size: px2rem(38px);
+      //     line-height: px2rem(60px);
+      //     margin-bottom: px2rem(20px);
+      //   }
+      //   .say {
+      //     font-size: px2rem(26px);
+      //     color: rgba(255, 255, 255, 0.7);
+      //   }
+      // }
     }
   }
 }

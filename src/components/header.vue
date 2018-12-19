@@ -1,76 +1,66 @@
 <template>
-  <div class="header">
-    <div class="header-icon" @click="showSidebar">
-      <i class="icon">&#xe692;</i>
+  <div class="header" :style="headerStyle">
+    <div class="header-icon" @click="leftEvent">
+      <slot name="left-icon"></slot>
     </div>
     <div class="header-cont">
-      <div class="nav-item">
-        <router-link to="/home/popular">推荐</router-link>
-      </div>
-      <div class="nav-item">
-        <router-link to="/collection">排行榜</router-link>
-      </div>
-      <div class="nav-item">
-        <router-link to="/user">我的</router-link>
-      </div>
+      <slot name="content"></slot>
     </div>
-    <div class="header-icon">
-      <router-link to="/search">
-        <i class="icon">&#xe638;</i>
-      </router-link>
+    <div class="header-icon" @click="rightEvent">
+      <slot name="right-icon"></slot>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-
+  name: 'header',
+  props: {
+    headerStyle: {
+      type: Object,
+      default() {
+        return {}
+      }
     }
   },
   methods: {
-    showSidebar() {
-      this.$store.dispatch('setShowSidebar', true)
+    leftEvent() {
+      this.$emit('left')
+    },
+    rightEvent() {
+      this.$emit('right')
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../assets/css/function";
 .header {
-  height: px2rem(100px);
-  line-height: px2rem(100px);
+  height: px2rem(88px);
+  line-height: px2rem(88px);
   text-align: center;
-  background: #28224e;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   color: #746ca8;
   font-size: px2rem(30px);
   .header-icon {
-    flex: 0.5;
+    flex: 0 0 px2rem(88px);
     cursor: pointer;
     .icon {
-      font-size: px2rem(50px);
+      font-size: px2rem(48px);
     }
   }
   .header-cont {
-    flex: 2;
-    margin: px2rem(5px) px2rem(50px) 0;
-    display: flex;
-    .nav-item {
-      flex: 1;
-      font-weight: 700;
-      cursor: pointer;
-      a {
-        display: block;
-        color: #746ca8;
-        &.active {
-          color: #eb234a;
-        }
-      }
-    }
+    flex: 1;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 </style>

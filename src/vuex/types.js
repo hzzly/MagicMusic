@@ -1,3 +1,4 @@
+export const GET_DISC_LISTS = 'GET_DISC_LISTS' // 推荐歌单
 export const GET_MUSIC_LISTS = 'GET_MUSIC_LISTS'   //获取音乐列表
 export const ADD_LISTEN_LISTS = 'ADD_LISTEN_LISTS'
 export const REMOVE_LISTEN_LISTS = 'REMOVE_LISTEN_LISTS'
@@ -16,6 +17,10 @@ export const GET_MUSIC_LYRIC = 'GET_MUSIC_LYRIC'
 export const GET_MUSIC_TIME = 'GET_MUSIC_TIME'
 
 //com
+export const COM_GET_BANNERS = 'COM_GET_BANNERS' // banner
+export const COM_SAVE_SEARCH_HISTORY = 'COM_SAVE_SEARCH_HISTORY'  // 保存搜索历史
+export const COM_DELETE_SEARCH_HISTORY = 'COM_DELETE_SEARCH_HISTORY'  // 删除搜索历史
+export const COM_CLEAR_SEARCH_HISTORY = 'COM_CLEAR_SEARCH_HISTORY'  // 清空搜索历史
 export const COM_SHOW_LISTEN_LIST = 'COM_SHOW_LISTEN_LIST'  //试听列表
 export const COM_SHOW_SIDE_BAR = 'COM_SHOW_SIDE_BAR' //侧边栏
 export const COM_SHOW_PLAY = 'COM_SHOW_PLAY' //播放页

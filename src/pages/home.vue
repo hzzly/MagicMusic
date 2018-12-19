@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <v-banner :image="image"></v-banner>
+    <v-banner :images="images"></v-banner>
     <v-nav></v-nav>
     <router-view></router-view>
   </div>
@@ -11,6 +11,38 @@
 import banner from '@/components/banner'
 import nav from '@/components/nav'
 
+const images = [
+  // [
+    {
+      linkUrl: 'http://y.qq.com/w/album.html?albummid=0044K2vN1sT5mE',
+      picUrl: 'http://y.gtimg.cn/music/photo_new/T003R720x288M000001YCZlY3aBifi.jpg',
+      id: 11351
+    },
+    {
+      linkUrl: 'https://y.qq.com/m/digitalbum/gold/index.html?_video=true&id=2197820&g_f=shoujijiaodian',
+      picUrl: 'http://y.gtimg.cn/music/photo_new/T003R720x288M000004ckGfg3zaho0.jpg',
+      id: 11372
+    }
+  // ],
+  // [
+  //   {
+  //     linkUrl: 'http://y.qq.com/w/album.html?albummid=001tftZs2RX1Qz',
+  //     picUrl: 'http://y.gtimg.cn/music/photo_new/T003R720x288M00000236sfA406cmk.jpg',
+  //     id: 11378
+  //   },
+  //   {
+  //     linkUrl: 'https://y.qq.com/msa/218/0_4085.html',
+  //     picUrl: 'http://y.gtimg.cn/music/photo_new/T003R720x288M000001s0BXx3Zxcwb.jpg',
+  //     id: 11375
+  //   },
+  //   {
+  //     linkUrl: 'https://y.qq.com/m/digitalbum/gold/index.html?_video=true&id=2195876&g_f=shoujijiaodian',
+  //     picUrl: 'http://y.gtimg.cn/music/photo_new/T003R720x288M000002cwng4353HKz.jpg',
+  //     id: 11287
+  //   }
+  // ]
+]
+
 export default {
   components: {
     'v-banner': banner,
@@ -18,21 +50,15 @@ export default {
   },
   data() {
     return {
-      image: [
-        'http://p4.music.126.net/_Dnld3WEJrGJhu5HnVj80Q==/18824738581025900.jpg',
-        'http://p3.music.126.net/zK84D6B5owkHCggrRss5YQ==/19032546276883223.jpg',
-        'http://p4.music.126.net/3_iSYvbjOiKeYFmbpYChPA==/18959978509453169.jpg',
-        'http://p3.music.126.net/fuGZBbYxyRQX43vrtXe5FA==/19005058486178477.jpg',
-        'http://p4.music.126.net/4I-kNYnRSND9I52NSB1AtQ==/19032546276883221.jpg'
-      ],
+      images: images,
       fixed: false
     }
   },
   mounted() {
     let audioDOM = document.querySelector('audio')
     audioDOM.addEventListener('loadedmetadata', () => {
-      this.$store.dispatch('setPlaying', true)
-      this.$store.dispatch('setShowPlayLoading', false)
+      // this.$store.dispatch('setPlaying', true)
+      // this.$store.dispatch('setShowPlayLoading', false)
       this.$store.dispatch('getMusicTime', audioDOM.duration)
     })
   }

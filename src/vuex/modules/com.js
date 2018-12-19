@@ -1,9 +1,12 @@
+import api from '../../api'
 import * as types from '../types'
 
 /**
  * App通用配置
  */
 const state = {
+  banners: [],
+  searchHistory: [],
   showListenList: false,
   showSidebar: false,
   showPlay: false,
@@ -14,6 +17,21 @@ const state = {
 }
 
 const actions = {
+  getBanners({ commit }) {
+    api.BannerList()
+      .then(res => {
+        commit(types.COM_GET_BANNERS, res.banners)
+      })
+  },
+  saveSearchHistory({ commit }, status) {
+    commit(types.COM_SAVE_SEARCH_HISTORY, status)
+  },
+  deleteSearchHistory({ commit }, index) {
+    commit(types.COM_DELETE_SEARCH_HISTORY, index)
+  },
+  clearSearchHistory({ commit }) {
+    commit(types.COM_CLEAR_SEARCH_HISTORY)
+  },
   setShowListenList({
     commit
   }, status) {
@@ -52,6 +70,8 @@ const actions = {
 }
 
 const getters = {
+  banners: state => state.banners,
+  searchHistory: state => state.searchHistory,
   showListenList: state => state.showListenList,
   showSidebar: state => state.showSidebar,
   showToast: state => state.showToast,
@@ -62,6 +82,18 @@ const getters = {
 
 
 const mutations = {
+  [types.COM_GET_BANNERS](state, status) {
+    state.banners = status
+  },
+  [types.COM_SAVE_SEARCH_HISTORY](state, status) {
+    state.searchHistory = [status, ...state.searchHistory]
+  },
+  [types.COM_DELETE_SEARCH_HISTORY](state, index) {
+    state.searchHistory.splice(index, 1)
+  },
+  [types.COM_CLEAR_SEARCH_HISTORY](state) {
+    state.searchHistory = []
+  },
   [types.COM_SHOW_LISTEN_LIST](state, status) {
     state.showListenList = status
   },

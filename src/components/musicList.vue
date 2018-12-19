@@ -1,98 +1,131 @@
 <template>
   <div class="music-list">
-    <div class="list-item" v-for="(item, index) in musicLists" :key="index" v-show="!showLoading">
-      <div class="avatar" @click="_play(item)">
-        <img v-if="item.al" v-lazy="item.al.picUrl" alt>
-        <img v-else v-lazy="item.album.picUrl" alt>
-      </div>
-      <div class="info" @click="_play(item)">
-        <div class="music-name">
-          {{item.name}}
-          <i class="tag" v-show="item.sq">SQ</i>
-        </div>
-        <div class="music-s" v-if="item.ar">{{item.ar[0].name}}</div>
-        <div class="music-s" v-else>{{item.artists[0].name}}</div>
-        <div class="music-hot" v-show="item.hot">
-          <i class="icon">&#xe650;</i>
-          {{item.hot}}
-        </div>
-      </div>
-      <div class="operation" @click="_showOperation(index)">
-        <i class="icon">&#xe605;</i>
-      </div>
-      <animation-menu :item="item" :index="index"></animation-menu>
+    <div class="back" @click="back">
+      <i class="icon">&#xe608;</i>
     </div>
-    <v-loading v-show="showLoading"></v-loading>
+    <h1 class="title" v-html="title"></h1>
+    <div class="bg-image" :style="bgStyle" ref="bgImage">
+      <div class="play-wrapper">
+        <div ref="playBtn" v-show="songs.length>0" class="play" @click="playAll">
+          <i class="icon">&#xe606;</i>
+          <span class="text">播放全部</span>
+        </div>
+      </div>
+      <div class="filter" ref="filter"></div>
+    </div>
+    <div class="bg-layer" ref="layer"></div>
+    <v-scroll
+      :data="songs"
+      @scroll="scroll"
+      :listen-scroll="listenScroll"
+      :probe-type="probeType"
+      class="list"
+      ref="list"
+    >
+      <div class="song-list-wrapper">
+        <v-song-list :song-lists="songs" v-show="songs.length > 0"></v-song-list>
+      </div>
+    </v-scroll>
   </div>
 </template>
 
 <script>
-import animationMenu from '@/components/animationMenu'
-import VLoading from '@/components/loading'
+import scroll from '@/components/scroll'
+import songList from '@/components/songList'
+import { playlistMixin } from '@/common/js/mixin'
+import { prefixStyle } from '@/common/js/dom'
 
-import Vue from 'vue'
-import { mapGetters } from 'vuex'
-
-import api from '../api'
+const RESERVED_HEIGHT = 46
+const transform = prefixStyle('transform')
+const backdrop = prefixStyle('backdrop-filter')
 
 export default {
+  mixins: [playlistMixin],
   components: {
-    animationMenu,
-    VLoading
+    'v-scroll': scroll,
+    'v-song-list': songList,
   },
   props: {
-    musicLists: Array
+    bgImage: {
+      type: String,
+      default: ''
+    },
+    songs: {
+      type: Array,
+      default: []
+    },
+    title: {
+      type: String,
+      default: ''
+    },
+    rank: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
+      scrollY: 0
     }
   },
   computed: {
-    ...mapGetters([
-      'listenLists',
-      'showLoading',
-    ])
+    bgStyle() {
+      return `background-image:url(${this.bgImage})`
+    }
+  },
+  created() {
+    this.probeType = 3
+    this.listenScroll = true
+  },
+  mounted() {
+    this.imageHeight = this.$refs.bgImage.clientHeight
+    this.minTransalteY = -this.imageHeight + RESERVED_HEIGHT
+    this.$refs.list.$el.style.top = `${this.imageHeight}px`
   },
   methods: {
-    _play(music) {
-      this.$store.dispatch('setPlaying', false)
-      this.$store.dispatch('setAudio', music)
-      this.$store.dispatch('setShowPlayLoading', true)
-      //查找试听列表中有没有点击中的歌
-      let x = this.listenLists.findIndex((item) => {
-        //判断是否是搜索列表里的(搜索结果字段不一样)
-        if (item.ar && music.ar) {
-          return item.name == music.name && item.ar[0].name == music.ar[0].name
-        } else if (item.artists && music.artists) {
-          return item.name == music.name && item.artists[0].name == music.artists[0].name
-        }
-      })
-      if (x === -1) {
-        this.$store.dispatch('addListenLists', music)
-      }
-      if (music.mp3Url) {
-        this.$store.dispatch('setAudioUrl', music.mp3Url)
-      } else {
-        api.MusicUrl(music.id)
-          .then(res => {
-            this.$store.dispatch('setAudioUrl', res.data[0].url)
-          })
-      }
+    handlePlaylist(playlist) {
+      const bottom = playlist.length > 0 ? '60px' : ''
+      this.$refs.list.$el.style.bottom = bottom
+      this.$refs.list.refresh()
     },
-    _showOperation(index) {
-      for (let i = 0; i < this.musicLists.length; i++) {
-        if (i !== index) {
-          this.musicLists[i].menuShow = false
-        }
-      }
-      this.musicLists[index].menuShow = !this.musicLists[index].menuShow
+    scroll(pos) {
+      this.scrollY = pos.y
+    },
+    back() {
+      this.$router.back()
+    },
+    playAll() {
+      
     },
   },
   watch: {
-    musicLists() {
-      for (let item of this.musicLists) {
-        Vue.set(item, 'menuShow', false)
+    scrollY(newVal) {
+      let translateY = Math.max(this.minTransalteY, newVal)
+      let scale = 1
+      let zIndex = 0
+      let blur = 0
+      const percent = Math.abs(newVal / this.imageHeight)
+      if (newVal > 0) {
+        scale = 1 + percent
+        zIndex = 10
+      } else {
+        blur = Math.min(20, percent * 20)
       }
+
+      this.$refs.layer.style[transform] = `translate3d(0,${translateY}px,0)`
+      this.$refs.filter.style[backdrop] = `blur(${blur}px)`
+      if (newVal < this.minTransalteY) {
+        zIndex = 10
+        this.$refs.bgImage.style.paddingTop = 0
+        this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`
+        this.$refs.playBtn.style.display = 'none'
+      } else {
+        this.$refs.bgImage.style.paddingTop = '70%'
+        this.$refs.bgImage.style.height = 0
+        this.$refs.playBtn.style.display = ''
+      }
+      this.$refs.bgImage.style[transform] = `scale(${scale})`
+      this.$refs.bgImage.style.zIndex = zIndex
     }
   }
 }
@@ -101,80 +134,95 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/css/function.scss";
 .music-list {
-  background: #28224e;
-  position: relative;
-  .list-item {
-    position: relative;
-    height: px2rem(145px);
-    border-bottom: 1px solid #3c3662;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: #fff;
-    &:last-child {
-      border-bottom: none;
-    }
-    .avatar {
-      width: px2rem(100px);
-      height: px2rem(100px);
-      border-radius: 50%;
-      overflow: hidden;
-      margin: 0 px2rem(15px) 0 px2rem(25px);
-      img {
-        width: 100%;
-      }
-    }
-    .info {
-      flex: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      .music-name {
-        font-size: px2rem(32px);
-        font-weight: bold;
-        vertical-align: middle;
-        .tag {
-          font-size: px2rem(20px);
-          color: #e53f6f;
-          line-height: px2rem(20px);
-          border: 1px solid #e53f6f;
-          border-radius: px2rem(20px);
-          padding: 0 px2rem(8px);
-          vertical-align: middle;
-          margin-left: px2rem(6px);
-        }
-      }
-      .music-s {
-        font-size: px2rem(24px);
-        color: #777686;
-        line-height: px2rem(40px);
-      }
-      .music-hot {
-        .icon {
-          font-size: px2rem(25px);
-          display: inline-block;
-          margin-right: px2rem(5px);
-          color: #e53f6f;
-        }
-      }
-    }
-    .operation {
-      width: px2rem(100px);
-      height: 100%;
-      line-height: px2rem(145px);
-      text-align: center;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgb(8, 5, 58);
+  .back {
+    position: absolute;
+    top: 0;
+    line-height: px2rem(100px);
+    z-index: 50;
+    .icon {
+      display: block;
+      padding: 0 px2rem(30px);
+      font-size: 22px;
     }
   }
-}
-
-@media screen and(min-width: 769px) {
-  .list-item {
-    .info {
-      .music-hot {
+  .title {
+    position: absolute;
+    top: 0;
+    left: px2rem(100px);
+    z-index: 40;
+    width: 80%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: px2rem(100px);
+    font-size: 18px;
+    color: #fff;
+  }
+  .bg-image {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-top: 70%;
+    transform-origin: top;
+    background-size: cover;
+    .play-wrapper {
+      position: absolute;
+      bottom: px2rem(60px);
+      z-index: 50;
+      width: 100%;
+      .play {
+        box-sizing: border-box;
+        width: px2rem(240px);
+        padding: px2rem(10px) 0;
+        margin: 0 auto;
+        text-align: center;
+        border: 1px solid #ea2448;
+        color: #ea2448;
+        border-radius: px2rem(200px);
+        font-size: 0;
         .icon {
-          font-size: 14px !important;
+          display: inline-block;
+          vertical-align: middle;
+          margin-right: 6px;
+          font-size: 16px;
+          color: #ea2448;
+        }
+        .text {
+          display: inline-block;
+          vertical-align: middle;
+          font-size: 12px;
         }
       }
+    }
+    .filter {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(7, 17, 27, 0.4);
+    }
+  }
+  .bg-layer {
+    position: relative;
+    height: 100%;
+    background: rgb(8, 5, 58);
+  }
+  .list {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgb(8, 5, 58);
+    .song-list-wrapper {
+      padding: px2rem(30px) px2rem(50px);
     }
   }
 }

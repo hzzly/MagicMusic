@@ -70,7 +70,7 @@ export default {
 .menu {
   position: absolute;
   right: px2rem(130px);
-  top: px2rem(44px);
+  top: px2rem(20px);
   transition: all 0.7s ease-in;
   &.move-enter-active {
     .inner {
