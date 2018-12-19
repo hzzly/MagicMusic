@@ -4,7 +4,7 @@
       <div class="head">
         <div class="avatar">
           <img
-            src="https://dn-mhke0kuv.qbox.me/51ec2dae1418f9c88443.png?imageView2/1/w/100/h/100/q/85/interlace/1"
+            src="https://avatar-static.segmentfault.com/561/990/561990135-57d0e6353f822_huge256"
             alt
           >
         </div>

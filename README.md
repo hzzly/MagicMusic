@@ -33,6 +33,7 @@ $ npm start
 > * [vue文档](https://cn.vuejs.org/)
 > * [vue-router文档](https://router.vuejs.org/zh-cn/)
 > * [vuex文档](https://vuex.vuejs.org/zh-cn/) 不想看文档的可以看看我这篇博客[vuex学习实践笔记](https://hzzly.github.io/2017/04/04/vuex%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/)
+> * [better-scroll文档](https://ustbhuangyi.github.io/better-scroll/#/)
 > * [axios文档](https://www.npmjs.com/package/axios) 或者这篇博客 [Vuex2 与 Axios 开发](https://blog.ygxdxx.com/2017/02/01/Vuex2&Axios-Develop/)(我也是参考这篇，感谢作者😁)
 > * [es6(阮一峰的es6入门)](http://es6.ruanyifeng.com/) 可以参考[我的es6之路](http://hjingren.cn/tag/#es6)(还在继续,轻喷)
 > * [webpack2(中文网站)](https://doc.webpack-china.org/)
@@ -46,12 +47,10 @@ $ npm start
 ### 实现的功能
 
 #### 1、首页
-> - [x] 轮播
-> - [x] 个性推荐[流行、古典、轻音乐、流行]
-> - [x] 歌曲操作
->   - [x] 加入播放列表
->   - [ ] 喜欢
->   - [ ] 分享
+> - [x] 个性推荐
+> - [x] 歌手列表
+> - [x] 排行榜
+> - [x] 搜索
 
 #### 2、底部播放控件
 > - [x] 播放
