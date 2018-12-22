@@ -1,7 +1,7 @@
 <template>
   <transition name="move">
-    <div class="menu" v-show="item.menuShow">
-      <div class="inner inner-1" @click.once="_add(index)">
+    <div class="menu" v-show="song.menuShow">
+      <div class="inner inner-1" @click.stop="_add">
         <i class="icon">&#xe639;</i>
       </div>
       <div class="inner inner-2" @click="_share(index)">
@@ -17,49 +17,34 @@
 <script>
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
-import * as _ from '../util/tool'
+import { findIndex } from '@/common/js/util'
+
+
 export default {
   props: {
-    item: Object,
+    song: Object,
     index: Number
-  },
-  data() {
-    return {
-
-    }
   },
   computed: {
     ...mapGetters([
-      'listenLists'
+      'playList'
     ])
   },
   methods: {
     _love(index) {
-      _.toast('开发中，敬请期待...')
+      this.$toast('开发中，敬请期待...')
     },
-    _add(index) {
-      let x = this.listenLists.findIndex((music) => {
-        if (this.item.ar) {
-          return music.name == this.item.name && music.ar[0].name == this.item.ar[0].name
-        } else {
-          if (music.ar) {
-            return music.name == this.item.name && music.ar[0].name == this.item.artists[0].name
-          } else {
-            return music.name == this.item.name && music.artists[0].name == this.item.artists[0].name
-          }
-        }
-      })
-      if (x !== -1) {
-        _.toast('试听列表中已存在')
-        Vue.set(this.item, 'menuShow', false)
+    _add() {
+      let fpIndex = findIndex(this.playList, this.song)
+      if (fpIndex > -1) {
+        this.$toast('播放列表中已存在')
       } else {
-        _.toast('已添加到试听列表')
-        this.$store.dispatch('addListenLists', this.item)
-        Vue.set(this.item, 'menuShow', false)
+        this.$store.dispatch('addPlayList', this.song)
       }
+      Vue.set(this.song, 'menuShow', false)
     },
     _share(index) {
-      _.toast('开发中，敬请期待...')
+      this.$toast('开发中，敬请期待...')
     }
   }
 }
@@ -71,6 +56,7 @@ export default {
   position: absolute;
   right: px2rem(130px);
   top: px2rem(20px);
+  z-index: 100;
   transition: all 0.7s ease-in;
   &.move-enter-active {
     .inner {

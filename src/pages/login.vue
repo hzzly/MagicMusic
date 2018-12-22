@@ -35,8 +35,9 @@
 </template>
 
 <script>
-import api from '../api/index'
+import api from '@/api'
 export default {
+  name: 'login',
   data() {
     return {
       email: '',
@@ -46,31 +47,19 @@ export default {
   methods: {
     _login() {
       if (!this.email || !this.password) {
-        // _.alert('请填写完整')
+        this.$toast('请填写完整')
         return
       }
+      // TODO: 正则校验缺少
       let data = {
         email: this.email,
         password: this.password
       }
-      // this.$store.dispatch('setLoadingState', true)
-      api.Login(data)
-        .then(res => {
-          if (res.code == 200) {
-            // let userInfo = Object.assign()
-            // this.$store.dispatch('setLoadingState', false)
-            // this.setUserInfo(res.data)
-            this.$router.replace('/')
-          }
-        })
-        .catch(res => {
-          if (res.code == 200) {
-            // let userInfo = Object.assign()
-            // this.$store.dispatch('setLoadingState', false)
-            // this.setUserInfo(res.data)
-            this.$router.replace('/')
-          }
-        })
+      // api.Login(data).then(res => {
+      //   if (res.code == 200) {
+      //     this.$router.replace('/')
+      //   }
+      // })
     }
   }
 }

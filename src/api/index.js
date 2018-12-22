@@ -129,7 +129,9 @@ export default {
    * music歌词
    */
   MusicLyric(id) {
-    return fetchGet('/lyric', id)
+    return fetchGet('/lyric', {
+      id
+    })
   },
 
   /**

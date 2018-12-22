@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     handlePlaylist(playlist) {
-      const bottom = playlist.length > 0 ? '60px' : ''
+      const bottom = playlist.length > 0 ? '1.5rem' : ''
       this.$refs.list.$el.style.bottom = bottom
       this.$refs.list.refresh()
     },
@@ -95,7 +95,7 @@ export default {
       this.$router.back()
     },
     playAll() {
-      
+      this.$store.dispatch('playAllList', this.songs)
     },
   },
   watch: {

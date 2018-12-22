@@ -5,17 +5,15 @@ import fastclick from 'fastclick'
 import VueLazyLoad from 'vue-lazyload'
 import App from './App'
 import router from './router'
+import store from './vuex/store'
+import '../static/css/reset.scss'
 
 Vue.config.productionTip = false
 
-import '../static/css/reset.scss'
-
-var VueTouch = require('vue-touch')
-Vue.use(VueTouch, {name: 'v-touch'})
-
-import store from './vuex/store'
-
 fastclick.attach(document.body)
+
+import { Toast } from '@/common/js/plugin';
+Vue.use(Toast);
 
 //懒加载的默认图片 
 import def_lazy_img from '../static/img/loading.gif'

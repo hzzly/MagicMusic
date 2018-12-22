@@ -12,12 +12,16 @@
           <div class="img">
             <img :src="item.coverImgUrl" alt>
           </div>
-          <ul class="songlist">
+          <ul class="songlist" v-if="item.tracks.length > 0">
             <li class="song" v-for="(song, index) in item.tracks" :key="index">
               <span>{{index + 1}}</span>
               <span>{{song.first}}-{{song.second}}</span>
             </li>
           </ul>
+          <div class="songlist" v-else>
+            <div class="title">{{item.name}}</div>
+            <div class="say">{{item.updateFrequency}}</div>
+          </div>
         </li>
       </ul>
     </v-scroll>
@@ -30,18 +34,19 @@ import scroll from '@/components/scroll'
 import api from '@/api'
 import { playlistMixin } from 'common/js/mixin'
 export default {
+  name: 'rank',
   mixins: [playlistMixin],
-  created() {
-    this._getRankList()
-  },
   data() {
     return {
       rankList: []
     }
   },
+  created() {
+    this._getRankList()
+  },
   methods: {
     handlePlaylist(playlist) {
-      const bottom = playlist.length > 0 ? '60px' : ''
+      const bottom = playlist.length > 0 ? '1.5rem' : ''
       this.$refs.rank.style.bottom = bottom
       this.$refs.ranklist.refresh()
     },
@@ -68,8 +73,6 @@ export default {
       })
     },
   },
-  computed: {
-  },
   watch: {
     rankList() {
       setTimeout(() => {
@@ -90,7 +93,6 @@ export default {
   width: 100%;
   top: px2rem(176px);
   bottom: 0;
-  z-index: 10;
   .ranklist {
     height: 100%;
     overflow: hidden;
@@ -154,6 +156,16 @@ export default {
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
+        }
+        .title {
+          font-size: px2rem(38px);
+          line-height: px2rem(60px);
+          margin-bottom: px2rem(20px);
+          color: rgba(255, 255, 255, 0.9);
+        }
+        .say {
+          font-size: px2rem(26px);
+          color: rgba(255, 255, 255, 0.7);
         }
       }
       // .desc {

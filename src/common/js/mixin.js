@@ -5,17 +5,17 @@ import {mapGetters, mapMutations, mapActions} from 'vuex'
 export const playlistMixin = {
   computed: {
     ...mapGetters([
-      'listenLists'
+      'playList'
     ])
   },
   mounted() {
-    this.handlePlaylist(this.listenLists)
+    this.handlePlaylist(this.playList)
   },
   activated() {
-    this.handlePlaylist(this.listenLists)
+    this.handlePlaylist(this.playList)
   },
   watch: {
-    listenLists(newVal) {
+    playList(newVal) {
       this.handlePlaylist(newVal)
     }
   },
@@ -26,72 +26,73 @@ export const playlistMixin = {
   }
 }
 
-// export const playerMixin = {
-//   computed: {
-//     iconMode() {
-//       return this.mode === playMode.sequence ? 'icon-sequence' : this.mode === playMode.loop ? 'icon-loop' : 'icon-random'
-//     },
-//     ...mapGetters([
-//       'sequenceList',
-//       'playlist',
-//       'currentSong',
-//       'mode',
-//       'favoriteList'
-//     ]),
-//     favoriteIcon() {
-//       return this.getFavoriteIcon(this.currentSong)
-//     }
-//   },
-//   methods: {
-//     changeMode() {
-//       const mode = (this.mode + 1) % 3
-//       this.setPlayMode(mode)
-//       let list = null
-//       if (mode === playMode.random) {
-//         list = shuffle(this.sequenceList)
-//       } else {
-//         list = this.sequenceList
-//       }
-//       this.resetCurrentIndex(list)
-//       this.setPlaylist(list)
-//     },
-//     resetCurrentIndex(list) {
-//       let index = list.findIndex((item) => {
-//         return item.id === this.currentSong.id
-//       })
-//       this.setCurrentIndex(index)
-//     },
-//     toggleFavorite(song) {
-//       if (this.isFavorite(song)) {
-//         this.deleteFavoriteList(song)
-//       } else {
-//         this.saveFavoriteList(song)
-//       }
-//     },
-//     getFavoriteIcon(song) {
-//       if (this.isFavorite(song)) {
-//         return 'icon-favorite'
-//       }
-//       return 'icon-not-favorite'
-//     },
-//     isFavorite(song) {
-//       const index = this.favoriteList.findIndex((item) => {
-//         return item.id === song.id
-//       })
-//       return index > -1
-//     },
-//     ...mapMutations({
-//       setPlayMode: 'SET_PLAY_MODE',
-//       setPlaylist: 'SET_PLAYLIST',
-//       setCurrentIndex: 'SET_CURRENT_INDEX',
-//       setPlayingState: 'SET_PLAYING_STATE'
-//     }),
-//     ...mapActions([
-//       'saveFavoriteList',
-//       'deleteFavoriteList'
-//     ])
-//   }
-// }
+export const playerMixin = {
+  computed: {
+    // iconMode() {
+    //   return this.mode === playMode.sequence ? 'icon-sequence' : this.mode === playMode.loop ? 'icon-loop' : 'icon-random'
+    // },
+    ...mapGetters([
+      // 'sequenceList',
+      'playList',
+      'currentSong',
+      'currentIndex',
+      // 'mode',
+      'favoriteList'
+    ]),
+    favoriteIcon() {
+      return this.getFavoriteIcon(this.currentSong)
+    }
+  },
+  methods: {
+    changeMode() {
+    //   const mode = (this.mode + 1) % 3
+    //   this.setPlayMode(mode)
+    //   let list = null
+    //   if (mode === playMode.random) {
+    //     list = shuffle(this.sequenceList)
+    //   } else {
+    //     list = this.sequenceList
+    //   }
+    //   this.resetCurrentIndex(list)
+    //   this.setPlaylist(list)
+    },
+    // resetCurrentIndex(list) {
+    //   let index = list.findIndex((item) => {
+    //     return item.id === this.currentSong.id
+    //   })
+    //   this.setCurrentIndex(index)
+    // },
+    toggleFavorite(song) {
+      if (this.isFavorite(song)) {
+        this.deleteFavoriteList(song)
+      } else {
+        this.saveFavoriteList(song)
+      }
+    },
+    getFavoriteIcon(song) {
+      if (this.isFavorite(song)) {
+        return 'icon-favorite'
+      }
+      return 'icon-not-favorite'
+    },
+    isFavorite(song) {
+      const index = this.favoriteList.findIndex((item) => {
+        return item.id === song.id
+      })
+      return index > -1
+    },
+    ...mapMutations({
+      // setPlayMode: 'SET_PLAY_MODE',
+      setPlaylist: 'SET_PLAYLIST',
+      setCurrentIndex: 'SET_CURRENT_INDEX',
+      setPlaying: 'SET_PLAYING'
+    }),
+    ...mapActions([
+      'saveFavoriteList',
+      'deleteFavoriteList'
+    ])
+  }
+}
 
 export const searchMixin = {
   data() {
@@ -116,10 +117,12 @@ export const searchMixin = {
     addQuery(query) {
       this.$refs.searchBox.setQuery(query)
     },
-    saveSearch() {
+    saveSearch(song) {
+      this.selectPlaySong(song)
       this.saveSearchHistory(this.query)
     },
     ...mapActions([
+      'selectPlaySong',
       'saveSearchHistory',
       'deleteSearchHistory'
     ])
