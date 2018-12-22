@@ -1,179 +1,199 @@
 <template>
-  <div class="user">
-    <div class="user-card">
-      <div class="avatar">
-        <img
-          src="hhttps://avatar-static.segmentfault.com/561/990/561990135-57d0e6353f822_huge256"
-          alt
+  <transition name="slide">
+    <div class="user-center">
+      <div class="back" @click="back">
+        <i class="icon">&#xe608;</i>
+      </div>
+      <div class="switches-wrapper">
+        <v-switches @switch="switchItem" :switches="switches" :currentIndex="currentIndex"></v-switches>
+      </div>
+      <div ref="playBtn" class="play" @click="playAll">
+        <i class="icon">&#xe606;</i>
+        <span class="text">播放全部</span>
+      </div>
+      <div class="list-wrapper" ref="listWrapper">
+        <v-scroll
+          ref="favoriteList"
+          class="list-scroll"
+          v-if="currentIndex === 0"
+          :data="favoriteList"
         >
+          <div class="list-inner">
+            <v-song-list :song-lists="favoriteList" @select="selectSong" :operate="false"></v-song-list>
+          </div>
+        </v-scroll>
+        <v-scroll ref="playList" class="list-scroll" v-if="currentIndex===1" :data="playHistory">
+          <div class="list-inner">
+            <v-song-list :song-lists="playHistory" @select="selectSong" :operate="false"></v-song-list>
+          </div>
+        </v-scroll>
       </div>
-      <div class="name">hzzly</div>
-      <div class="desc">
-        <p>
-          本人大三狗一枚，就读的是江西一所普通的大学(非985,211)，但这并没有阻挡我对前端的热爱，
-          自学两年多，做过两个外包项目以及两个个人的开源项目。
-          <span>求实习ing。</span>
-        </p>
-      </div>
-      <div class="about">
-        <div class="dynamic" @click="dynamics">
-          <span>{{dynamic}}</span>
-          <span>动态</span>
-        </div>
-        <div class="focus" @click="focuses">
-          <span>{{focus}}</span>
-          <span>关注</span>
-        </div>
-        <div class="love" @click="loves">
-          <span>{{love}}</span>
-          <span>喜欢</span>
-        </div>
-      </div>
-      <div class="btn">
-        <a href="http://hzzly.net/resume/" target="_blank">
-          <i class="icon">&#xe63c;</i>关于我
-        </a>
+      <div class="no-result-wrapper" v-show="noResult">
+        <span>{{noResultDesc}}</span>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
+import switches from '@/components/switches'
+import scroll from '@/components/scroll'
+import songList from '@/components/songList'
+import { mapGetters, mapActions } from 'vuex'
+import { playlistMixin } from '@/common/js/mixin'
+
 export default {
+  name: 'user',
+  mixins: [playlistMixin],
+  components: {
+    'v-switches': switches,
+    'v-scroll': scroll,
+    'v-song-list': songList,
+  },
   data() {
     return {
-      dynamic: localStorage.dynamic || 10,
-      focus: localStorage.focus || 20,
-      love: localStorage.love || 30
+      currentIndex: 0,
+      switches: [
+        {
+          name: '我喜欢的'
+        },
+        {
+          name: '最近听的'
+        }
+      ]
     }
   },
+  computed: {
+    noResult() {
+      if (this.currentIndex === 0) {
+        return !this.favoriteList.length
+      } else {
+        return !this.playHistory.length
+      }
+    },
+    noResultDesc() {
+      if (this.currentIndex === 0) {
+        return '暂无收藏歌曲'
+      } else {
+        return '你还没有听过歌曲'
+      }
+    },
+    ...mapGetters([
+      'favoriteList',
+      'playHistory'
+    ])
+  },
   methods: {
-    dynamics() {
-      this.dynamic++
-      localStorage.dynamic = this.dynamic
+    handlePlaylist(playlist) {
+      const bottom = playlist.length > 0 ? '1.5rem' : ''
+      this.$refs.listWrapper.style.bottom = bottom
+      this.$refs.favoriteList && this.$refs.favoriteList.refresh()
+      this.$refs.playList && this.$refs.playList.refresh()
     },
-    focuses() {
-      this.focus++
-      localStorage.focus = this.focus
+    switchItem(index) {
+      this.currentIndex = index
     },
-    loves() {
-      this.love++
-      localStorage.love = this.love
-    }
-  }
+    selectSong(song) {
+      this.selectPlaySong(song)
+    },
+    back() {
+      this.$router.back()
+    },
+    playAll() {
+      this.playAllList(this.playHistory)
+    },
+    ...mapActions([
+      'selectPlaySong',
+      'playAllList'
+    ])
+  },
 }
 </script>
 
-<style lang="scss" scoped>
-@import "../assets/css/function.scss";
-.user {
-  height: 100%;
-  background: rgba(8, 5, 58, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .user-card {
-    width: px2rem(600px);
-    height: px2rem(600px);
-    border-radius: px2rem(30px);
-    background: #fff;
-    position: relative;
-    z-index: 0;
+<style scoped lang="scss">
+@import "../assets/css/function";
+.user-center {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  background: rgb(8, 5, 58);
+
+  &.slide-enter-active,
+  &.slide-leave-active {
+    transition: all 0.3s;
+  }
+
+  &.slide-enter,
+  &.slide-leave-to {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .back {
+    position: absolute;
+    top: 0;
+    line-height: px2rem(100px);
+    z-index: 50;
+    .icon {
+      display: block;
+      padding: 0 px2rem(30px);
+      font-size: 22px;
+    }
+  }
+
+  .switches-wrapper {
+    margin: px2rem(20px) 0 px2rem(60px) 0;
+  }
+
+  .play {
+    box-sizing: border-box;
+    width: px2rem(240px);
+    padding: px2rem(10px) 0;
+    margin: 0 auto;
     text-align: center;
-    &::before {
-      content: "";
-      position: absolute;
-      left: px2rem(10px);
-      top: px2rem(30px);
-      width: px2rem(580px);
-      height: px2rem(580px);
-      border-radius: px2rem(30px);
-      background: rgba(255, 255, 255, 0.8);
-      z-index: -1;
+    border: 1px solid #ea2448;
+    color: #ea2448;
+    border-radius: px2rem(200px);
+    font-size: 0;
+    .icon {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 6px;
+      font-size: 16px;
+      color: #ea2448;
     }
-    &::after {
-      content: "";
-      position: absolute;
-      left: px2rem(20px);
-      top: px2rem(60px);
-      width: px2rem(560px);
-      height: px2rem(560px);
-      border-radius: px2rem(30px);
-      background: rgba(255, 255, 255, 0.6);
-      z-index: -2;
+    .text {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 12px;
     }
-    .avatar {
-      width: px2rem(150px);
-      height: px2rem(150px);
-      border-radius: 50%;
-      background: #fff;
-      position: absolute;
-      top: px2rem(-75px);
-      left: 50%;
-      border: 2px solid rgba(255, 255, 255, 1);
-      transform: translateX(-50%);
-    }
-    .name {
-      margin-top: px2rem(90px);
-      font-size: px2rem(50px);
-      font-weight: bold;
-    }
-    .desc {
-      font-size: px2rem(28px);
-      color: rgba(0, 0, 0, 0.6);
-      margin: px2rem(30px) px2rem(50px);
-      p {
-        line-height: px2rem(36px);
-        span {
-          font-weight: bold;
-        }
+  }
+
+  .list-wrapper {
+    position: absolute;
+    top: px2rem(220px);
+    bottom: 0;
+    width: 100%;
+
+    .list-scroll {
+      height: 100%;
+      overflow: hidden;
+
+      .list-inner {
+        padding: px2rem(40px) px2rem(60px);
       }
     }
-    .about {
-      display: flex;
-      justify-content: center;
-      font-size: px2rem(24px);
-      > div {
-        width: px2rem(120px);
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-        span {
-          line-height: px2rem(40px);
-          &:first-child {
-            color: #ea2448;
-          }
-        }
-      }
-    }
-    .btn {
-      width: px2rem(260px);
-      height: px2rem(80px);
-      line-height: px2rem(80px);
-      text-align: center;
-      font-size: px2rem(30px);
-      font-weight: bold;
-      color: #fff;
-      margin: px2rem(30px) auto;
-      border-radius: px2rem(40px);
-      background: linear-gradient(45deg, #ea2448, #902444);
-      cursor: pointer;
-      transition: all 0.5s;
-      a {
-        display: block;
-        color: #fff;
-      }
-      .icon {
-        font-size: px2rem(40px);
-        margin-right: px2rem(10px);
-        vertical-align: middle;
-        transition: all 0.5s;
-      }
-      &:hover {
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-      }
-    }
+  }
+
+  .no-result-wrapper {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: 14px;
+    color: hsla(0,0%,100%,.3);
   }
 }
 </style>

@@ -38,7 +38,7 @@ export default {
   align-items: center;
   width: 240px;
   margin: 0 auto;
-  border: 1px solid #333;
+  border: 1px solid #2f3054;
   border-radius: 5px;
   .switch-item {
     flex: 1;
@@ -47,7 +47,7 @@ export default {
     font-size: 14px;
     color: hsla(0,0%,100%,.3);
     &.active {
-      background: #333;
+      background: #2f3054;
       color: #fff;
     }
   }

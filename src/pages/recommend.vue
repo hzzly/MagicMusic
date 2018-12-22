@@ -1,9 +1,9 @@
 <template>
-  <div class="popular" ref="popular">
+  <div class="recommend" ref="recommend">
     <v-scroll
       ref="scroll"
-      class="popular-content"
-      :data="discLists"
+      class="recommend-content"
+      :data="discList"
       :pullup="true"
       @scrollToEnd="scrollToEnd"
     >
@@ -14,7 +14,7 @@
           <ul>
             <li
               @click="selectItem(item)"
-              v-for="(item, index) in discLists"
+              v-for="(item, index) in discList"
               :key="index"
               class="item"
             >
@@ -28,43 +28,10 @@
             </li>
           </ul>
         </div>
-
-        <!-- <v-music-list :music-lists="popularLists"></v-music-list> -->
       </div>
-      <!-- <div>
-        <div class="slider-wrapper">
-          <div class="slider-content">
-            <slider ref="slider">
-              <div v-for="item in recommends">
-                <a :href="item.linkUrl">
-                  <img @load="loadImage" :src="item.picUrl">
-                </a>
-              </div>
-            </slider>
-          </div>
-        </div>
-        <div class="recommend-list">
-          <h1 class="list-title">热门歌单推荐</h1>
-          <ul>
-            <li @click="selectItem(item)" v-for="(item, index) in discList" :key="index" class="item">
-              <div class="icon">
-                <img width="60" height="60" v-lazy="item.imgurl">
-              </div>
-              <div class="text">
-                <h2 class="name" v-html="item.creator.name"></h2>
-                <p class="desc" v-html="item.dissname"></p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="loading-container" v-show="!discList.length">
-        <loading></loading>
-      </div>-->
     </v-scroll>
     <router-view></router-view>
   </div>
-  <!-- <v-music-list :music-lists="popularLists"></v-music-list> -->
 </template>
 
 <script>
@@ -86,34 +53,31 @@ export default {
   },
   data() {
     return {
-      pullup: true
+      pullup: true,
+      discList: []
     }
   },
   computed: {
     ...mapGetters([
-      'discLists',
       'banners',
-      'listenLists'
+      'playList'
     ]),
   },
   created() {
     this.limit = 10
-    if (this.discLists.length === 0) {
-      this.$store.dispatch('getDiscLists', { limit: this.limit })
-    }
     if (this.banners.length === 0) {
       this.$store.dispatch('getBanners')
     }
-  },
-  mounted() {
-    // let audioDOM = document.querySelector('audio')
-    // audioDOM.addEventListener('loadedmetadata', () => {
-    //   // this.$store.dispatch('setPlaying', true)
-    //   // this.$store.dispatch('setShowPlayLoading', false)
-    //   this.$store.dispatch('getMusicTime', audioDOM.duration)
-    // })
+    this._getDiscList({ limit: this.limit })
   },
   methods: {
+    _getDiscList(params) {
+      api.DiscLists(params).then(res => {
+        if (res.code === 200) {
+          this.discList = res.playlists
+        }
+      })
+    },
     selectItem(item) {
       this.$router.push({
         path: `/recommend/${item.id}`
@@ -121,12 +85,12 @@ export default {
     },
     scrollToEnd() {
       this.limit += 10
-      this.$store.dispatch('getDiscLists', { limit: this.limit });
+      this._getDiscList({ limit: this.limit })
     },
-    handlePlaylist(listenLists) {
-      const bottom = listenLists.length > 0 ? '1.5rem' : ''
+    handlePlaylist(playList) {
+      const bottom = playList.length > 0 ? '1.5rem' : ''
 
-      this.$refs.popular.style.bottom = bottom
+      this.$refs.recommend.style.bottom = bottom
       this.$refs.scroll.refresh()
     },
   },
@@ -143,13 +107,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/css/function.scss";
-.popular {
+.recommend {
   position: fixed;
   width: 100%;
   top: px2rem(176px);
   bottom: 0;
-  z-index: 10;
-  .popular-content {
+  .recommend-content {
     height: 100%;
     overflow: hidden;
     .recommend-list {

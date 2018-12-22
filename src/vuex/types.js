@@ -1,30 +1,14 @@
-export const GET_DISC_LISTS = 'GET_DISC_LISTS' // 推荐歌单
-export const GET_MUSIC_LISTS = 'GET_MUSIC_LISTS'   //获取音乐列表
-export const ADD_LISTEN_LISTS = 'ADD_LISTEN_LISTS'
-export const REMOVE_LISTEN_LISTS = 'REMOVE_LISTEN_LISTS'
-export const ADD_ALL_TO_LISTEN_LISTS = 'ADD_ALL_TO_LISTEN_LISTS'
-export const GET_POPULAR_LISTS = 'GET_POPULAR_LISTS'
-export const GET_CLASSICAL_LISTS = 'GET_CLASSICAL_LISTS'
-export const GET_LIGHT_LISTS = 'GET_LIGHT_LISTS'
-export const GET_RADIO_LISTS = 'GET_RADIO_LISTS'
-export const SET_AUDIO = 'SET_AUDIO'
-export const SET_AUDIO_URL = 'SET_AUDIO_URL'
-export const SET_NEXT_AUDIO = 'SET_NEXT_AUDIO'
-export const SET_PRE_AUDIO = 'SET_PRE_AUDIO'
+export const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX'  // 设置播放音乐索引
+export const SET_FULL_SCREEN = 'SET_FULL_SCREEN' // 设置播放是否全屏
+export const SET_PLAYLIST = 'SET_PLAYLIST'  // 播放列表
+export const SAVE_PLAY_HISTORY = 'SAVE_PLAY_HISTORY' // 播放历史
+export const SAVE_FAVORITE_LIST = 'SAVE_FAVORITE_LIST'  // 喜欢列表
 export const SET_PLAYING = 'SET_PLAYING'
-export const DELETE_MUSIC = 'DELETE_MUSIC'
-export const GET_MUSIC_LYRIC = 'GET_MUSIC_LYRIC'
-export const GET_MUSIC_TIME = 'GET_MUSIC_TIME'
 
 //com
 export const COM_GET_BANNERS = 'COM_GET_BANNERS' // banner
 export const COM_SAVE_SEARCH_HISTORY = 'COM_SAVE_SEARCH_HISTORY'  // 保存搜索历史
 export const COM_DELETE_SEARCH_HISTORY = 'COM_DELETE_SEARCH_HISTORY'  // 删除搜索历史
 export const COM_CLEAR_SEARCH_HISTORY = 'COM_CLEAR_SEARCH_HISTORY'  // 清空搜索历史
-export const COM_SHOW_LISTEN_LIST = 'COM_SHOW_LISTEN_LIST'  //试听列表
+export const COM_SHOW_PLAY_LIST = 'COM_SHOW_PLAY_LIST'  //播放列表
 export const COM_SHOW_SIDE_BAR = 'COM_SHOW_SIDE_BAR' //侧边栏
-export const COM_SHOW_PLAY = 'COM_SHOW_PLAY' //播放页
-export const COM_ALERT_MSG = 'COM_ALERT_MSG'
-export const COM_SHOW_ALERT_MSG = 'COM_SHOW_ALERT_MSG'
-export const COM_SHOW_LOADING = 'COM_SHOW_LOADING'
-export const COM_SHOW_PLAY_LOADING = 'COM_SHOW_PLAY_LOADING'

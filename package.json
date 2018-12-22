@@ -12,7 +12,9 @@
   "dependencies": {
     "axios": "^0.16.1",
     "better-scroll": "^1.13.2",
+    "create-keyframe-animation": "^0.1.0",
     "fastclick": "^1.0.6",
+    "lyric-parser": "^1.0.1",
     "node-sass": "^4.5.2",
     "qs": "^6.4.0",
     "sass-loader": "^6.0.3",

@@ -58,7 +58,6 @@
 <script>
 
 import { mapGetters } from 'vuex'
-import * as _ from '../util/tool'
 
 export default {
   data() {
@@ -71,7 +70,7 @@ export default {
       this.$store.dispatch('setShowSidebar', false)
     },
     showToast() {
-      _.toast('开发中，敬请期待...')
+      this.$toast('开发中，敬请期待...')
     }
   },
   computed: {
@@ -159,18 +158,6 @@ export default {
     right: 0;
     z-index: 1001;
     background: rgba(0, 0, 0, 0.4);
-  }
-}
-
-@media screen and(min-width: 769px) {
-  .showSidebar {
-    width: 460px;
-    margin: 0 auto;
-    position: absolute;
-    height: 100%;
-    .sidebar_mask {
-      width: 460px;
-    }
   }
 }
 </style>

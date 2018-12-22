@@ -47,6 +47,7 @@ export default {
   font-size: px2rem(30px);
   .header-icon {
     flex: 0 0 px2rem(88px);
+    margin-top: px2rem(6px);
     cursor: pointer;
     .icon {
       font-size: px2rem(48px);

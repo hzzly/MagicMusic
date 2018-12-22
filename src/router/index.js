@@ -1,19 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import home from '@/pages/home'
-// import collection from '@/pages/collection'
-// import user from '@/pages/user'
-// import login from '@/pages/login'
-import search from '@/pages/search'
-import rank from '@/pages/rank'
-import topList from '@/pages/topList'
-import recommend from '@/pages/recommend'
-import disc from '@/pages/disc'
-import singer from '@/pages/singer'
-import singerDetail from '@/pages/singerDetail'
-// import classical from '@/pages/classical'
-// import light from '@/pages/light'
-// import radio from '@/pages/radio'
+
+const recommend = () => import(/* webpackChunkName: "recommend" */ '@/pages/recommend')
+const disc = () => import(/* webpackChunkName: "disc" */ '@/pages/disc')
+const singer = () => import(/* webpackChunkName: "singer" */ '@/pages/singer')
+const singerDetail = () => import(/* webpackChunkName: "singerDetail" */ '@/pages/singerDetail')
+const rank = () => import(/* webpackChunkName: "rank" */ '@/pages/rank')
+const topList = () => import(/* webpackChunkName: "topList" */ '@/pages/topList')
+const search = () => import(/* webpackChunkName: "search" */ '@/pages/search')
+const user = () => import(/* webpackChunkName: "user" */ '@/pages/user')
+const login = () => import(/* webpackChunkName: "login" */ '@/pages/login')
 
 Vue.use(Router)
 
@@ -56,44 +52,16 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: search
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: user
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login
     }
-		// {
-    //   path: '/home',
-    //   name: 'home',
-		// 	component: home,
-		// 	redirect: '/popular',
-    //   children: [{
-    //       path: 'popular',
-    //       component: popular
-    //     },
-    //     {
-    //       path: 'classical',
-    //       component: classical
-    //     },
-    //     {
-    //       path: 'light',
-    //       component: light
-    //     },
-    //     {
-    //       path: 'radio',
-    //       component: radio
-    //     }
-    //   ]
-    // },
-    // {
-    //   path: '/collection',
-    //   name: 'collection',
-    //   component: collection
-    // },
-    // {
-    //   path: '/user',
-    //   name: 'user',
-    //   component: user
-    // },
-    // {
-    //   path: '/login',
-    //   name: 'login',
-    //   component: login
-    // },
   ]
 })

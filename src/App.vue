@@ -3,74 +3,34 @@
     <v-header @left="showSidebar">
       <i slot="left-icon" class="icon">&#xe692;</i>
       <span slot="content">Magic Music</span>
-      <router-link slot="right-icon" to="/search">
-        <i class="icon">&#xe638;</i>
+      <router-link slot="right-icon" to="/user">
+        <i class="icon">&#xe63c;</i>
       </router-link>
     </v-header>
     <v-tab></v-tab>
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
-    <v-playbar></v-playbar>
+    <v-play></v-play>
 
     <!--公用组件-->
     <v-sidebar></v-sidebar>
-    <v-toast v-show="showToast"></v-toast>
-    <!-- <v-loading v-show="showPlayLoading" class="play-loading"></v-loading> -->
-    <transition name="fold">
-      <v-play v-show="showPlay"></v-play>
-    </transition>
   </div>
 </template>
 
 <script>
 import header from '@/components/header'
 import tab from '@/components/tab'
-import playbar from '@/components/playbar'
 import play from '@/components/play'
 import sidebar from '@/components/sidebar'
-import toast from '@/components/toast'
-import loading from '@/components/loading'
-
-import { mapGetters } from 'vuex'
-
-import api from './api'
 
 export default {
   name: 'app',
   components: {
     'v-header': header,
     'v-tab': tab,
-    'v-playbar': playbar,
     'v-play': play,
     'v-sidebar': sidebar,
-    'v-toast': toast,
-    'v-loading': loading
-  },
-  created() {
-    // if (!this.audioUrl) {
-    //   api.MusicUrl(this.audio[0].id)
-    //     .then(res => {
-    //       this.$store.dispatch('setAudioUrl', res.data[0].url)
-    //     })
-    // }
-    // this.$store.dispatch('getMusicInfo', this.audio[0].id)
-  },
-  data() {
-    return {
-    }
-  },
-  computed: {
-    header() {
-      return this.$route.path.split('/')[1] == 'search' || this.$route.path.split('/')[1] == 'rank' ? false : true
-    },
-    ...mapGetters([
-      'showToast',
-      'showPlay',
-      'audio',
-      'audioUrl',
-      'showPlayLoading'
-    ]),
   },
   methods: {
     showSidebar() {
@@ -114,35 +74,24 @@ body {
   color: #fff;
 }
 
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  flex-direction: column;
-  .play-loading {
-    top: 8rem;
-    z-index: 99;
+.vue-toast {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: px2rem(26px) px2rem(40px);
+  border-radius: px2rem(50px);
+  color: rgba(255, 255, 255, .7);
+  background: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  z-index: 1000;
+  &.toast-center {
+    top: 50%;
   }
-  .container {
-    flex: 1;
-    overflow: auto;
-    overflow-x: hidden;
+  &.toast-bottom {
+    bottom: 10%;
   }
-  .slide-left-enter-active {
-    animation: slideLeft 0.3s;
-  }
-  .slide-right-enter-active {
-    animation: slideRight 0.3s;
-  }
-
-  .fold-enter-active,
-  .fold-leave-active {
-    transition: transform 0.3s ease-in;
-  }
-  .fold-enter,
-  .fold-leave-active {
-    transform: translate3d(0, 100%, 0);
+  &.toast-top {
+    top: 20%;
   }
 }
 </style>
