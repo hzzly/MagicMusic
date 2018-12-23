@@ -7,7 +7,7 @@
             <i class="icon">&#xe6ae;</i>
             循环播放({{playList.length}}首)
           </span>
-          <span @click="_removeAll">
+          <span @click.stop="_removeAll">
             <i class="icon">&#xe612;</i> 清空
           </span>
         </div>
@@ -28,6 +28,7 @@
         </v-scroll>
         <div class="close" @click="_close">关闭</div>
       </div>
+      <v-confirm ref="confirm" @confirm="clearPlayList" text="是否清空播放列表" confirmBtnText="清空"></v-confirm>
     </div>
   </transition>
 </template>
@@ -35,11 +36,13 @@
 <script>
 
 import scroll from '@/components/scroll'
+import confirm from '@/components/confirm'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
-    'v-scroll': scroll
+    'v-scroll': scroll,
+    'v-confirm': confirm
   },
   data() {
     return {
@@ -53,13 +56,16 @@ export default {
         this.$refs.listContent.refresh()
       }, 20)
     },
+    clearPlayList() {
+      this.showFlag = false
+      this.$store.dispatch('setPlaying', false)
+      this.$store.dispatch('removeAllPlayList')
+    },
     _close() {
       this.showFlag = false
     },
     _removeAll() {
-      this.showFlag = false
-      this.$store.dispatch('setPlaying', false)
-      this.$store.dispatch('removeAllPlayList')
+      this.$refs.confirm.show()
     },
     _play(music, index) {
       if (this.currentIndex === index) {

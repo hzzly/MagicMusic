@@ -10,7 +10,7 @@
       <div class="operation" v-show="operate" @click="_showOperation(index)">
         <i class="icon">&#xe605;</i>
       </div>
-      <animation-menu :song="item" :index="index"></animation-menu>
+      <animation-menu @add="onAdd" :song="item" :index="index"></animation-menu>
     </div>
   </div>
 </template>
@@ -56,6 +56,9 @@ export default {
       }
       this.songLists[index].menuShow = !this.songLists[index].menuShow
     },
+    onAdd(el) {
+      this.$emit('add', el)
+    }
   },
   watch: {
     songLists() {

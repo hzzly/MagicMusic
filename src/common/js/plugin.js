@@ -19,7 +19,6 @@ Toast.install = function (Vue, options) {
         template: '<div class="vue-toast toast-' + opt.defaultType + '">' + tips + '</div>'
       });
       let tpl = new toastTpl().$mount().$el;
-      console.log(tpl);
       document.body.appendChild(tpl);
       setTimeout(function () {
         document.body.removeChild(tpl);
@@ -31,6 +30,29 @@ Toast.install = function (Vue, options) {
       }
     })
 }
+
+
+let Loading = {}
+Loading.install = function (Vue) {
+  let tpl;
+  Vue.prototype.$showLoading = () => {
+    if (document.getElementsByClassName('vue-loaing').length) {
+      return;
+    }
+		let loadingTpl = Vue.extend({     // 1、创建构造器，定义好提示信息的模板
+			template: '<div class="vue-loaing"></div>'
+    });
+    tpl = new loadingTpl().$mount().$el;  // 2、创建实例，挂载到文档以后的地方
+		document.body.appendChild(tpl);     // 3、把创建的实例添加到body中
+  }
+  Vue.prototype.$hideLoading = () => {
+    if (document.getElementsByClassName('vue-loaing').length) {
+      document.body.removeChild(tpl);
+    }
+	}
+}
+
 export {
-  Toast
+  Toast,
+  Loading
 }

@@ -29,9 +29,11 @@ export default {
         this.$router.push('/recommend')
         return
       }
+      this.$showLoading()
       api.SongList({ id: this.$route.params.id })
         .then((res) => {
           if (res.code === 200) {
+            this.$hideLoading()
             this.songs = res.playlist.tracks
             this.bgImage = res.playlist.coverImgUrl
             this.title = res.playlist.name

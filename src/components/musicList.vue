@@ -23,9 +23,18 @@
       ref="list"
     >
       <div class="song-list-wrapper">
-        <v-song-list :song-lists="songs" v-show="songs.length > 0"></v-song-list>
+        <v-song-list @add="onAddSong" :song-lists="songs" v-show="songs.length > 0"></v-song-list>
       </div>
     </v-scroll>
+    <div class="ball-container" ref="ball">
+      <div v-for="(item, index) in balls" :key="index">
+        <transition @before-enter="beforeDrop" @enter="dropping" @after-enter="afterDrop">
+          <div class="ball" v-show="item.show">
+            <div class="inner inner-hook"></div>
+          </div>
+        </transition>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -38,6 +47,19 @@ import { prefixStyle } from '@/common/js/dom'
 const RESERVED_HEIGHT = 46
 const transform = prefixStyle('transform')
 const backdrop = prefixStyle('backdrop-filter')
+
+const BALL_LENGTH = 5
+const innerClsHook = 'inner-hook'
+
+function createBalls() {
+  let ret = []
+  for (let i = 0; i < BALL_LENGTH; i++) {
+    ret.push({
+      show: false
+    })
+  }
+  return ret
+}
 
 export default {
   mixins: [playlistMixin],
@@ -65,7 +87,8 @@ export default {
   },
   data() {
     return {
-      scrollY: 0
+      scrollY: 0,
+      balls: createBalls()
     }
   },
   computed: {
@@ -76,6 +99,7 @@ export default {
   created() {
     this.probeType = 3
     this.listenScroll = true
+    this.dropBalls = []
   },
   mounted() {
     this.imageHeight = this.$refs.bgImage.clientHeight
@@ -97,6 +121,53 @@ export default {
     playAll() {
       this.$store.dispatch('playAllList', this.songs)
     },
+    onAddSong(el) {
+      for (let i = 0; i < this.balls.length; i++) {
+        const ball = this.balls[i]
+        if (!ball.show) {
+          ball.show = true
+          ball.el = el
+          this.dropBalls.push(ball)
+        }
+      }
+    },
+    beforeDrop (el) {
+      // 拿到最后一个正在下落的小球
+      const ball = this.dropBalls[this.dropBalls.length - 1]
+      // getBoundingClientRect用于获取某个元素相对于视窗的位置集合
+      const rect = ball.el.getBoundingClientRect()
+      // x,y是指获得小球的位置
+      // 32是指购物车那个图标离左边的距离
+      const x = rect.left - 32
+      // 整个高度-加减那里到顶部的距离-购物车那个图标离底边的距离在取反，因为之前所有的小球是隐藏在购物车图标那里在三象限为负数，现在在加减号那里是正方向。
+      const y = -(window.innerHeight - rect.top - 22)
+      // 让el为空显示出来
+      el.style.display = ''
+      // 外层
+      el.style[transform] = `translate3d(0,${y}px,0)`
+      // 内层
+      const inner = el.getElementsByClassName(innerClsHook)[0]
+      inner.style[transform] = `translate3d(${x}px,0,0)`
+    },
+    dropping (el, done) {
+      // 重绘
+      this._reflow = document.body.offsetHeight
+      // 重指定transition的位置
+      // 初始位置：偏移到按钮位置
+      el.style[transform] = `translate3d(0,0,0)`
+      const inner = el.getElementsByClassName(innerClsHook)[0]
+      // 目标位置：自己的位置
+      inner.style[transform] = `translate3d(0,0,0)`
+      // 监听transitionend
+      el.addEventListener('transitionend', done)
+    },
+    afterDrop (el) {
+      const ball = this.dropBalls.shift()
+      if (ball) {
+        ball.show = false
+        el.style.display = 'none'
+      }
+    }
   },
   watch: {
     scrollY(newVal) {
@@ -223,6 +294,23 @@ export default {
     background: rgb(8, 5, 58);
     .song-list-wrapper {
       padding: px2rem(30px) px2rem(50px);
+    }
+  }
+  .ball-container {
+    .ball {
+      position: fixed;
+      left: 32px;
+      bottom: 22px;
+      z-index: 100;
+      transition: all 0.4s cubic-bezier(0.49, -0.29, 0.75, 0.41);
+
+      .inner {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #ea2448;
+        transition: all 0.4s linear;
+      }
     }
   }
 }

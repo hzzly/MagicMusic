@@ -64,33 +64,37 @@
           <div class="progress-wrapper">
             <span class="time time-l">{{format(currentTime)}}</span>
             <div class="progress-bar-wrapper">
-              <v-progress-bar
+              <!-- <v-progress-bar
                 ref="progressBar"
                 :percent="percent"
                 @percentChange="onProgressBarChange"
                 @percentChanging="onProgressBarChanging"
-              ></v-progress-bar>
+              ></v-progress-bar> -->
+              <v-progress-curve :percent="percent" />
             </div>
             <span class="time time-r">{{format(duration)}}</span>
           </div>
-          <div class="operators">
-            <div class="icon-box i-left" @click="changeMode">
-              <i class="icon" style="font-size: 20px">&#xe819;</i>
-            </div>
-            <div class="icon-box i-left" :class="disableCls">
-              <i @click="prev" class="icon">&#xe61e;</i>
-            </div>
-            <div class="icon-box i-center" :class="disableCls">
-              <i class="icon" v-if="playing" @click="togglePlaying">&#xe644;</i>
-              <i class="icon pause-icon" v-else @click="togglePlaying">&#xe630;</i>
-              <!-- <i class="needsclick" @click="togglePlaying" :class="playIcon"></i> -->
-            </div>
-            <div class="icon-box i-right" :class="disableCls">
-              <i @click="next" class="icon">&#xe604;</i>
-            </div>
-            <div class="icon-box i-right" @click="showPlaylist">
-              <i class="icon" style="font-size: 28px">&#xe927;</i>
-              <!-- <i @click="toggleFavorite(currentSong)" class="icon" :class="favoriteIcon"></i> -->
+          <div class="operators-box">
+            <div class="operators">
+              <div class="icon-box i-left" @click="changeMode">
+                <i class="icon" style="font-size: 20px">&#xe819;</i>
+              </div>
+              <div class="icon-box i-left" :class="disableCls">
+                <i @click="prev" class="icon">&#xe61e;</i>
+              </div>
+              <div class="icon-box i-center" :class="disableCls">
+                <div>
+                  <i class="icon" v-if="playing" @click="togglePlaying">&#xe644;</i>
+                  <i class="icon icon-pause" v-else @click="togglePlaying">&#xe630;</i>
+                </div>
+              </div>
+              <div class="icon-box i-right" :class="disableCls">
+                <i @click="next" class="icon">&#xe604;</i>
+              </div>
+              <div class="icon-box i-right" @click="showPlaylist">
+                <i class="icon" style="font-size: 28px">&#xe927;</i>
+                <!-- <i @click="toggleFavorite(currentSong)" class="icon" :class="favoriteIcon"></i> -->
+              </div>
             </div>
           </div>
         </div>
@@ -148,6 +152,7 @@ import animations from 'create-keyframe-animation'
 import scroll from '@/components/scroll'
 import progressBar from '@/components/progressBar'
 import progressCircle from '@/components/progressCircle'
+import progressCurve from '@/components/progressCurve'
 // import { playMode } from 'common/js/config'
 import { playerMixin } from '@/common/js/mixin'
 import { prefixStyle } from '@/common/js/dom'
@@ -167,6 +172,7 @@ export default {
     'v-progress-bar': progressBar,
     'v-scroll': scroll,
     'v-progress-circle': progressCircle,
+    'v-progress-curve': progressCurve,
     'v-playlist': playList
   },
   data() {
@@ -305,6 +311,9 @@ export default {
           this.togglePlaying()
         }
       }
+    },
+    changeMode() {
+      this.$toast('开发中，敬请期待...')
     },
     ready() {
       clearTimeout(this.timer)
@@ -544,7 +553,7 @@ export default {
       if (newVal) {
         setTimeout(() => {
           this.$refs.lyricList.refresh()
-          this.$refs.progressBar.setProgressOffset(this.percent)
+          // this.$refs.progressBar.setProgressOffset(this.percent)
         }, 20)
       }
     }
@@ -565,7 +574,6 @@ export default {
     bottom: 0;
     z-index: 150;
     background: rgb(8, 5, 58);
-
     .background {
       position: absolute;
       left: 0;
@@ -576,17 +584,14 @@ export default {
       opacity: 0.6;
       filter: blur(20px);
     }
-
     .top {
       position: relative;
       margin-bottom: 25px;
-
       .back {
         position: absolute;
         top: 0;
         left: px2rem(12px);
         z-index: 50;
-
         .icon {
           display: block;
           height: px2rem(100px);
@@ -595,7 +600,6 @@ export default {
           font-size: 22px;
         }
       }
-
       .title {
         width: 70%;
         margin: 0 auto;
@@ -607,7 +611,6 @@ export default {
         font-size: 18px;
         color: #fff;
       }
-
       .subtitle {
         line-height: px2rem(40px);
         text-align: center;
@@ -615,7 +618,6 @@ export default {
         color: #fff;
       }
     }
-
     .middle {
       position: fixed;
       width: 100%;
@@ -623,7 +625,6 @@ export default {
       bottom: px2rem(340px);
       white-space: nowrap;
       font-size: 0;
-
       .middle-l {
         display: inline-block;
         vertical-align: top;
@@ -631,7 +632,6 @@ export default {
         width: 100%;
         height: 0;
         padding-top: 80%;
-
         .cd-wrapper {
           position: absolute;
           left: 10%;
@@ -639,12 +639,10 @@ export default {
           width: 80%;
           box-sizing: border-box;
           height: 100%;
-
           .cd {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-
             .image {
               position: absolute;
               left: 0;
@@ -655,19 +653,16 @@ export default {
               border-radius: 50%;
               border: 10px solid rgba(255, 255, 255, 0.1);
             }
-
             .play {
               animation: rotate 20s linear infinite;
             }
           }
         }
-
         .playing-lyric-wrapper {
           width: 80%;
           margin: 30px auto 0 auto;
           overflow: hidden;
           text-align: center;
-
           .playing-lyric {
             height: px2rem(40px);
             line-height: px2rem(40px);
@@ -676,30 +671,25 @@ export default {
           }
         }
       }
-
       .middle-r {
         display: inline-block;
         vertical-align: top;
         width: 100%;
         height: 100%;
         overflow: hidden;
-
         .lyric-wrapper {
           width: 80%;
           margin: 0 auto;
           overflow: hidden;
           text-align: center;
-
           .text {
             line-height: px2rem(64px);
             color: hsla(0, 0%, 100%, 0.5);
             font-size: 14px;
-
             &.current {
               color: #fff;
             }
           }
-
           .pure-music {
             padding-top: 50%;
             line-height: px2rem(64px);
@@ -709,16 +699,13 @@ export default {
         }
       }
     }
-
     .bottom {
       position: absolute;
-      bottom: px2rem(100px);
+      bottom: px2rem(200px);
       width: 100%;
-
       .dot-wrapper {
         text-align: center;
         font-size: 0;
-
         .dot {
           display: inline-block;
           vertical-align: middle;
@@ -727,7 +714,6 @@ export default {
           height: px2rem(16px);
           border-radius: 50%;
           background: hsla(0, 0%, 100%, 0.5);
-
           &.active {
             width: px2rem(40px);
             border-radius: px2rem(10px);
@@ -735,89 +721,121 @@ export default {
           }
         }
       }
-
       .progress-wrapper {
         display: flex;
+        justify-content: space-between;
         align-items: center;
         width: 80%;
         margin: 0px auto;
         padding: 10px 0;
-
         .time {
           color: #fff;
           font-size: 12px;
           flex: 0 0 30px;
           line-height: px2rem(60px);
           width: px2rem(60px);
-
           &.time-l {
             text-align: left;
           }
-
           &.time-r {
             text-align: right;
           }
         }
-
         .progress-bar-wrapper {
-          flex: 1;
+          // width: ;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
         }
       }
-
+      .operators-box {
+        width: px2rem(1200px);
+        height: px2rem(1200px);
+        position: absolute;
+        top: px2rem(80px);
+        left: 50%;
+        transform: translate3d(-50%, 0, 0);
+        overflow: hidden;
+        z-index: -1;
+        &::after {
+          content: '';
+          width: 100%;
+          height: 100%;
+          background: #ea2448;
+          position: absolute;
+          clip: rect(0 px2rem(600px) px2rem(1200px) 0);
+          transform: rotate(90deg);
+          border-radius: 50%;
+        }
+      }
       .operators {
+        position: absolute;
+        top: px2rem(70px);
         display: flex;
+        width: px2rem(660px);
+        height: px2rem(132px);
+        margin-left: 50%;
+        transform: translate3d(-50%, 0, 0);
         align-items: center;
+        z-index: 100;
 
         .icon-box {
           flex: 1;
-          color: #4436b1;
-
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           &.disable {
             color: #222;
           }
-
           i {
             font-size: 26px;
           }
         }
-
         .i-left {
           text-align: right;
         }
-
         .i-center {
-          padding: 0 px2rem(40px);
-          text-align: center;
-
-          i {
-            font-size: 30px;
+          margin: 0 px2rem(20px);
+          > div {
+            width: px2rem(120px);
+            height: px2rem(120px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #fff;
+            .icon {
+              margin-top: px2rem(4px);
+              font-size: 30px;
+              display: inline-block;
+              color: #4436b1;
+              &.icon-pause {
+                margin: px2rem(10px) 0 0 px2rem(10px);
+              }
+            }
           }
         }
-
         .i-right {
           text-align: left;
         }
       }
     }
-
     &.normal-enter-active,
     &.normal-leave-active {
       transition: all 0.4s;
-
       .top,
       .bottom {
         transition: all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32);
       }
     }
-
     &.normal-enter,
     &.normal-leave-to {
       opacity: 0;
-
       .top {
         transform: translate3d(0, -100px, 0);
       }
-
       .bottom {
         transform: translate3d(0, 100px, 0);
       }
@@ -834,34 +852,27 @@ export default {
     width: 100%;
     height: px2rem(105px);
     background: #ea2448;
-
     &.mini-enter-active,
     &.mini-leave-active {
       transition: all 0.4s;
     }
-
     &.mini-enter,
     &.mini-leave-to {
       opacity: 0;
     }
-
     .picture {
       flex: 0 0 px2rem(80px);
       width: px2rem(80px);
       height: px2rem(80px);
       padding: 0 px2rem(20px) 0 px2rem(40px);
-
       .imgWrapper {
         height: 100%;
         width: 100%;
-
         img {
           border-radius: 50%;
-
           &.play {
             animation: rotate 10s linear infinite;
           }
-
           &.pause {
             animation-play-state: paused;
           }
@@ -876,7 +887,6 @@ export default {
       flex: 1;
       line-height: px2rem(40px);
       overflow: hidden;
-
       .name {
         margin-bottom: 2px;
         text-overflow: ellipsis;
@@ -885,7 +895,6 @@ export default {
         font-size: 14px;
         color: #fff;
       }
-
       .desc {
         text-overflow: ellipsis;
         overflow: hidden;
@@ -894,7 +903,6 @@ export default {
         color: hsla(0, 0%, 100%, 0.3);
       }
     }
-
     .control {
       flex: 0 0 px2rem(60px);
       width: px2rem(60px);
@@ -924,7 +932,6 @@ export default {
   0% {
     transform: rotate(0);
   }
-
   100% {
     transform: rotate(360deg);
   }
