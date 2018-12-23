@@ -4,10 +4,10 @@
       <div class="inner inner-1" @click.stop="_add">
         <i class="icon">&#xe639;</i>
       </div>
-      <div class="inner inner-2" @click="_share(index)">
+      <div class="inner inner-2" @click.stop="_share(index)">
         <i class="icon">&#xe64c;</i>
       </div>
-      <div class="inner inner-3" @click="_love(index)">
+      <div class="inner inner-3" @click.stop="_love(index)">
         <i class="icon">&#xe615;</i>
       </div>
     </div>
@@ -19,6 +19,7 @@ import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import { findIndex } from '@/common/js/util'
 
+const EVENT_ADD = 'add'
 
 export default {
   props: {
@@ -34,11 +35,12 @@ export default {
     _love(index) {
       this.$toast('开发中，敬请期待...')
     },
-    _add() {
+    _add(e) {
       let fpIndex = findIndex(this.playList, this.song)
       if (fpIndex > -1) {
         this.$toast('播放列表中已存在')
       } else {
+        this.$emit('add', e.target)
         this.$store.dispatch('addPlayList', this.song)
       }
       Vue.set(this.song, 'menuShow', false)
@@ -56,7 +58,6 @@ export default {
   position: absolute;
   right: px2rem(130px);
   top: px2rem(20px);
-  z-index: 100;
   transition: all 0.7s ease-in;
   &.move-enter-active {
     .inner {
@@ -103,6 +104,7 @@ export default {
     text-align: center;
     color: #fff;
     cursor: pointer;
+    z-index: 100;
     transition: all 0.4s;
   }
   .inner-1 {

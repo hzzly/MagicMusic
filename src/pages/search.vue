@@ -92,8 +92,10 @@ export default {
       this.$refs.confirm.show()
     },
     _getHotKey() {
+      this.$showLoading()
       api.HotSearchKey().then((res) => {
         if (res.code === 200) {
+          this.$hideLoading()
           this.hotKey = res.result.hots.slice(0, 10)
         }
       })

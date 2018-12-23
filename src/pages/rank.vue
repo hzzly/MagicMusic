@@ -66,8 +66,10 @@ export default {
       })
     },
     _getRankList() {
+      this.$showLoading()
       api.RankList().then((res) => {
         if (res.code === 200) {
+          this.$hideLoading()
           this.rankList = res.list
         }
       })

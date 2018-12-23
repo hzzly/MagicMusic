@@ -30,7 +30,7 @@ export default {
     'v-header': header,
     'v-tab': tab,
     'v-play': play,
-    'v-sidebar': sidebar,
+    'v-sidebar': sidebar
   },
   methods: {
     showSidebar() {
@@ -72,26 +72,5 @@ body {
   -webkit-tap-highlight-color: transparent;
   background: rgba(8, 5, 58, 0.9);
   color: #fff;
-}
-
-.vue-toast {
-  position: fixed;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: px2rem(26px) px2rem(40px);
-  border-radius: px2rem(50px);
-  color: rgba(255, 255, 255, .7);
-  background: rgba(0, 0, 0, 0.7);
-  font-size: 14px;
-  z-index: 1000;
-  &.toast-center {
-    top: 50%;
-  }
-  &.toast-bottom {
-    bottom: 10%;
-  }
-  &.toast-top {
-    top: 20%;
-  }
 }
 </style>

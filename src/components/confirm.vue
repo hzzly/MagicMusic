@@ -83,7 +83,7 @@ export default {
     .confirm-content {
       width: 270px;
       border-radius: 13px;
-      background: #333;
+      background: rgba(24, 25, 44, 0.8);
 
       .text {
         padding: 19px 15px;

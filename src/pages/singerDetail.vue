@@ -29,9 +29,11 @@ export default {
         this.$router.push('/singer')
         return
       }
+      this.$showLoading()
       api.SingerMusciList({ id: this.$route.params.id })
         .then((res) => {
           if (res.code === 200) {
+            this.$hideLoading()
             this.songs = res.hotSongs
             this.bgImage = res.artist.img1v1Url
             this.title = res.artist.name

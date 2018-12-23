@@ -103,6 +103,7 @@ export default {
     }
   }
   .form-g {
+    margin-top: 45%;
     .input-group {
       margin-bottom: px2rem(25px);
       position: relative;

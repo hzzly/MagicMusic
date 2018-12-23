@@ -40,6 +40,7 @@ import banner from '@/components/banner'
 import scroll from '@/components/scroll'
 import musicList from '@/components/musicList'
 import { playlistMixin } from '@/common/js/mixin'
+import api from '@/api'
 
 import { mapGetters } from 'vuex'
 

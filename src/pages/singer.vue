@@ -38,9 +38,16 @@ export default {
       })
     },
     _getSingerList() {
+      if (localStorage.singers) {
+        this.singers = JSON.parse(localStorage.singers)
+        return
+      }
+      this.$showLoading()
       api.SingerList().then((res) => {
         if (res.code === 200) {
+          this.$hideLoading()
           this.singers = this._normalizeSinger(res.artists)
+          localStorage.singers = JSON.stringify(this.singers)
         }
       })
     },
