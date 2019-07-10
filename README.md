@@ -5,7 +5,11 @@
 
 [温馨提示：pc浏览f12手机模式最佳,手机建议wifi下访问,低版本浏览器可能有兼容性问题]
 
-<!-- **demo地址：** [http://hzzly.net/magic-music](http://hzzly.net/magic-music) -->
+**demo地址：** [http://hzzly.net/magic-music/](http://hzzly.net/magic-music/)
+
+<img src="./screenshots/magic-music1.png" title="Logo" width="146" />
+<img src="./screenshots/magic-music2.png" title="Logo" width="146" />
+<img src="./screenshots/magic-music3.png" title="Logo" width="146" />
 
 欢迎大家的star啦😄~
 
