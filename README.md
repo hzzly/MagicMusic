@@ -7,9 +7,8 @@
 
 **demo地址：** [http://hzzly.net/magic-music/](http://hzzly.net/magic-music/)
 
-<img src="./screenshots/magic-music1.png" title="Logo" width="146" />
-<img src="./screenshots/magic-music2.png" title="Logo" width="146" />
-<img src="./screenshots/magic-music3.png" title="Logo" width="146" />
+| ![示范图片1](./screenshots/magic-music1.png) | ![示范图片1](./screenshots/magic-music2.png) | ![示范图片3](./screenshots/magic-music3.png) |
+|:-|:-|:-|
 
 欢迎大家的star啦😄~
 
